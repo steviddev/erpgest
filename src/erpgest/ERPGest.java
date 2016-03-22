@@ -5,6 +5,8 @@
  */
 package erpgest;
 
+import erpgest.db.DbConn;
+
 /**
  *
  * @author Sitzia Impianti <sitiziaimpianti.eu>
@@ -16,6 +18,8 @@ public class ERPGest {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        erpgest.db.DbConn conn = new DbConn();
+        conn.makeConn();
     }
     
 }

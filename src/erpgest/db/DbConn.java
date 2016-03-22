@@ -37,18 +37,19 @@ public class DbConn {
                 connection.close();
             }
             try {
-                Class.forName("com.mysql.jdbc.Driver");
+                Class.forName("org.sqlite.JDBC");
             } catch (ClassNotFoundException e) {
-                System.err.println("MySQL JDBC Driver not found!");
+                System.err.println("sqlite Driver not found!");
             }
             Properties props = new Properties();
             props.put("charSet", "latin1");
             
             
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sinbaddb","root", "123456");
+            connection = DriverManager.getConnection("jdbc:sqlite:system/erp.db");
 
-            statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         } catch (Exception e) {
+            e.printStackTrace();
             return "non riuscito";
         }
         return "riuscito";
