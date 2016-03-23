@@ -9,7 +9,7 @@ import erpgest.db.DbConn;
 
 /**
  *
- * @author Sitzia Impianti <sitiziaimpianti.eu>
+ * @author SteVid <www.stevid.it>
  */
 public class ERPGest {
 
