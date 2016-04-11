@@ -5,6 +5,7 @@
  */
 package erpgest;
 
+import erpgest.db.CreateDB;
 import erpgest.db.DbConn;
 
 /**
@@ -18,8 +19,9 @@ public class ERPGest {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        erpgest.db.DbConn conn = new DbConn();
-        conn.makeConn();
+        //erpgest.db.DbConn conn = new DbConn();
+        //conn.makeConn();
+        CreateDB db = new CreateDB();
     }
     
 }

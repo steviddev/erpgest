@@ -45,7 +45,7 @@ public class DbConn {
             props.put("charSet", "latin1");
             
             
-            connection = DriverManager.getConnection("jdbc:sqlite:system/erp.db");
+            connection = DriverManager.getConnection("jdbc:sqlite:system/erp.s3db");
 
             statement = connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
         } catch (Exception e) {
@@ -57,13 +57,18 @@ public class DbConn {
     }
 
     public ResultSet select(String query, javax.swing.JLabel label) {
-        ResultSet risultato;
+        ResultSet risultato = null;
         try {
 
             ResultSet ris = null;
 
             risultato = statement.executeQuery(query);
         } catch (Exception e) {
+            e.printStackTrace();
+                                      try { statement.close(); } catch(Exception e1) {}
+                                      try { risultato.close();      } catch(Exception e2) {}
+                                      try { risultato = null;       } catch(Exception e3) {}            
+            
             return null;
         }
         return risultato;
@@ -86,6 +91,9 @@ public class DbConn {
             ris = statement.executeQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
+            try { statement.close(); } catch(Exception e1) {}
+            try { ris.close();      } catch(Exception e2) {}
+            try { ris = null;       } catch(Exception e3) {}             
             return null;
         }
         return ris;
