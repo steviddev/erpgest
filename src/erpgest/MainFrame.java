@@ -34,20 +34,36 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanelAnagrafica1 = new erpgest.panels.JPanelAnagrafica();
+        jPanelArticoli1 = new erpgest.panels.JPanelArticoli();
+        jPanelListinoPrezzi1 = new erpgest.panels.JPanelListinoPrezzi();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTabbedPane2.addTab("Anagrafica", jPanelAnagrafica1);
 
+        javax.swing.GroupLayout jPanelArticoli1Layout = new javax.swing.GroupLayout(jPanelArticoli1);
+        jPanelArticoli1.setLayout(jPanelArticoli1Layout);
+        jPanelArticoli1Layout.setHorizontalGroup(
+            jPanelArticoli1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1132, Short.MAX_VALUE)
+        );
+        jPanelArticoli1Layout.setVerticalGroup(
+            jPanelArticoli1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 646, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Articoli", jPanelArticoli1);
+        jTabbedPane2.addTab("Listini e Prezzi", jPanelListinoPrezzi1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
 
         pack();
@@ -104,6 +120,8 @@ public class MainFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erpgest.panels.JPanelAnagrafica jPanelAnagrafica1;
+    private erpgest.panels.JPanelArticoli jPanelArticoli1;
+    private erpgest.panels.JPanelListinoPrezzi jPanelListinoPrezzi1;
     private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 }
