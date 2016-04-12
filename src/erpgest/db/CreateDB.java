@@ -7,7 +7,7 @@ package erpgest.db;
 
 /**
  *
- * @author Sitzia Impianti <sitiziaimpianti.eu>
+ * @author Stefano Vidili <www.stevid.it>
  */
 public class CreateDB {
     

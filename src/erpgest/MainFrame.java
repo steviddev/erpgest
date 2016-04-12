@@ -11,6 +11,10 @@ package erpgest;
  */
 public class MainFrame extends javax.swing.JFrame {
 
+    public static erpgest.utils.Waiting waiting;
+    
+    public static erpgest.utils.Waiting2 waiting2;    
+    
     /**
      * Creates new form MainFrame
      */
@@ -35,16 +39,11 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 782, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
         );
 
         pack();
@@ -85,6 +84,20 @@ public class MainFrame extends javax.swing.JFrame {
         });
     }
 
+    public MainFrame getFrame() {
+        return this;
+    }
+    
+    public void closeDialog() {
+        if (waiting != null) {
+            waiting.dispose();
+            waiting = null;
+            validate();
+            repaint();
+        }
+
+    }    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
