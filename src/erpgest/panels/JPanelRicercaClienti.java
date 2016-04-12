@@ -546,7 +546,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         } catch (Exception e) {
             new javax.swing.JOptionPane().showMessageDialog(
                     jPanel1,
-                    "Selezionare il Nominativo",
+                    "Selezionare Un Elemento",
                     "Attenzione",
                     javax.swing.JOptionPane.WARNING_MESSAGE
             );
@@ -648,7 +648,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
                         "order by u1.nome, u1.cognome ";
                 ricercaDuplicati = true;
             }else */
-                query = "SELECT * FROM plc.utenti a where 1=1 and a.attivo='S' ";
+                query = "SELECT * FROM ANAGRAFICA a where 1=1 and a.attivo='S' ";
             
             ResultSet rSet = null;
 
