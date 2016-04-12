@@ -55,7 +55,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
     private static final String COMMIT_ACTION = "commit";   
     
     public JPanelRicercaClienti(MainFrame parent) {
-        super(parent, "Ricerca Utente", true);
+        super(parent, "Ricerca Azienda", true);
 
         this.parentFrame = parent;
 
@@ -223,12 +223,11 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         jLabel48 = new javax.swing.JLabel();
         jTextFieldID = new javax.swing.JTextField();
         jLabel49 = new javax.swing.JLabel();
-        jTextFieldCodiceBracciale = new javax.swing.JTextField();
+        jTextFieldRagioneSociale = new javax.swing.JTextField();
         buttonAzzeraCampi = new javax.swing.JButton();
         idDescOrder = new javax.swing.JRadioButton();
-        idBraccialeDescOrder = new javax.swing.JRadioButton();
-        jRadioButtonDuplicati = new javax.swing.JRadioButton();
-        jTextFieldCabina = new javax.swing.JTextField();
+        idRagioneSociale = new javax.swing.JRadioButton();
+        jTextFieldPartitaIVA = new javax.swing.JTextField();
         jLabel50 = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(827, 620));
@@ -275,14 +274,14 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Cognome", "Nome", "Bracciale", "Cabina", "Codice Fiscale"
+                "ID", "Rag.Soc.", "Nome Ref. Leg.", "Partita IVA", "Codice Fiscale"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -311,9 +310,6 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
             tabella.getColumnModel().getColumn(4).setMinWidth(70);
             tabella.getColumnModel().getColumn(4).setPreferredWidth(100);
             tabella.getColumnModel().getColumn(4).setMaxWidth(100);
-            tabella.getColumnModel().getColumn(5).setMinWidth(80);
-            tabella.getColumnModel().getColumn(5).setPreferredWidth(130);
-            tabella.getColumnModel().getColumn(5).setMaxWidth(170);
         }
 
         jScrollPane1.setViewportView(tabella);
@@ -334,27 +330,27 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         jTextFieldNome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldNome.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldNome);
-        jTextFieldNome.setBounds(20, 120, 220, 30);
+        jTextFieldNome.setBounds(20, 120, 140, 30);
 
         jTextFieldCognome.setBackground(new java.awt.Color(204, 255, 204));
         jTextFieldCognome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCognome.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldCognome);
-        jTextFieldCognome.setBounds(250, 120, 220, 30);
+        jTextFieldCognome.setBounds(180, 120, 140, 30);
 
         jLabel47.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel47.setText("Nome");
         jPanel1.add(jLabel47);
-        jLabel47.setBounds(20, 90, 220, 30);
+        jLabel47.setBounds(20, 90, 140, 30);
 
         jLabel4.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel4.setText("Cognome");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(250, 90, 220, 30);
+        jLabel4.setBounds(180, 90, 140, 30);
 
         jButtonRicerca.setBackground(new java.awt.Color(204, 204, 255));
         jButtonRicerca.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtonRicerca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lidomatic/img/ico/drawer.png"))); // NOI18N
+        jButtonRicerca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/drawer.png"))); // NOI18N
         jButtonRicerca.setText("<html>Ricerca</html>");
         jButtonRicerca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,8 +362,13 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
 
         buttonGroup.add(idBraccialeAscOrder);
         idBraccialeAscOrder.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        idBraccialeAscOrder.setText("Ordinare per Bracciale Ascendente");
+        idBraccialeAscOrder.setText("Ordinare per Rag. Soc. Ascendente");
         idBraccialeAscOrder.setOpaque(false);
+        idBraccialeAscOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idBraccialeAscOrderActionPerformed(evt);
+            }
+        });
         jPanel1.add(idBraccialeAscOrder);
         idBraccialeAscOrder.setBounds(250, 200, 240, 30);
 
@@ -396,13 +397,13 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel5.setText("Codice Fiscale");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(480, 90, 280, 30);
+        jLabel5.setBounds(340, 90, 160, 30);
 
         jTextFieldCodiceFiscale.setBackground(new java.awt.Color(204, 255, 204));
         jTextFieldCodiceFiscale.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCodiceFiscale.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldCodiceFiscale);
-        jTextFieldCodiceFiscale.setBounds(480, 120, 280, 30);
+        jTextFieldCodiceFiscale.setBounds(340, 120, 160, 30);
 
         jLabel48.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel48.setText("ID");
@@ -416,18 +417,18 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         jTextFieldID.setBounds(20, 50, 100, 30);
 
         jLabel49.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel49.setText("Codice Bracciale");
+        jLabel49.setText("Ragione Sociale");
         jPanel1.add(jLabel49);
         jLabel49.setBounds(140, 20, 120, 30);
 
-        jTextFieldCodiceBracciale.setBackground(new java.awt.Color(204, 255, 204));
-        jTextFieldCodiceBracciale.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldCodiceBracciale.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel1.add(jTextFieldCodiceBracciale);
-        jTextFieldCodiceBracciale.setBounds(140, 50, 170, 30);
+        jTextFieldRagioneSociale.setBackground(new java.awt.Color(204, 255, 204));
+        jTextFieldRagioneSociale.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldRagioneSociale.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldRagioneSociale);
+        jTextFieldRagioneSociale.setBounds(140, 50, 170, 30);
 
         buttonAzzeraCampi.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        buttonAzzeraCampi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lidomatic/img/ico/sport_shuttlecock.png"))); // NOI18N
+        buttonAzzeraCampi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/sport_shuttlecock.png"))); // NOI18N
         buttonAzzeraCampi.setText(" Azzera");
         buttonAzzeraCampi.setToolTipText("Azzera tutti i dati");
         buttonAzzeraCampi.addActionListener(new java.awt.event.ActionListener() {
@@ -445,28 +446,21 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         jPanel1.add(idDescOrder);
         idDescOrder.setBounds(20, 170, 210, 30);
 
-        buttonGroup.add(idBraccialeDescOrder);
-        idBraccialeDescOrder.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        idBraccialeDescOrder.setText("Ordinare per Bracciale Discendente ");
-        idBraccialeDescOrder.setOpaque(false);
-        jPanel1.add(idBraccialeDescOrder);
-        idBraccialeDescOrder.setBounds(20, 200, 240, 30);
+        buttonGroup.add(idRagioneSociale);
+        idRagioneSociale.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        idRagioneSociale.setText("Ordinare per Rag. Soc. Discendente ");
+        idRagioneSociale.setOpaque(false);
+        jPanel1.add(idRagioneSociale);
+        idRagioneSociale.setBounds(20, 200, 260, 30);
 
-        buttonGroup.add(jRadioButtonDuplicati);
-        jRadioButtonDuplicati.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jRadioButtonDuplicati.setText("Duplicati");
-        jRadioButtonDuplicati.setOpaque(false);
-        jPanel1.add(jRadioButtonDuplicati);
-        jRadioButtonDuplicati.setBounds(490, 200, 240, 30);
-
-        jTextFieldCabina.setBackground(new java.awt.Color(204, 255, 204));
-        jTextFieldCabina.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldCabina.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel1.add(jTextFieldCabina);
-        jTextFieldCabina.setBounds(330, 50, 170, 30);
+        jTextFieldPartitaIVA.setBackground(new java.awt.Color(204, 255, 204));
+        jTextFieldPartitaIVA.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldPartitaIVA.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldPartitaIVA);
+        jTextFieldPartitaIVA.setBounds(330, 50, 170, 30);
 
         jLabel50.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel50.setText("Codice Cabina");
+        jLabel50.setText("Partita IVA");
         jPanel1.add(jLabel50);
         jLabel50.setBounds(330, 20, 120, 30);
 
@@ -583,6 +577,10 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         azzeraCampi();
     }//GEN-LAST:event_buttonAzzeraCampiActionPerformed
 
+    private void idBraccialeAscOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idBraccialeAscOrderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idBraccialeAscOrderActionPerformed
+
  //   Thread t = new Thread(new ShowWaiting(apigen,this));
     //   t.start();
     //      while(apigen.waiting == null) try { Thread.sleep(100); } catch(Exception e) {}
@@ -595,8 +593,8 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JRadioButton idAscOrder;
     private javax.swing.JRadioButton idBraccialeAscOrder;
-    private javax.swing.JRadioButton idBraccialeDescOrder;
     private javax.swing.JRadioButton idDescOrder;
+    private javax.swing.JRadioButton idRagioneSociale;
     private javax.swing.JButton jButtonChiudi;
     private javax.swing.JButton jButtonRicerca;
     private javax.swing.JButton jButtonSeleziona;
@@ -608,27 +606,26 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
     protected javax.swing.JLabel jLabel5;
     protected javax.swing.JLabel jLabel50;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButtonDuplicati;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    protected javax.swing.JTextField jTextFieldCabina;
-    protected javax.swing.JTextField jTextFieldCodiceBracciale;
     protected javax.swing.JTextField jTextFieldCodiceFiscale;
     protected javax.swing.JTextField jTextFieldCognome;
     protected javax.swing.JTextField jTextFieldID;
     protected javax.swing.JTextField jTextFieldNome;
+    protected javax.swing.JTextField jTextFieldPartitaIVA;
+    protected javax.swing.JTextField jTextFieldRagioneSociale;
     private javax.swing.JRadioButton nomeOrder;
     private javax.swing.JTable tabella;
     // End of variables declaration//GEN-END:variables
 
     private void azzeraCampi() {
         jTextFieldNome.setText("");
-        jTextFieldCodiceBracciale.setText("");
+        jTextFieldRagioneSociale.setText("");
         jTextFieldCodiceFiscale.setText("");
         jTextFieldID.setText("");
         jTextFieldCognome.setText("");
-        jTextFieldCabina.setText("");
+        jTextFieldPartitaIVA.setText("");
     }
 
     class eseguiRicerca implements Runnable {
@@ -637,6 +634,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         public void run() {
             String query;
             boolean ricercaDuplicati = false;
+            /*
             if( jRadioButtonDuplicati.isSelected() ){
                 query = "select * from\n" +
                         "plc.utenti u1\n" +
@@ -649,7 +647,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
                         "and u1.attivo = 'S'\n" +
                         "order by u1.nome, u1.cognome ";
                 ricercaDuplicati = true;
-            }else
+            }else */
                 query = "SELECT * FROM plc.utenti a where 1=1 and a.attivo='S' ";
             
             ResultSet rSet = null;
@@ -678,16 +676,16 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
                         filter += "\n AND upper(a.codice_fiscale) LIKE '%" + jTextFieldCodiceFiscale.getText().toUpperCase().replace("'", "''") + "%' ";
                     }
 
-                    if (jTextFieldCodiceBracciale.getText().trim().length() > 0) {
-                        filter += "\n AND a.id_transponder =" + jTextFieldCodiceBracciale.getText().toUpperCase().replace("'", "''") + " ";
+                    if (jTextFieldRagioneSociale.getText().trim().length() > 0) {
+                        filter += "\n AND a.id_transponder =" + jTextFieldRagioneSociale.getText().toUpperCase().replace("'", "''") + " ";
                     }
 
                     if (jTextFieldID.getText().trim().length() > 0) {
                         filter += "\n AND a.id =" + jTextFieldID.getText().toUpperCase().replace("'", "''") + " ";
                     }
 
-                    if (jTextFieldCabina.getText().trim().length() > 0) {
-                        filter += "\n AND upper(a.cabina) LIKE '%" + jTextFieldCabina.getText().trim().toUpperCase().replace("'", "''") + "%' ";
+                    if (jTextFieldPartitaIVA.getText().trim().length() > 0) {
+                        filter += "\n AND upper(a.cabina) LIKE '%" + jTextFieldPartitaIVA.getText().trim().toUpperCase().replace("'", "''") + "%' ";
                     }                
 
                     if (idDescOrder.isSelected() == true) {
@@ -696,7 +694,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
                         order += "\n ORDER BY a.ID  ASC ";
                     } else if (nomeOrder.isSelected() == true && jTextFieldNome.getText().trim().length() > 0) {
                         order += "\n ORDER BY upper(trim(a.cognome)), upper(trim(a.nome)) ";
-                    } else if( idBraccialeDescOrder.isSelected()){
+                    } else if( idRagioneSociale.isSelected()){
                         order += "\n and id_transponder is not null ORDER BY a.id_transponder DESC ";
                     }else if( idBraccialeAscOrder.isSelected()){
                         order += "\n and id_transponder is not null ORDER BY a.id_transponder ASC ";

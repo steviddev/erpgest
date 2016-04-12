@@ -20,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        jPanelAnagrafica1.setParentFrame(this);
     }
 
     /**
@@ -32,14 +33,17 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanelAnagrafica1 = new erpgest.panels.JPanelAnagrafica();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jTabbedPane2.addTab("Anagrafica", jPanelAnagrafica1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1018, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,6 +103,7 @@ public class MainFrame extends javax.swing.JFrame {
     }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private erpgest.panels.JPanelAnagrafica jPanelAnagrafica1;
     private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 }

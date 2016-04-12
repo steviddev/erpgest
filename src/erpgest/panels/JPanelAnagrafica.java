@@ -59,20 +59,28 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jLabel54 = new javax.swing.JLabel();
         jTextFieldCAP = new javax.swing.JTextField();
         jLabel55 = new javax.swing.JLabel();
-        jTextFieldCitta2 = new javax.swing.JTextField();
+        jTextFieldCittaAzienda = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
         jTextFieldRagioneSociale = new javax.swing.JTextField();
         jTextFieldFax = new javax.swing.JTextField();
         jLabel56 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jTextFieldPartitaIVA = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldCognome = new javax.swing.JTextField();
         jLabel53 = new javax.swing.JLabel();
-        jTextFieldCitta = new javax.swing.JTextField();
+        jTextFieldCittaRL = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jTextFieldCF = new javax.swing.JTextField();
+        jLabel58 = new javax.swing.JLabel();
+        jLabel57 = new javax.swing.JLabel();
+        jTextFieldTelefonoRL = new javax.swing.JTextField();
+        jTextFieldCAPRL = new javax.swing.JTextField();
+        jLabel59 = new javax.swing.JLabel();
+        jTextFieldIndirizzoRL = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Clienti"));
         setLayout(null);
@@ -86,7 +94,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(buttonRegistra);
-        buttonRegistra.setBounds(290, 40, 120, 30);
+        buttonRegistra.setBounds(370, 40, 120, 30);
 
         buttonRicerca2.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         buttonRicerca2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/drawer.png"))); // NOI18N
@@ -97,7 +105,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(buttonRicerca2);
-        buttonRicerca2.setBounds(180, 40, 100, 30);
+        buttonRicerca2.setBounds(260, 40, 100, 30);
 
         buttonRipulisci.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         buttonRipulisci.setText("Azzera Campi");
@@ -108,9 +116,10 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(buttonRipulisci);
-        buttonRipulisci.setBounds(420, 40, 150, 30);
+        buttonRipulisci.setBounds(500, 40, 150, 30);
 
         jButtonAggiorna.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonAggiorna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/arrow_refresh.png"))); // NOI18N
         jButtonAggiorna.setText("Aggiorna");
         jButtonAggiorna.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -118,9 +127,10 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(jButtonAggiorna);
-        jButtonAggiorna.setBounds(590, 40, 110, 30);
+        jButtonAggiorna.setBounds(670, 40, 110, 30);
 
         buttonNuovoCliente.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        buttonNuovoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/user.png"))); // NOI18N
         buttonNuovoCliente.setText("Nuovo Cliente");
         buttonNuovoCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +138,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(buttonNuovoCliente);
-        buttonNuovoCliente.setBounds(780, 40, 150, 30);
+        buttonNuovoCliente.setBounds(860, 40, 150, 30);
 
         ID.setEditable(false);
         ID.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -136,6 +146,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         add(ID);
         ID.setBounds(30, 40, 90, 35);
 
+        buttonElimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cancel.png"))); // NOI18N
+        buttonElimina.setText("Elimina");
         buttonElimina.setToolTipText("Cancella il cliente indicato");
         buttonElimina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -143,7 +155,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(buttonElimina);
-        buttonElimina.setBounds(130, 40, 40, 30);
+        buttonElimina.setBounds(130, 40, 110, 30);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dati Azienda"));
         jPanel1.setLayout(null);
@@ -183,10 +195,10 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jPanel1.add(jLabel55);
         jLabel55.setBounds(290, 110, 260, 20);
 
-        jTextFieldCitta2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldCitta2.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel1.add(jTextFieldCitta2);
-        jTextFieldCitta2.setBounds(290, 130, 260, 30);
+        jTextFieldCittaAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldCittaAzienda.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldCittaAzienda);
+        jTextFieldCittaAzienda.setBounds(290, 130, 260, 30);
 
         jLabel51.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel51.setText("Ragione Sociale");
@@ -207,6 +219,16 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jLabel56.setText("FAX");
         jPanel1.add(jLabel56);
         jLabel56.setBounds(820, 110, 130, 20);
+
+        jLabel21.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel21.setText("Partita IVA");
+        jPanel1.add(jLabel21);
+        jLabel21.setBounds(290, 20, 220, 20);
+
+        jTextFieldPartitaIVA.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldPartitaIVA.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldPartitaIVA);
+        jTextFieldPartitaIVA.setBounds(290, 40, 340, 30);
 
         add(jPanel1);
         jPanel1.setBounds(30, 100, 1040, 180);
@@ -237,22 +259,52 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jLabel53.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel53.setText("Città");
         jPanel2.add(jLabel53);
-        jLabel53.setBounds(20, 100, 260, 20);
+        jLabel53.setBounds(290, 110, 260, 20);
 
-        jTextFieldCitta.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldCitta.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel2.add(jTextFieldCitta);
-        jTextFieldCitta.setBounds(20, 120, 260, 30);
+        jTextFieldCittaRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldCittaRL.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel2.add(jTextFieldCittaRL);
+        jTextFieldCittaRL.setBounds(290, 130, 260, 30);
 
         jLabel20.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel20.setText("Codice Fiscale");
         jPanel2.add(jLabel20);
-        jLabel20.setBounds(290, 100, 220, 20);
+        jLabel20.setBounds(820, 110, 200, 20);
 
         jTextFieldCF.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCF.setForeground(new java.awt.Color(0, 0, 204));
         jPanel2.add(jTextFieldCF);
-        jTextFieldCF.setBounds(290, 120, 340, 30);
+        jTextFieldCF.setBounds(820, 130, 200, 30);
+
+        jLabel58.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel58.setText("Telefono");
+        jPanel2.add(jLabel58);
+        jLabel58.setBounds(680, 110, 130, 20);
+
+        jLabel57.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel57.setText("CAP");
+        jPanel2.add(jLabel57);
+        jLabel57.setBounds(560, 110, 110, 20);
+
+        jTextFieldTelefonoRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldTelefonoRL.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel2.add(jTextFieldTelefonoRL);
+        jTextFieldTelefonoRL.setBounds(680, 130, 130, 30);
+
+        jTextFieldCAPRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldCAPRL.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel2.add(jTextFieldCAPRL);
+        jTextFieldCAPRL.setBounds(560, 130, 110, 30);
+
+        jLabel59.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel59.setText("Indirizzo");
+        jPanel2.add(jLabel59);
+        jLabel59.setBounds(20, 110, 260, 20);
+
+        jTextFieldIndirizzoRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldIndirizzoRL.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel2.add(jTextFieldIndirizzoRL);
+        jTextFieldIndirizzoRL.setBounds(20, 130, 260, 30);
 
         add(jPanel2);
         jPanel2.setBounds(30, 300, 1040, 170);
@@ -301,7 +353,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonRegistraActionPerformed
 
     private void buttonRicerca2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRicerca2ActionPerformed
-        lidomatic.panels.JPanelRicercaClienti dialog = new lidomatic.panels.JPanelRicercaClienti(this);
+        JPanelRicercaClienti dialog = new JPanelRicercaClienti(this.parentFrame);
     }//GEN-LAST:event_buttonRicerca2ActionPerformed
 
     private void buttonRipulisciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRipulisciActionPerformed
@@ -340,9 +392,6 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             //JOptionPane.showMessageDialog(null, "Goodbye");
             return;
         }
-
-        //JOptionPane.showMessageDialog(this, lidomatic.utils.UtilsHttp.UtilsHttp("", "http://192.168.1.111/VarStateRedirect.mwsl?PriNav=Varstate&v1=M0.2&t1=BOOL&modifyvalue_t1=true&gobutton_t1=Go&v2=New+variable&t2=BIN"), "Attenzione", JOptionPane.ERROR_MESSAGE);
-        //System.out.println( lidomatic.utils.UtilsHttp.UtilsHttp("<?xml ?>", "http://localhost") );
     }//GEN-LAST:event_buttonEliminaMouseReleased
 
 
@@ -360,6 +409,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     public javax.swing.JButton buttonRipulisci;
     private javax.swing.JButton jButtonAggiorna;
     public javax.swing.JLabel jLabel20;
+    public javax.swing.JLabel jLabel21;
     public javax.swing.JLabel jLabel49;
     public javax.swing.JLabel jLabel5;
     public javax.swing.JLabel jLabel50;
@@ -369,19 +419,34 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     public javax.swing.JLabel jLabel54;
     public javax.swing.JLabel jLabel55;
     public javax.swing.JLabel jLabel56;
+    public javax.swing.JLabel jLabel57;
+    public javax.swing.JLabel jLabel58;
+    public javax.swing.JLabel jLabel59;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     public javax.swing.JTextField jTextFieldCAP;
+    public javax.swing.JTextField jTextFieldCAPRL;
     public javax.swing.JTextField jTextFieldCF;
-    public javax.swing.JTextField jTextFieldCitta;
-    public javax.swing.JTextField jTextFieldCitta2;
+    public javax.swing.JTextField jTextFieldCittaAzienda;
+    public javax.swing.JTextField jTextFieldCittaRL;
     public javax.swing.JTextField jTextFieldCognome;
     public javax.swing.JTextField jTextFieldFax;
     public javax.swing.JTextField jTextFieldIndirizzo;
+    public javax.swing.JTextField jTextFieldIndirizzoRL;
     public javax.swing.JTextField jTextFieldNome;
+    public javax.swing.JTextField jTextFieldPartitaIVA;
     public javax.swing.JTextField jTextFieldRagioneSociale;
     public javax.swing.JTextField jTextFieldTelefono;
+    public javax.swing.JTextField jTextFieldTelefonoRL;
     // End of variables declaration//GEN-END:variables
+
+    private void azzeraCampi() {
+        
+    }
+
+    private void disabilitaUtente(String text) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
 
 class SalvaDatiNelDB implements Runnable {

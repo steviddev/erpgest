@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane2" alignment="0" pref="1018" max="32767" attributes="0"/>
+          <Component id="jTabbedPane2" alignment="0" pref="1144" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -36,6 +36,17 @@
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane2">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="erpgest.panels.JPanelAnagrafica" name="jPanelAnagrafica1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Anagrafica">
+                <Property name="tabTitle" type="java.lang.String" value="Anagrafica"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+        </Component>
+      </SubComponents>
     </Container>
   </SubComponents>
 </Form>
