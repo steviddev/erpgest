@@ -21,7 +21,13 @@ public class ERPGest {
         // TODO code application logic here
         //erpgest.db.DbConn conn = new DbConn();
         //conn.makeConn();
-        CreateDB db = new CreateDB();
+        //CreateDB db = new CreateDB();
+        MainFrame erp = new MainFrame();
+        erp.setVisible(true);
     }
+    private void setupAndInitialize(){
+        
+        
     
+    }
 }
