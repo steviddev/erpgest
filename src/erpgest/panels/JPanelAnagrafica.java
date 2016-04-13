@@ -6,6 +6,10 @@
 package erpgest.panels;
 
 import erpgest.MainFrame;
+import erpgest.db.DbConn;
+import erpgest.utils.ValidatoreCodiceFiscale;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,6 +37,40 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
      */
     public JPanelAnagrafica() {
         initComponents();
+        
+    jTextFieldPartitaIVA.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    char vChar = e.getKeyChar();
+                    if (!(Character.isDigit(vChar)
+                            || (vChar == KeyEvent.VK_BACK_SPACE)
+                            || (vChar == KeyEvent.VK_DELETE))) {
+                        e.consume();
+                    }
+                }
+            });         
+
+        jTextFieldCAPAzienda.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    char vChar = e.getKeyChar();
+                    if (!(Character.isDigit(vChar)
+                            || (vChar == KeyEvent.VK_BACK_SPACE)
+                            || (vChar == KeyEvent.VK_DELETE))) {
+                        e.consume();
+                    }
+                }
+            });  
+
+        jTextFieldCAPRL.addKeyListener(new KeyAdapter() {
+                public void keyTyped(KeyEvent e) {
+                    char vChar = e.getKeyChar();
+                    if (!(Character.isDigit(vChar)
+                            || (vChar == KeyEvent.VK_BACK_SPACE)
+                            || (vChar == KeyEvent.VK_DELETE))) {
+                        e.consume();
+                    }
+                }
+            });         
+        
     }
 
     /**
@@ -49,28 +87,28 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         buttonRipulisci = new javax.swing.JButton();
         jButtonAggiorna = new javax.swing.JButton();
         buttonNuovoCliente = new javax.swing.JButton();
-        ID = new javax.swing.JTextField();
+        jTextFieldID = new javax.swing.JTextField();
         buttonElimina = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel50 = new javax.swing.JLabel();
         jTextFieldIndirizzo = new javax.swing.JTextField();
         jLabel52 = new javax.swing.JLabel();
-        jTextFieldTelefono = new javax.swing.JTextField();
+        jTextFieldTelefonoAzienda = new javax.swing.JTextField();
         jLabel54 = new javax.swing.JLabel();
-        jTextFieldCAP = new javax.swing.JTextField();
+        jTextFieldCAPAzienda = new javax.swing.JTextField();
         jLabel55 = new javax.swing.JLabel();
         jTextFieldCittaAzienda = new javax.swing.JTextField();
         jLabel51 = new javax.swing.JLabel();
         jTextFieldRagioneSociale = new javax.swing.JTextField();
-        jTextFieldFax = new javax.swing.JTextField();
+        jTextFieldFaxAzienda = new javax.swing.JTextField();
         jLabel56 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jTextFieldPartitaIVA = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
-        jTextFieldNome = new javax.swing.JTextField();
+        jTextFieldNomeRL = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldCognome = new javax.swing.JTextField();
+        jTextFieldCognomeRL = new javax.swing.JTextField();
         jLabel53 = new javax.swing.JLabel();
         jTextFieldCittaRL = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
@@ -108,6 +146,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         buttonRicerca2.setBounds(260, 40, 110, 30);
 
         buttonRipulisci.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        buttonRipulisci.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/sport_shuttlecock.png"))); // NOI18N
         buttonRipulisci.setText("Azzera Campi");
         buttonRipulisci.setToolTipText("Azzera tutti i dati");
         buttonRipulisci.addActionListener(new java.awt.event.ActionListener() {
@@ -140,11 +179,11 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         add(buttonNuovoCliente);
         buttonNuovoCliente.setBounds(860, 40, 150, 30);
 
-        ID.setEditable(false);
-        ID.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        ID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        add(ID);
-        ID.setBounds(30, 40, 90, 35);
+        jTextFieldID.setEditable(false);
+        jTextFieldID.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        add(jTextFieldID);
+        jTextFieldID.setBounds(30, 40, 90, 35);
 
         buttonElimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cancel.png"))); // NOI18N
         buttonElimina.setText("Elimina");
@@ -175,20 +214,20 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jPanel1.add(jLabel52);
         jLabel52.setBounds(680, 110, 130, 20);
 
-        jTextFieldTelefono.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldTelefono.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel1.add(jTextFieldTelefono);
-        jTextFieldTelefono.setBounds(680, 130, 130, 30);
+        jTextFieldTelefonoAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldTelefonoAzienda.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldTelefonoAzienda);
+        jTextFieldTelefonoAzienda.setBounds(680, 130, 130, 30);
 
         jLabel54.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel54.setText("CAP");
         jPanel1.add(jLabel54);
         jLabel54.setBounds(560, 110, 110, 20);
 
-        jTextFieldCAP.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldCAP.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel1.add(jTextFieldCAP);
-        jTextFieldCAP.setBounds(560, 130, 110, 30);
+        jTextFieldCAPAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldCAPAzienda.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldCAPAzienda);
+        jTextFieldCAPAzienda.setBounds(560, 130, 110, 30);
 
         jLabel55.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel55.setText("Città");
@@ -210,10 +249,10 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jPanel1.add(jTextFieldRagioneSociale);
         jTextFieldRagioneSociale.setBounds(20, 40, 260, 30);
 
-        jTextFieldFax.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldFax.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel1.add(jTextFieldFax);
-        jTextFieldFax.setBounds(820, 130, 130, 30);
+        jTextFieldFaxAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldFaxAzienda.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldFaxAzienda);
+        jTextFieldFaxAzienda.setBounds(820, 130, 130, 30);
 
         jLabel56.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel56.setText("FAX");
@@ -241,20 +280,20 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jPanel2.add(jLabel49);
         jLabel49.setBounds(20, 20, 90, 20);
 
-        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldNome.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel2.add(jTextFieldNome);
-        jTextFieldNome.setBounds(20, 40, 260, 30);
+        jTextFieldNomeRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldNomeRL.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel2.add(jTextFieldNomeRL);
+        jTextFieldNomeRL.setBounds(20, 40, 260, 30);
 
         jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel5.setText("Cognome");
         jPanel2.add(jLabel5);
         jLabel5.setBounds(290, 20, 100, 20);
 
-        jTextFieldCognome.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldCognome.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel2.add(jTextFieldCognome);
-        jTextFieldCognome.setBounds(290, 40, 280, 30);
+        jTextFieldCognomeRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldCognomeRL.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel2.add(jTextFieldCognomeRL);
+        jTextFieldCognomeRL.setBounds(290, 40, 280, 30);
 
         jLabel53.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel53.setText("Città");
@@ -312,12 +351,67 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
 
     private void buttonRegistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistraActionPerformed
 
+        String CAPAzienda     = jTextFieldCAPAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+        String CAPRL          = jTextFieldCAPRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String codiceFiscale  = jTextFieldCF.getText().trim().toUpperCase().replaceAll("'", "''");
+        String cittaAzienda   = jTextFieldCittaAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+        String CittaRL        = jTextFieldCittaRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String CognomeRL      = jTextFieldCognomeRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String faxAzienda     = jTextFieldFaxAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+        String indirizzo      = jTextFieldIndirizzo.getText().trim().toUpperCase().replaceAll("'", "''");
+        String indirizzoRL    = jTextFieldIndirizzoRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String nomeRL         = jTextFieldNomeRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String partitaIVA     = jTextFieldPartitaIVA.getText().trim().toUpperCase().replaceAll("'", "''");
+        String ragioneSociale = jTextFieldRagioneSociale.getText().trim().toUpperCase().replaceAll("'", "''");
+        String telefonoAzienda= jTextFieldTelefonoAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+        String telefonoRL     = jTextFieldTelefonoRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String id             = jTextFieldID.getText().trim().toUpperCase().replaceAll("'", "''");
+        
+        //controllo esistenza e validazione
+        if( ragioneSociale.equals("") ||
+            indirizzo.equals("") ||
+            CAPAzienda.equals("") ||
+            cittaAzienda.equals("")
+                ){
+                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore Ragione Sociale , indirizzo ,citta e cap dell'azienda, sono obbligatori.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+
+        if( ( partitaIVA.equals("") && codiceFiscale.equals("") ) ){
+                JOptionPane.showMessageDialog(parentFrame.getFrame(), "E' obbligatorio inserire la Partita IVA o il Codice Fiscale", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                return;            
+        }
+        
+        if( partitaIVA.equals("00000000000")){
+            JOptionPane.showMessageDialog(parentFrame, "Partita iva generica non consentita.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        if( !partitaIVA.equals("") ){
+            String resultPartitaIva = erpgest.utils.Utils.ControllaPIVA(partitaIVA);
+            if (!resultPartitaIva.equals("")) {
+                JOptionPane.showMessageDialog(parentFrame, resultPartitaIva, "Attenzione", JOptionPane.ERROR_MESSAGE);
+                closeDialog();
+                return;
+            }        
+        }
+        
+        if( !codiceFiscale.equals("") ){
+            if (!erpgest.utils.Utils.validaCF(codiceFiscale)) {
+                JOptionPane.showMessageDialog(parentFrame, "CodiceFiscale non Valido", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                //closeDialog();
+                return;
+            }          
+        }      
+       
+        
+        /*
         Calendar cal = Calendar.getInstance();
         String query;
         String strDate = formatterDataAndTimeENG.format(cal.getTime());
-        String nomeStr = (jTextFieldNome.getText()).toUpperCase().replaceAll("'", "''");
-        String cognomeStr = (jTextFieldCognome.getText()).toUpperCase().replaceAll("'", "''");
-        String codiceFiscaleStr = (jTextFieldCF.getText()).toUpperCase().replaceAll("'", "''");
+        String nomeStr = (jTextFieldNomeRL.getText()).trim().toUpperCase().replaceAll("'", "''");
+        String cognomeStr = (jTextFieldCognomeRL.getText()).trim().toUpperCase().replaceAll("'", "''");
+        String codiceFiscaleStr = (jTextFieldCF.getText()).trim().toUpperCase().replaceAll("'", "''");
 
 
         String returnStr = "";
@@ -335,9 +429,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore Nome,Cognome sono obbligatori", "Attenzione", JOptionPane.ERROR_MESSAGE);
             parentFrame.closeDialog();
             return;
-        }
-
-        //lancio il thread per la lettura e l'apertura della porta
+        }*/
+        
         Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame.getFrame(), null, "Salvataggio in corso. Attendere"));
         t.start();
 
@@ -361,7 +454,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonRipulisciActionPerformed
 
     private void jButtonAggiornaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAggiornaMouseReleased
-        String id = ID.getText();
+        String id = jTextFieldID.getText();
         int _id = 0;
         if (!id.equals("") && !id.equals("-")) {
             _id = Integer.parseInt(id);
@@ -374,20 +467,33 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         azzeraCampi();
     }//GEN-LAST:event_buttonNuovoClienteActionPerformed
 
+    
+    private void closeDialog() {
+        if (parentFrame.waiting != null) {
+            parentFrame.waiting.dispose();
+            parentFrame.waiting = null;
+            parentFrame.validate();
+            parentFrame.repaint();
+        }
+
+    }    
+    
     private void buttonEliminaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonEliminaMouseReleased
-        if (ID.getText().equals("") || ID.getText().equals("-")) {
+        if (jTextFieldID.getText().equals("") || jTextFieldID.getText().equals("-")) {
             JOptionPane.showMessageDialog(this, "Cliente Selezionato Non disponibile o mancante.", "Attenzione", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        
+        controllaPresenzaCliente(jTextFieldID.getText());
+        
         int n = JOptionPane.showConfirmDialog(null,
-            "ATTENZIONE!! Si vuole cancellare il cliente "+ jTextFieldNome.getText()+","+jTextFieldCognome.getText() +"?",
+            "ATTENZIONE!! Si vuole cancellare il cliente "+ jTextFieldNomeRL.getText()+","+jTextFieldCognomeRL.getText() +"?",
             "",
             JOptionPane.YES_NO_OPTION);
 
         if (n == JOptionPane.YES_OPTION) {
             //JOptionPane.showMessageDialog(null, "Opening...");
-            disabilitaUtente(ID.getText());
+            disabilitaUtente(jTextFieldID.getText());
         } else {
             //JOptionPane.showMessageDialog(null, "Goodbye");
             return;
@@ -397,11 +503,41 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
 
     public void aggiornaFinestraInserimentoCliente(int id){
         
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
+            String query = "SELECT * FROM ANAGRAFICA "
+                    + " WHERE ID='"+id+"'";
+            
+            ResultSet res = conn.selectSMS(query);
+            
+            if( res.next() ){
+                jTextFieldCAPAzienda.setText( res.getString("CAP_AZIENDA") );
+                jTextFieldCAPRL.setText( res.getString("CAP_RL") );
+                jTextFieldCF.setText(res.getString("CODICE_FISCALE"));
+                jTextFieldCittaAzienda.setText( res.getString("CITTA_AZIENDA") );
+                jTextFieldCittaRL.setText( res.getString("CITTA_RL") );
+                jTextFieldCognomeRL.setText( res.getString("COGNOME_RL") );
+                jTextFieldFaxAzienda.setText( res.getString("FAX_AZIENDA") );
+                jTextFieldIndirizzo.setText( res.getString("INDIRIZZO_AZIENDA") );
+                jTextFieldIndirizzoRL.setText( res.getString("INDIRIZZO_RL") );
+                jTextFieldNomeRL.setText( res.getString("NOME_RL") );
+                jTextFieldPartitaIVA.setText( res.getString("PARTITA_IVA") );
+                jTextFieldRagioneSociale.setText( res.getString("RAGIONE_SOCIALE") );
+                jTextFieldTelefonoAzienda.setText( res.getString("TELEFONO_AZIENDA") );
+                jTextFieldTelefonoRL.setText( res.getString("TELEFONO_RL") );
+                jTextFieldID.setText( res.getString("ID") );            
+            
+            }
+        } catch (Exception e) {
+        }
+        
+        conn.close();
         
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField ID;
     public javax.swing.JButton buttonElimina;
     public javax.swing.JButton buttonNuovoCliente;
     public javax.swing.JButton buttonRegistra;
@@ -424,29 +560,84 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     public javax.swing.JLabel jLabel59;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    public javax.swing.JTextField jTextFieldCAP;
+    public javax.swing.JTextField jTextFieldCAPAzienda;
     public javax.swing.JTextField jTextFieldCAPRL;
     public javax.swing.JTextField jTextFieldCF;
     public javax.swing.JTextField jTextFieldCittaAzienda;
     public javax.swing.JTextField jTextFieldCittaRL;
-    public javax.swing.JTextField jTextFieldCognome;
-    public javax.swing.JTextField jTextFieldFax;
+    public javax.swing.JTextField jTextFieldCognomeRL;
+    public javax.swing.JTextField jTextFieldFaxAzienda;
+    public javax.swing.JTextField jTextFieldID;
     public javax.swing.JTextField jTextFieldIndirizzo;
     public javax.swing.JTextField jTextFieldIndirizzoRL;
-    public javax.swing.JTextField jTextFieldNome;
+    public javax.swing.JTextField jTextFieldNomeRL;
     public javax.swing.JTextField jTextFieldPartitaIVA;
     public javax.swing.JTextField jTextFieldRagioneSociale;
-    public javax.swing.JTextField jTextFieldTelefono;
+    public javax.swing.JTextField jTextFieldTelefonoAzienda;
     public javax.swing.JTextField jTextFieldTelefonoRL;
     // End of variables declaration//GEN-END:variables
 
     private void azzeraCampi() {
-        
+        jTextFieldCAPAzienda.setText("");
+        jTextFieldCAPRL.setText("");
+        jTextFieldCF.setText("");
+        jTextFieldCittaAzienda.setText("");
+        jTextFieldCittaRL.setText("");
+        jTextFieldCognomeRL.setText("");
+        jTextFieldFaxAzienda.setText("");
+        jTextFieldIndirizzo.setText("");
+        jTextFieldIndirizzoRL.setText("");
+        jTextFieldNomeRL.setText("");
+        jTextFieldPartitaIVA.setText("");
+        jTextFieldRagioneSociale.setText("");
+        jTextFieldTelefonoAzienda.setText("");
+        jTextFieldTelefonoRL.setText("");
+        jTextFieldID.setText("");
     }
 
-    private void disabilitaUtente(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void disabilitaUtente(String id) {
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
+            String query = "UPDATE ANAGRAFICA SET ATTIVO = 'N' , DATA_MODIFICA =  datetime('now', 'localtime') WHERE ID = '"+id+"'";
+            
+            String result = conn.delete(query);
+            if( result.equals("Rimozione effettuata.") ){
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Cliente", "OK", JOptionPane.INFORMATION_MESSAGE);                    
+                    azzeraCampi();                    
+                    
+            }else{
+                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Non è stato possibile cancellare l'elemento", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+        }
+        conn.close();        
     }
+    private boolean controllaPresenzaCliente(String id){
+        boolean risultato = false;
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        try {
+            
+            String query = "SELECT COUNT(*) FROM ANAGRAFICA WHERE ID='"+id+"'";
+            ResultSet res = conn.selectSMS(query);
+            int count = res.getInt(1);
+            if( count > 0 ){
+                risultato = true;
+            }else
+                risultato = false;
+            
+        } catch (Exception e) {
+        }
+        
+        conn.close();
+        return risultato;
+    }    
+    
+    
+    
 }
 
 class SalvaDatiNelDB implements Runnable {

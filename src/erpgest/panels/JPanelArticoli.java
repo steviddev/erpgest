@@ -357,7 +357,10 @@ public class JPanelArticoli extends javax.swing.JPanel{
                     JOptionPane.YES_NO_OPTION);
 
             if (n == JOptionPane.YES_OPTION) {
-                disabilitaArticolo(id);
+                if( !controllaPresenzaArticolo(id) ){
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Elemento non presente.Impossibile Eliminare Elemento.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                }else
+                    disabilitaArticolo(id);
             } else {            
                 return;
             }               
@@ -373,13 +376,29 @@ public class JPanelArticoli extends javax.swing.JPanel{
             );
             return;            
         }
-    
-        
-       
-        
-
     }//GEN-LAST:event_jButtonEliminaArticoloActionPerformed
 
+    private boolean controllaPresenzaArticolo(String id){
+        boolean risultato = false;
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        try {
+            
+            String query = "SELECT COUNT(*) FROM ARTICOLI WHERE ID='"+id+"'";
+            ResultSet res = conn.selectSMS(query);
+            int count = res.getInt(1);
+            if( count > 0 ){
+                risultato = true;
+            }else
+                risultato = false;
+            
+        } catch (Exception e) {
+        }
+        
+        conn.close();
+        return risultato;
+    }
+    
     private void jButtonCercaArticoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCercaArticoliActionPerformed
         lastSearchQuery = "";
         lanciaThreadRicerca();
@@ -451,10 +470,10 @@ public class JPanelArticoli extends javax.swing.JPanel{
             String query;
             boolean ricercaDuplicati = false;
 
-            System.out.println("QUERY RICERCA : " + lastSearchQuery);
-            
-            System.out.println("**************************");
-            System.out.println("\n");
+//            System.out.println("QUERY RICERCA : " + lastSearchQuery);
+//            
+//            System.out.println("**************************");
+//            System.out.println("\n");
             
             ResultSet rSet = null;
 
