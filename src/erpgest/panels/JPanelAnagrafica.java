@@ -98,14 +98,14 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
 
         buttonRicerca2.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         buttonRicerca2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/drawer.png"))); // NOI18N
-        buttonRicerca2.setText("ricerca");
+        buttonRicerca2.setText(" Ricerca");
         buttonRicerca2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonRicerca2ActionPerformed(evt);
             }
         });
         add(buttonRicerca2);
-        buttonRicerca2.setBounds(260, 40, 100, 30);
+        buttonRicerca2.setBounds(260, 40, 110, 30);
 
         buttonRipulisci.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         buttonRipulisci.setText("Azzera Campi");
@@ -116,7 +116,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }
         });
         add(buttonRipulisci);
-        buttonRipulisci.setBounds(500, 40, 150, 30);
+        buttonRipulisci.setBounds(490, 40, 150, 30);
 
         jButtonAggiorna.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonAggiorna.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/arrow_refresh.png"))); // NOI18N

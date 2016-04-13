@@ -149,7 +149,7 @@ public class Waiting extends javax.swing.JDialog {
         loadingLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         loadingLabel.setForeground(new java.awt.Color(255, 0, 51));
         loadingLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        loadingLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/biousaegettacrm/img/load.gif"))); // NOI18N
+        loadingLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/load.gif"))); // NOI18N
         loadingLabel.setText("Operazione in corso, attendere...");
         jPanel1.add(loadingLabel);
         loadingLabel.setBounds(0, 40, 388, 20);

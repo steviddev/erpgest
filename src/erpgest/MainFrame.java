@@ -21,6 +21,8 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         jPanelAnagrafica1.setParentFrame(this);
+        jPanelArticoli1.setParentFrame(this);
+        
     }
 
     /**

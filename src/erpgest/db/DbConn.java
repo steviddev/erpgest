@@ -106,7 +106,7 @@ public class DbConn {
             statement = connection.createStatement();
 
             statement.executeUpdate(query);
-            connection.commit();
+            //connection.commit();
 //            System.out.println("fatta la commit");
         } catch (Exception e) {
             erpgest.db.Utils.ResultSetClose(null, statement);
