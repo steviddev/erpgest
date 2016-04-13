@@ -266,6 +266,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
                 + " NOME = '"+ nome +"' "
                 + " AND DESCRIZIONE = '"+descrizione+"'"
                 + " AND UNITA_DI_MISURA = '"+um+"'"
+                + " AND NOTE = '"+note+"'" 
                 + " AND ATTIVO = 'S'";
         
         DbConn conn = new DbConn();
@@ -278,7 +279,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
             try {
                 if( res.next() ){
                     String id2 = res.getString("ID");
-                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Elemento gia presente con ID="+id2, "Attenzione", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Non è stata fatta alcuna modifica.", "Attenzione", JOptionPane.ERROR_MESSAGE);
                     conn.close();
                     return;        
                 };
@@ -300,7 +301,8 @@ public class JPanelArticoli extends javax.swing.JPanel{
                         + " SET NOME='"+nome+"', "
                         + " DESCRIZIONE ='"+descrizione+"',"
                         + " UNITA_DI_MISURA = '"+um+"',"
-                        + " NOTE='"+note+"' "
+                        + " NOTE='"+note+"', "
+                        + " DATA_MODIFICA =  datetime('now', 'localtime') "
                         + " WHERE ID = '"+id+"'";
                 String result = conn.update(query);
                 if( !result.equals("Aggiornamento effettuato.") ){
@@ -422,7 +424,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
         conn.makeConn();
         
         try {
-            String query = "UPDATE ARTICOLI SET ATTIVO = 'N' WHERE ID = '"+id+"'";
+            String query = "UPDATE ARTICOLI SET ATTIVO = 'N' , DATA_MODIFICA =  datetime('now', 'localtime') WHERE ID = '"+id+"'";
             
             String result = conn.delete(query);
             if( result.equals("Rimozione effettuata.") ){
