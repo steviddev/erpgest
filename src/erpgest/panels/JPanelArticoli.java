@@ -47,17 +47,21 @@ public class JPanelArticoli extends javax.swing.JPanel{
             public void valueChanged(ListSelectionEvent e) {
                 String id,nome,descrizione,um,note;
              int[] selection = jTableArticoli.getSelectedRows();
-             id = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString() ;
-             nome = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 1).toString() ;
-             descrizione = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 2).toString() ;
-             um = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 3).toString() ;
-             note = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 4).toString() ;
-             
-             jTextFieldID.setText(id);
-             jTextFieldNomeArticolo.setText(nome);
-             jTextFieldDescrizioneArt.setText(descrizione);
-             jTextFieldUnitaMisura.setText(um);
-             jTextFieldNoteArticolo.setText(note);
+                try {
+                    id = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString() ;
+                    nome = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 1).toString() ;
+                    descrizione = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 2).toString() ;
+                    um = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 3).toString() ;
+                    note = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 4).toString() ;
+
+                    jTextFieldID.setText(id);
+                    jTextFieldNomeArticolo.setText(nome);
+                    jTextFieldDescrizioneArt.setText(descrizione);
+                    jTextFieldUnitaMisura.setText(um);
+                    jTextFieldNoteArticolo.setText(note);                    
+                } catch (Exception e1) {
+                }
+
              
             }
     });
@@ -229,7 +233,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
 
     private void jButtonCercaArticoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCercaArticoliActionPerformed
 
-        jTableArticoli.getSelectionModel().clearSelection();
+        
         Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame, null));
         t.start();
         while (parentFrame.waiting == null) {
@@ -413,10 +417,17 @@ public class JPanelArticoli extends javax.swing.JPanel{
                     defaultModel.removeRow(defaultModel.getRowCount()-1);
                     
                 }*/
-                
-                if( defaultModel.getRowCount() > 0 ){
-                    defaultModel.setRowCount(0);                   
+                try {
+                    if( defaultModel.getRowCount() > 0 ){
+                        //defaultModel.setRowCount(0);   
+
+                        defaultModel.getDataVector().removeAllElements();
+                        defaultModel.fireTableDataChanged();                    
+                    }                    
+                } catch (Exception e) {
                 }
+
+
                 
                 rSet = conn.selectSMS(query + filter + order);
                         

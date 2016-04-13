@@ -433,3 +433,47 @@ java.lang.ArrayIndexOutOfBoundsException: -1
 	at java.lang.Thread.run(Thread.java:745)
 /-------------------------FINE---------------------------/
 
+/------------------------INIZIO----------------------------/
+Wed Apr 13 03:31:42 CEST 2016
+
+java.lang.ArrayIndexOutOfBoundsException: -1
+	at java.util.Vector.elementData(Vector.java:734)
+	at java.util.Vector.elementAt(Vector.java:477)
+	at javax.swing.table.DefaultTableModel.getValueAt(DefaultTableModel.java:648)
+	at erpgest.panels.JPanelArticoli$1.valueChanged(JPanelArticoli.java:50)
+	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:184)
+	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:164)
+	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:211)
+	at javax.swing.DefaultListSelectionModel.removeIndexInterval(DefaultListSelectionModel.java:677)
+	at javax.swing.JTable.tableRowsDeleted(JTable.java:4509)
+	at javax.swing.JTable.tableChanged(JTable.java:4412)
+	at javax.swing.table.AbstractTableModel.fireTableChanged(AbstractTableModel.java:296)
+	at javax.swing.table.AbstractTableModel.fireTableRowsDeleted(AbstractTableModel.java:261)
+	at javax.swing.table.DefaultTableModel.setNumRows(DefaultTableModel.java:321)
+	at javax.swing.table.DefaultTableModel.setRowCount(DefaultTableModel.java:339)
+	at erpgest.panels.JPanelArticoli$eseguiRicerca.run(JPanelArticoli.java:418)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Wed Apr 13 03:32:08 CEST 2016
+
+java.lang.ArrayIndexOutOfBoundsException: -1
+	at java.util.Vector.elementData(Vector.java:734)
+	at java.util.Vector.elementAt(Vector.java:477)
+	at javax.swing.table.DefaultTableModel.getValueAt(DefaultTableModel.java:648)
+	at erpgest.panels.JPanelArticoli$1.valueChanged(JPanelArticoli.java:50)
+	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:184)
+	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:164)
+	at javax.swing.DefaultListSelectionModel.fireValueChanged(DefaultListSelectionModel.java:211)
+	at javax.swing.DefaultListSelectionModel.removeIndexInterval(DefaultListSelectionModel.java:677)
+	at javax.swing.JTable.tableRowsDeleted(JTable.java:4509)
+	at javax.swing.JTable.tableChanged(JTable.java:4412)
+	at javax.swing.table.AbstractTableModel.fireTableChanged(AbstractTableModel.java:296)
+	at javax.swing.table.AbstractTableModel.fireTableRowsDeleted(AbstractTableModel.java:261)
+	at javax.swing.table.DefaultTableModel.setNumRows(DefaultTableModel.java:321)
+	at javax.swing.table.DefaultTableModel.setRowCount(DefaultTableModel.java:339)
+	at erpgest.panels.JPanelArticoli$eseguiRicerca.run(JPanelArticoli.java:418)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
