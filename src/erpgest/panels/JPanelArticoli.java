@@ -29,6 +29,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
      */
     
     MainFrame parentFrame = null;
+    String lastSearchQuery = "";
     
     public void setParentFrame(MainFrame parent){
         parentFrame = parent;
@@ -91,6 +92,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
         jTextFieldID = new javax.swing.JTextField();
         jLabel53 = new javax.swing.JLabel();
         jButtonSalvaArticolo = new javax.swing.JButton();
+        jButtonEliminaArticolo = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Gestione Articoli"));
         setLayout(null);
@@ -138,7 +140,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
         }
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 150, 830, 230);
+        jScrollPane1.setBounds(40, 170, 830, 230);
 
         jLabel49.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel49.setText("Nome");
@@ -190,7 +192,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
             }
         });
         add(jButtonAzzera);
-        jButtonAzzera.setBounds(590, 90, 110, 40);
+        jButtonAzzera.setBounds(570, 90, 110, 40);
 
         jLabel52.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel52.setText("Note");
@@ -229,23 +231,18 @@ public class JPanelArticoli extends javax.swing.JPanel{
         });
         add(jButtonSalvaArticolo);
         jButtonSalvaArticolo.setBounds(700, 50, 110, 40);
-    }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCercaArticoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCercaArticoliActionPerformed
-
-        
-        Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame, null));
-        t.start();
-        while (parentFrame.waiting == null) {
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
+        jButtonEliminaArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonEliminaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cross_octagon.png"))); // NOI18N
+        jButtonEliminaArticolo.setText("Elimina Selezionato");
+        jButtonEliminaArticolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminaArticoloActionPerformed(evt);
             }
-        }
-
-        //    Thread tt = new Thread(new esegui(aTest.myJD,aTest.actionStop));
-        Thread tt = new Thread(new JPanelArticoli.eseguiRicerca());
-        tt.start();    }//GEN-LAST:event_jButtonCercaArticoliActionPerformed
+        });
+        add(jButtonEliminaArticolo);
+        jButtonEliminaArticolo.setBounds(40, 420, 220, 40);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNoteArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNoteArticoloActionPerformed
         // TODO add your handling code here:
@@ -328,6 +325,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
                 //inserimento avvenuto correttamente
                 jTextFieldID.setText(res.getString("ID"));
                 JOptionPane.showMessageDialog(parentFrame.getFrame(), "Operazione avvenuta correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                lanciaThreadRicerca();
             }
             
             
@@ -346,10 +344,64 @@ public class JPanelArticoli extends javax.swing.JPanel{
         jTextFieldUnitaMisura.setText("");
     }//GEN-LAST:event_jButtonAzzeraActionPerformed
 
+    private void jButtonEliminaArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaArticoloActionPerformed
+        try {
+            int[] selection = jTableArticoli.getSelectedRows();
+            String id = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString() ;   
+            
+            int n = JOptionPane.showConfirmDialog(null,
+                    "ATTENZIONE!! Si vuole cancellare l'articolo "+ jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 1).toString() +"?",
+                    "",
+                    JOptionPane.YES_NO_OPTION);
 
+            if (n == JOptionPane.YES_OPTION) {
+                disabilitaArticolo(id);
+            } else {            
+                return;
+            }               
+            
+            
+        } catch (Exception e) {
+            
+            new javax.swing.JOptionPane().showMessageDialog(
+                    this,
+                    "Nessun Articolo Selezionato",
+                    "Attenzione",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;            
+        }
+    
+        
+       
+        
+
+    }//GEN-LAST:event_jButtonEliminaArticoloActionPerformed
+
+    private void jButtonCercaArticoliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCercaArticoliActionPerformed
+        lastSearchQuery = "";
+        lanciaThreadRicerca();
+    }//GEN-LAST:event_jButtonCercaArticoliActionPerformed
+
+    private void lanciaThreadRicerca(){
+        Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame, null));
+        t.start();
+        while (parentFrame.waiting == null) {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+        }
+
+        Thread tt = new Thread(new JPanelArticoli.eseguiRicerca());
+        tt.start();    
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAzzera;
     private javax.swing.JButton jButtonCercaArticoli;
+    private javax.swing.JButton jButtonEliminaArticolo;
     private javax.swing.JButton jButtonSalvaArticolo;
     public javax.swing.JLabel jLabel49;
     public javax.swing.JLabel jLabel50;
@@ -364,6 +416,30 @@ public class JPanelArticoli extends javax.swing.JPanel{
     public javax.swing.JTextField jTextFieldNoteArticolo;
     public javax.swing.JTextField jTextFieldUnitaMisura;
     // End of variables declaration//GEN-END:variables
+
+    private void disabilitaArticolo(String id) {
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
+            String query = "UPDATE ARTICOLI SET ATTIVO = 'N' WHERE ID = '"+id+"'";
+            
+            String result = conn.delete(query);
+            if( result.equals("Rimozione effettuata.") ){
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Articolo cancellato correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                    if( id.equals(jTextFieldID.getText()) ){
+                        jButtonAzzeraActionPerformed(null);
+                    }
+                    lanciaThreadRicerca();
+                    
+            }else{
+                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Non è stato possibile cancellare l'elemento", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            }
+            
+        } catch (Exception e) {
+        }
+        conn.close();
+    }
     
     
     class eseguiRicerca implements Runnable {
@@ -373,7 +449,10 @@ public class JPanelArticoli extends javax.swing.JPanel{
             String query;
             boolean ricercaDuplicati = false;
 
-            query = "SELECT * FROM ARTICOLI a where 1=1 and a.attivo='S' ";
+            System.out.println("QUERY RICERCA : " + lastSearchQuery);
+            
+            System.out.println("**************************");
+            System.out.println("\n");
             
             ResultSet rSet = null;
 
@@ -385,29 +464,36 @@ public class JPanelArticoli extends javax.swing.JPanel{
             conn.makeConn();
 
             try {
-                if(!ricercaDuplicati){
-                    if (jTextFieldNomeArticolo.getText().trim().length() > 0) {
-                            filter += "\n AND upper(a.nome) LIKE '%" + jTextFieldNomeArticolo.getText().toUpperCase().replace("'", "''") + "%' ";
-                    }
-
-                    if (jTextFieldDescrizioneArt.getText().trim().length() > 0) {
-                        filter += "\n AND upper(a.descrizione) LIKE '%" + jTextFieldDescrizioneArt.getText().toUpperCase().replace("'", "''") + "%' ";
-                    }
-
-                    if (jTextFieldNoteArticolo.getText().trim().length() > 0) {
-                        filter += "\n AND upper(a.note) LIKE '%" + jTextFieldNoteArticolo.getText().toUpperCase().replace("'", "''") + "%' ";
-                    }
-
-                    if (jTextFieldUnitaMisura.getText().trim().length() > 0) {
-                        filter += "\n AND upper(a.unita_di_misura) LIKE '%" + jTextFieldUnitaMisura.getText().toUpperCase().replace("'", "''") + "%' ";
-                    }
-
-                    if (jTextFieldID.getText().trim().length() > 0) {
-                        filter += "\n AND a.id =" + jTextFieldID.getText().toUpperCase().replace("'", "''") + " ";
-                    }              
-                    
-                    order += "\n ORDER BY a.ID  DESC ";
                 
+                if( lastSearchQuery.equals("") ){
+                    query = "SELECT * FROM ARTICOLI a where 1=1 and a.attivo='S' ";
+                    if(!ricercaDuplicati){
+                        if (jTextFieldNomeArticolo.getText().trim().length() > 0) {
+                                filter += "\n AND upper(a.nome) LIKE '%" + jTextFieldNomeArticolo.getText().toUpperCase().replace("'", "''") + "%' ";
+                        }
+
+                        if (jTextFieldDescrizioneArt.getText().trim().length() > 0) {
+                            filter += "\n AND upper(a.descrizione) LIKE '%" + jTextFieldDescrizioneArt.getText().toUpperCase().replace("'", "''") + "%' ";
+                        }
+
+                        if (jTextFieldNoteArticolo.getText().trim().length() > 0) {
+                            filter += "\n AND upper(a.note) LIKE '%" + jTextFieldNoteArticolo.getText().toUpperCase().replace("'", "''") + "%' ";
+                        }
+
+                        if (jTextFieldUnitaMisura.getText().trim().length() > 0) {
+                            filter += "\n AND upper(a.unita_di_misura) LIKE '%" + jTextFieldUnitaMisura.getText().toUpperCase().replace("'", "''") + "%' ";
+                        }
+
+                        if (jTextFieldID.getText().trim().length() > 0) {
+                            filter += "\n AND a.id =" + jTextFieldID.getText().toUpperCase().replace("'", "''") + " ";
+                        }              
+
+                        order += "\n ORDER BY a.ID  DESC ";
+                        query = query + filter + order;
+                        lastSearchQuery = query;
+                    }
+                }else{
+                    query = lastSearchQuery;
                 }
 
                 DefaultTableModel defaultModel = (DefaultTableModel) jTableArticoli.getModel();
@@ -429,7 +515,7 @@ public class JPanelArticoli extends javax.swing.JPanel{
 
 
                 
-                rSet = conn.selectSMS(query + filter + order);
+                rSet = conn.selectSMS(query);
                         
 //                        apigen.dbOP.select(
 //                        DbQueryUser.selectUsers(filter, order, "")

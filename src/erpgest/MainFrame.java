@@ -5,6 +5,8 @@
  */
 package erpgest;
 
+import javax.swing.UIManager;
+
 /**
  *
  * @author stefano
@@ -19,7 +21,9 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form MainFrame
      */
     public MainFrame() {
+        setUI();
         initComponents();
+        this.setLocationRelativeTo(null);
         jPanelAnagrafica1.setParentFrame(this);
         jPanelArticoli1.setParentFrame(this);
         
@@ -126,4 +130,16 @@ public class MainFrame extends javax.swing.JFrame {
     private erpgest.panels.JPanelListinoPrezzi jPanelListinoPrezzi1;
     private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
+
+    public void setUI() {
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
 }
