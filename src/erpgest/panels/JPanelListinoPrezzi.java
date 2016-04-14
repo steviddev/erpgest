@@ -5,17 +5,30 @@
  */
 package erpgest.panels;
 
+import erpgest.MainFrame;
+import erpgest.db.DbConn;
+import erpgest.utils.Utils;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author SteVid <www.stevid.it>
  */
 public class JPanelListinoPrezzi extends javax.swing.JPanel {
-
+    String UPDATE_OK = "Aggiornamento effettuato.";
+    String INSERT_OK = "Inserimento effettuato.";    
+    MainFrame parentFrame;
+    
     /**
      * Creates new form JPanelListinoPrezzi
      */
     public JPanelListinoPrezzi() {
         initComponents();
+        nascondiPannelloCopiaListino();
+        nascondiPannelloNuovoListino();
+        caricaComboListini();
     }
 
     /**
@@ -31,12 +44,23 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        jButtonInserisciProdotto = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldNomeListino = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBoxListini = new javax.swing.JComboBox();
+        jButtonNuovoListino = new javax.swing.JButton();
+        jButtonEliminaListino = new javax.swing.JButton();
+        jPanelCreazioneListino = new javax.swing.JPanel();
+        jButtonOkCreazione = new javax.swing.JButton();
+        jTextFieldNuovoListino = new javax.swing.JTextField();
+        jButtonAnnullaCreazioneListino = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jPanelCopiaListini = new javax.swing.JPanel();
+        jButtonCopiaListino = new javax.swing.JButton();
+        jButtonAnnullaCopiaListino = new javax.swing.JButton();
+        jComboBoxListinoDaCuiCopiare = new javax.swing.JComboBox();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Listino Prezzi"));
         setLayout(null);
@@ -46,13 +70,10 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Nome Prodotto", "Descrizione", "prezzo"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -64,44 +85,455 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel {
         jPanel1.add(jButton1);
         jButton1.setBounds(680, 280, 160, 31);
 
+        jButtonInserisciProdotto.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonInserisciProdotto.setText("Inserisci Prodotto");
+        jButtonInserisciProdotto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInserisciProdottoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonInserisciProdotto);
+        jButtonInserisciProdotto.setBounds(20, 280, 150, 40);
+
+        jButton2.setText("Elimina Prodotto");
+        jPanel1.add(jButton2);
+        jButton2.setBounds(180, 280, 190, 40);
+
+        jButton4.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton4.setText("Aggiorna");
+        jPanel1.add(jButton4);
+        jButton4.setBounds(390, 280, 130, 40);
+
         add(jPanel1);
-        jPanel1.setBounds(20, 180, 870, 390);
+        jPanel1.setBounds(30, 240, 870, 340);
 
-        jButton2.setText("Scegli Listino");
-        add(jButton2);
-        jButton2.setBounds(50, 50, 140, 31);
+        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel3.setText("Scegli Listino ");
+        add(jLabel3);
+        jLabel3.setBounds(60, 100, 110, 20);
 
-        jButton3.setText("Nuovo");
+        jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jComboBoxListini.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxListiniItemStateChanged(evt);
+            }
+        });
+        add(jComboBoxListini);
+        jComboBoxListini.setBounds(160, 100, 150, 25);
+
+        jButtonNuovoListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonNuovoListino.setText("Nuovo Listino");
+        jButtonNuovoListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuovoListinoActionPerformed(evt);
+            }
+        });
+        add(jButtonNuovoListino);
+        jButtonNuovoListino.setBounds(740, 30, 140, 34);
+
+        jButtonEliminaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonEliminaListino.setText("Elimina Listino");
+        add(jButtonEliminaListino);
+        jButtonEliminaListino.setBounds(740, 70, 140, 34);
+
+        jPanelCreazioneListino.setBorder(javax.swing.BorderFactory.createTitledBorder("Creazione Nuovo Listino"));
+        jPanelCreazioneListino.setEnabled(false);
+        jPanelCreazioneListino.setLayout(null);
+
+        jButtonOkCreazione.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonOkCreazione.setText("OK");
+        jButtonOkCreazione.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOkCreazioneActionPerformed(evt);
+            }
+        });
+        jPanelCreazioneListino.add(jButtonOkCreazione);
+        jButtonOkCreazione.setBounds(250, 10, 90, 31);
+
+        jTextFieldNuovoListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNuovoListinoActionPerformed(evt);
+            }
+        });
+        jPanelCreazioneListino.add(jTextFieldNuovoListino);
+        jTextFieldNuovoListino.setBounds(10, 20, 230, 30);
+
+        jButtonAnnullaCreazioneListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonAnnullaCreazioneListino.setText("Annulla");
+        jButtonAnnullaCreazioneListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnnullaCreazioneListinoActionPerformed(evt);
+            }
+        });
+        jPanelCreazioneListino.add(jButtonAnnullaCreazioneListino);
+        jButtonAnnullaCreazioneListino.setBounds(250, 50, 90, 31);
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jPanelCreazioneListino.add(jTextField2);
+        jTextField2.setBounds(10, 20, 230, 30);
+
+        add(jPanelCreazioneListino);
+        jPanelCreazioneListino.setBounds(370, 20, 350, 90);
+
+        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton3.setText("Copia da Altro Listino");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         add(jButton3);
-        jButton3.setBounds(230, 50, 140, 31);
+        jButton3.setBounds(740, 160, 180, 34);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("-");
-        add(jLabel1);
-        jLabel1.setBounds(130, 140, 190, 20);
+        jPanelCopiaListini.setBorder(javax.swing.BorderFactory.createTitledBorder("Copia Da Listino"));
+        jPanelCopiaListini.setLayout(null);
 
-        jLabel2.setText("Listino: ");
-        add(jLabel2);
-        jLabel2.setBounds(50, 140, 70, 20);
-        add(jTextFieldNomeListino);
-        jTextFieldNomeListino.setBounds(410, 50, 200, 30);
+        jButtonCopiaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonCopiaListino.setText("OK");
+        jButtonCopiaListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCopiaListinoActionPerformed(evt);
+            }
+        });
+        jPanelCopiaListini.add(jButtonCopiaListino);
+        jButtonCopiaListino.setBounds(250, 20, 90, 31);
 
-        jButton4.setText("Salva");
-        add(jButton4);
-        jButton4.setBounds(650, 50, 68, 31);
+        jButtonAnnullaCopiaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonAnnullaCopiaListino.setText("Annulla");
+        jButtonAnnullaCopiaListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAnnullaCopiaListinoActionPerformed(evt);
+            }
+        });
+        jPanelCopiaListini.add(jButtonAnnullaCopiaListino);
+        jButtonAnnullaCopiaListino.setBounds(250, 60, 90, 31);
+
+        jComboBoxListinoDaCuiCopiare.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jPanelCopiaListini.add(jComboBoxListinoDaCuiCopiare);
+        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
+
+        add(jPanelCopiaListini);
+        jPanelCopiaListini.setBounds(370, 110, 350, 100);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextFieldNuovoListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNuovoListinoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNuovoListinoActionPerformed
 
+    private void jButtonNuovoListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoListinoActionPerformed
+        visualizzaPannelloNuovoListino();
+        nascondiPannelloCopiaListino();
+    }//GEN-LAST:event_jButtonNuovoListinoActionPerformed
+
+    private void jButtonAnnullaCreazioneListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaCreazioneListinoActionPerformed
+        nascondiPannelloNuovoListino();
+    }//GEN-LAST:event_jButtonAnnullaCreazioneListinoActionPerformed
+    
+    private void nascondiPannelloNuovoListino(){
+        jTextFieldNuovoListino.setText("");
+        jPanelCreazioneListino.setEnabled(false);
+        jPanelCreazioneListino.setVisible(false);    
+    }
+
+    private void visualizzaPannelloNuovoListino(){
+        jTextFieldNuovoListino.setText("");
+        jPanelCreazioneListino.setEnabled(true);
+        jPanelCreazioneListino.setVisible(true);    
+    }    
+    
+    private void nascondiPannelloCopiaListino(){
+        jPanelCopiaListini.setEnabled(false);
+        jPanelCopiaListini.setVisible(false);    
+    }    
+
+    private void visualizzaPannelloCopiaListino(){
+        jPanelCopiaListini.setEnabled(true);
+        jPanelCopiaListini.setVisible(true);    
+    }      
+    
+    private void jButtonOkCreazioneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOkCreazioneActionPerformed
+        if (jTextFieldNuovoListino.getText().equals("")) {
+            JOptionPane.showMessageDialog(parentFrame, "Inserire un nome valido", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String nomeNuovoListino = jTextFieldNuovoListino.getText().trim().toUpperCase().replaceAll("'", "''");
+        if( controllaPresenzaListino(nomeNuovoListino)){
+            JOptionPane.showMessageDialog(parentFrame, "Nome gia presente, sceglierne uno nuovo", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;        
+        }
+        
+ 
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
+            String result = conn.insert("INSERT INTO LISTINI (NOME ) VALUES ('"+nomeNuovoListino+"')");
+            if(result.equals(INSERT_OK)){
+                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Inserimento avvenuto correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(parentFrame, "Spiacenti inserimento non effettuato", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                conn.close();
+                return;
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        
+        conn.close();
+        caricaComboListini();
+        
+        nascondiPannelloNuovoListino();
+    }//GEN-LAST:event_jButtonOkCreazioneActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        nascondiPannelloNuovoListino();
+        caricaComboCopiaListini();
+        visualizzaPannelloCopiaListino();
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButtonCopiaListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCopiaListinoActionPerformed
+
+        
+        //controllo se si tratta dello stesso listino
+        if ( ((String)jComboBoxListini.getSelectedItem()).equals( ((String)jComboBoxListinoDaCuiCopiare.getSelectedItem())  )) {
+            JOptionPane.showMessageDialog(parentFrame, "Impossibile copiare sullo stesso listino", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String listinoSorgente = (String)jComboBoxListinoDaCuiCopiare.getSelectedItem();
+        String listinoDestinazione = (String)jComboBoxListini.getSelectedItem();
+        
+        if ( listinoSorgente.equals("-")  || listinoDestinazione.equals("-") ) {
+            JOptionPane.showMessageDialog(parentFrame, "Selezionare un listino valido", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        //controllo se il listino di partenza ha almeno un prodotto con il prezzo
+        if( !controlloPresenzaPrezziNelListino(listinoSorgente) ){
+            JOptionPane.showMessageDialog(parentFrame, "Il listino scelto da cui copiare, non ha prezzi.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;             
+        }
+        
+        //faccio la copia cancellando il sorgente
+        nascondiPannelloCopiaListino();
+    }//GEN-LAST:event_jButtonCopiaListinoActionPerformed
+
+    private void jButtonAnnullaCopiaListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnnullaCopiaListinoActionPerformed
+        nascondiPannelloCopiaListino();
+    }//GEN-LAST:event_jButtonAnnullaCopiaListinoActionPerformed
+
+    private void jButtonInserisciProdottoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserisciProdottoActionPerformed
+        JPanelRicercaProdottiPerListino dialog = new JPanelRicercaProdottiPerListino(this.parentFrame,this);
+    }//GEN-LAST:event_jButtonInserisciProdottoActionPerformed
+
+    private void jComboBoxListiniItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxListiniItemStateChanged
+        
+        Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame, null,"Aggiornamento in corso. Attendere"));
+        t.start();
+        while (parentFrame.waiting == null) {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+        }
+
+        //    Thread tt = new Thread(new esegui(aTest.myJD,aTest.actionStop));
+        Thread tt = new Thread(new popolaTabellaConListino());
+        tt.start();        
+        
+        
+    }//GEN-LAST:event_jComboBoxListiniItemStateChanged
+
+    public void setParentFrame(MainFrame parent){
+        this.parentFrame = parent;
+    }    
+    
+    private boolean controlloPresenzaPrezziNelListino(String nomeListino){
+    
+        if (nomeListino.equals("") || nomeListino == null) {
+            return false;
+        }
+        boolean risultato = false;
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        try {
+            
+            String query = "select count(*) from listini l,prezzi p\n" +
+                            "where l.NOME = '"+nomeListino+"'\n" +
+                            "and p.id_listino = l.id\n" +
+                            "and p.attivo = 'S'";
+            ResultSet res = conn.selectSMS(query);
+            int count = res.getInt(1);
+            if( count > 0 ){
+                risultato = true;
+            }else
+                risultato = false;
+            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        
+        conn.close();
+        return risultato;        
+        
+    }
+    
+    private void caricaComboListini(){
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        jComboBoxListini.removeAllItems();
+        jComboBoxListini.addItem("-");
+        try {
+            String query = "SELECT * FROM LISTINI WHERE ATTIVO = 'S'";
+            ResultSet res = conn.selectSMS(query);
+            while( res.next() ){
+                jComboBoxListini.addItem(res.getString("NOME"));
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+    }
+    
+    private void caricaComboCopiaListini(){
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        jComboBoxListinoDaCuiCopiare.removeAllItems();
+        jComboBoxListinoDaCuiCopiare.addItem("-");
+        try {
+            String query = "SELECT * FROM LISTINI WHERE ATTIVO = 'S'";
+            ResultSet res = conn.selectSMS(query);
+            while( res.next() ){
+                if (!res.getString("NOME").equals((String)jComboBoxListini.getSelectedItem())) {
+                    jComboBoxListinoDaCuiCopiare.addItem(res.getString("NOME"));
+                }
+                
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+    }    
+    
+    private boolean controllaPresenzaListino(String nome){
+        
+        if (nome.equals("") || nome == null) {
+            return false;
+        }
+        boolean risultato = false;
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        try {
+            
+            String query = "SELECT COUNT(*) FROM LISTINI WHERE NOME='"+nome+"' AND ATTIVO = 'S'";
+            ResultSet res = conn.selectSMS(query);
+            int count = res.getInt(1);
+            if( count > 0 ){
+                risultato = true;
+            }else
+                risultato = false;
+            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        
+        conn.close();
+        return risultato;
+    }      
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButtonAnnullaCopiaListino;
+    private javax.swing.JButton jButtonAnnullaCreazioneListino;
+    private javax.swing.JButton jButtonCopiaListino;
+    private javax.swing.JButton jButtonEliminaListino;
+    private javax.swing.JButton jButtonInserisciProdotto;
+    private javax.swing.JButton jButtonNuovoListino;
+    private javax.swing.JButton jButtonOkCreazione;
+    private javax.swing.JComboBox jComboBoxListini;
+    private javax.swing.JComboBox jComboBoxListinoDaCuiCopiare;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelCopiaListini;
+    private javax.swing.JPanel jPanelCreazioneListino;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextFieldNomeListino;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldNuovoListino;
     // End of variables declaration//GEN-END:variables
+
+    void aggiornaListaProdotti(String id) {
+        
+    }
+    
+    
+    
+    class popolaTabellaConListino implements Runnable {
+
+        @Override
+        public void run() {
+            String query;
+
+            query = "SELECT * FROM ARTICOLI a where 1=1 and a.attivo='S' ";
+            
+            ResultSet rSet = null;
+
+
+            jTable1.setVisible(false);
+
+            String filter = "";
+            String order = "";
+            DbConn conn = new DbConn();
+            conn.makeConn();
+
+            try {
+
+                DefaultTableModel defaultModel = (DefaultTableModel) jTable1.getModel();
+
+                while (defaultModel.getRowCount() > 0) {
+                    defaultModel.removeRow(0);
+                }
+                rSet = conn.selectSMS(query);
+                while (rSet.next()) {
+                    Object[] cell = {rSet.getString("ID"),
+                        rSet.getString("NOME"),
+                        rSet.getString("DESCRIZIONE"),
+                        rSet.getString("UNITA_DI_MISURA"),
+                        rSet.getString("NOTE")
+                    };
+                    defaultModel.addRow(cell);
+                }
+
+                jTable1.invalidate();
+                jTable1.validate();
+                jTable1.repaint();
+                conn.close();
+            } catch (Exception e) {
+                erpgest.utils.Utils.logError(e, "", true);
+                conn.close();
+            }
+
+            erpgest.db.Utils.ResultSetClose(rSet, null);
+
+            jTable1.setVisible(true);
+            parentFrame.waiting.dispose();
+            parentFrame.waiting = null;
+            validate();
+            repaint();
+
+            return;
+        }
+    }    
 }

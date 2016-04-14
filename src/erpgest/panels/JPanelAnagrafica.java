@@ -42,38 +42,40 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     public JPanelAnagrafica() {
         initComponents();
         
-    jTextFieldPartitaIVA.addKeyListener(new KeyAdapter() {
-                public void keyTyped(KeyEvent e) {
-                    char vChar = e.getKeyChar();
-                    if (!(Character.isDigit(vChar)
-                            || (vChar == KeyEvent.VK_BACK_SPACE)
-                            || (vChar == KeyEvent.VK_DELETE))) {
-                        e.consume();
+        jTextFieldPartitaIVA.setDocument(new erpgest.utils.JTextFieldLimit(11) );
+        
+        jTextFieldPartitaIVA.addKeyListener(new KeyAdapter() {
+                    public void keyTyped(KeyEvent e) {
+                        char vChar = e.getKeyChar();
+                        if (!(Character.isDigit(vChar)
+                                || (vChar == KeyEvent.VK_BACK_SPACE)
+                                || (vChar == KeyEvent.VK_DELETE))) {
+                            e.consume();
+                        }
                     }
-                }
-            });         
+                });         
 
-        jTextFieldCAPAzienda.addKeyListener(new KeyAdapter() {
-                public void keyTyped(KeyEvent e) {
-                    char vChar = e.getKeyChar();
-                    if (!(Character.isDigit(vChar)
-                            || (vChar == KeyEvent.VK_BACK_SPACE)
-                            || (vChar == KeyEvent.VK_DELETE))) {
-                        e.consume();
+            jTextFieldCAPAzienda.addKeyListener(new KeyAdapter() {
+                    public void keyTyped(KeyEvent e) {
+                        char vChar = e.getKeyChar();
+                        if (!(Character.isDigit(vChar)
+                                || (vChar == KeyEvent.VK_BACK_SPACE)
+                                || (vChar == KeyEvent.VK_DELETE))) {
+                            e.consume();
+                        }
                     }
-                }
-            });  
+                });  
 
-        jTextFieldCAPRL.addKeyListener(new KeyAdapter() {
-                public void keyTyped(KeyEvent e) {
-                    char vChar = e.getKeyChar();
-                    if (!(Character.isDigit(vChar)
-                            || (vChar == KeyEvent.VK_BACK_SPACE)
-                            || (vChar == KeyEvent.VK_DELETE))) {
-                        e.consume();
+            jTextFieldCAPRL.addKeyListener(new KeyAdapter() {
+                    public void keyTyped(KeyEvent e) {
+                        char vChar = e.getKeyChar();
+                        if (!(Character.isDigit(vChar)
+                                || (vChar == KeyEvent.VK_BACK_SPACE)
+                                || (vChar == KeyEvent.VK_DELETE))) {
+                            e.consume();
+                        }
                     }
-                }
-            });         
+                });         
         
     }
 
@@ -266,12 +268,12 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         jLabel21.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel21.setText("Partita IVA");
         jPanel1.add(jLabel21);
-        jLabel21.setBounds(290, 20, 220, 20);
+        jLabel21.setBounds(290, 20, 170, 20);
 
         jTextFieldPartitaIVA.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldPartitaIVA.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldPartitaIVA);
-        jTextFieldPartitaIVA.setBounds(290, 40, 340, 30);
+        jTextFieldPartitaIVA.setBounds(290, 40, 170, 30);
 
         add(jPanel1);
         jPanel1.setBounds(30, 100, 1040, 180);
@@ -392,19 +394,23 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         }
         
         if( !partitaIVA.equals("") ){
-            String resultPartitaIva = erpgest.utils.Utils.ControllaPIVA(partitaIVA);
-            if (!resultPartitaIva.equals("")) {
-                JOptionPane.showMessageDialog(parentFrame, resultPartitaIva, "Attenzione", JOptionPane.ERROR_MESSAGE);
-                closeDialog();
-                return;
-            }else{
-                if (controllaPresenzaPartitaIVA(partitaIVA)) {
-                    JOptionPane.showMessageDialog(parentFrame, "Partita IVA gia presente", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            
+            String idPartitaIvaTrovata = controllaPresenzaPartitaIVA(partitaIVA);
+            
+            if (idPartitaIvaTrovata.equals("")) {
+                String resultPartitaIva = erpgest.utils.Utils.ControllaPIVA(partitaIVA);
+                if (!resultPartitaIva.equals("")) {
+                    JOptionPane.showMessageDialog(parentFrame, resultPartitaIva, "Attenzione", JOptionPane.ERROR_MESSAGE);
                     closeDialog();
-                    return;                    
-                }
-                        
-            }   
+                    return;
+                }                     
+            }else{
+                if (!idPartitaIvaTrovata.equals(id)) {
+                    JOptionPane.showMessageDialog(parentFrame, "Partita IVA gia presente id cliente:"+idPartitaIvaTrovata, "Attenzione", JOptionPane.ERROR_MESSAGE);
+                    closeDialog();
+                    return;                   
+                }                        
+            }
         }
         
         if( !codiceFiscale.equals("") ){
@@ -456,7 +462,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonRegistraActionPerformed
 
     private void buttonRicerca2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRicerca2ActionPerformed
-        JPanelRicercaClienti dialog = new JPanelRicercaClienti(this.parentFrame);
+        JPanelRicercaClienti dialog = new JPanelRicercaClienti(this.parentFrame,this);
     }//GEN-LAST:event_buttonRicerca2ActionPerformed
 
     private void buttonRipulisciActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRipulisciActionPerformed
@@ -470,7 +476,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             _id = Integer.parseInt(id);
         }
 
-        aggiornaFinestraInserimentoCliente(_id);
+        aggiornaFinestraInserimentoCliente(id);
     }//GEN-LAST:event_jButtonAggiornaMouseReleased
 
     private void buttonNuovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNuovoClienteActionPerformed
@@ -511,7 +517,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     }//GEN-LAST:event_buttonEliminaMouseReleased
 
 
-    public void aggiornaFinestraInserimentoCliente(int id){
+    public void aggiornaFinestraInserimentoCliente(String id){
         
         DbConn conn = new DbConn();
         conn.makeConn();
@@ -614,7 +620,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             
             String result = conn.delete(query);
             if( result.equals("Rimozione effettuata.") ){
-                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Cliente", "OK", JOptionPane.INFORMATION_MESSAGE);                    
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Cliente eliminato correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);                    
                     azzeraCampi();                    
                     
             }else{
@@ -650,23 +656,22 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         return risultato;
     }    
     
-    private boolean controllaPresenzaPartitaIVA(String pIVA){
+    private String controllaPresenzaPartitaIVA(String pIVA){
         
         if (pIVA.equals("") || pIVA == null) {
-            return false;
+            return "";
         }
-        boolean risultato = false;
+        String risultato = "";
         DbConn conn = new DbConn();
         conn.makeConn();
         try {
             
-            String query = "SELECT COUNT(*) FROM ANAGRAFICA WHERE PARTITA_IVA='"+pIVA+"' AND ATTIVO = 'S'";
+            String query = "SELECT * FROM ANAGRAFICA WHERE PARTITA_IVA='"+pIVA+"' AND ATTIVO = 'S'";
             ResultSet res = conn.selectSMS(query);
-            int count = res.getInt(1);
-            if( count > 0 ){
-                risultato = true;
-            }else
-                risultato = false;
+            
+            if (res.next()) {
+                risultato = res.getString("ID");
+            }
             
         } catch (Exception e) {
         }
@@ -723,10 +728,12 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
                             + " DATA_MODIFICA = datetime('now', 'localtime')"
                             + " WHERE ID = '"+id+"' AND ATTIVO = 'S'";
                     
-                    result = conn.update("");
+                    result = conn.update(query);
                     if (result.equals(UPDATE_OK)) {
-                        
+                        closeDialog();
+                        JOptionPane.showMessageDialog(parentFrame.getFrame(), "Aggiornamento avvenuto correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);                        
                     }else{
+                        closeDialog();
                         JOptionPane.showMessageDialog(parentFrame.getFrame(), "Impossibile aggiornare il cliente", "Attenzione", JOptionPane.ERROR_MESSAGE);
                         conn.close();
                         return;                      
@@ -737,7 +744,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
                     query = "INSERT INTO ANAGRAFICA "
                             + "(CAP_AZIENDA,"
                             + "CAP_RL,"
-                            + "CODICE_FICALE,"
+                            + "CODICE_FISCALE,"
                             + "CITTA_AZIENDA,"
                             + "CITTA_RL,"
                             + "NOME_RL,"
@@ -770,19 +777,19 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
                         
                         query = "SELECT * FROM ANAGRAFICA "
                                 + "WHERE "
-                            + " CAP_AZIENDA = '"+CAPAzienda+"',"
-                            + " AND CAP_RL = '"+CAPRL+"',"
-                            + " AND CODICE_FISCALE = '"+codiceFiscale+"',"
-                            + " AND CITTA_AZIENDA = '"+cittaAzienda+"',"
-                            + " AND CITTA_RL = '"+CittaRL+"',"
-                            + " AND NOME_RL = '"+nomeRL+"',"
-                            + " AND COGNOME_RL= '"+CognomeRL+"',"
-                            + " AND PARTITA_IVA = '"+partitaIVA+"',"
-                            + " AND FAX_AZIENDA = '"+faxAzienda+"',"
-                            + " AND TELEFONO_RL = '"+telefonoRL+"',"
-                            + " AND TELEFONO_AZIENDA = '"+telefonoAzienda+"',"
-                            + " AND INDIRIZZO_AZIENDA = '"+indirizzo+"',"
-                            + " AND INDIRIZZO_RL = '"+indirizzoRL+"',"
+                            + " CAP_AZIENDA = '"+CAPAzienda+"'"
+                            + " AND CAP_RL = '"+CAPRL+"'"
+                            + " AND CODICE_FISCALE = '"+codiceFiscale+"'"
+                            + " AND CITTA_AZIENDA = '"+cittaAzienda+"'"
+                            + " AND CITTA_RL = '"+CittaRL+"'"
+                            + " AND NOME_RL = '"+nomeRL+"'"
+                            + " AND COGNOME_RL= '"+CognomeRL+"'"
+                            + " AND PARTITA_IVA = '"+partitaIVA+"'"
+                            + " AND FAX_AZIENDA = '"+faxAzienda+"'"
+                            + " AND TELEFONO_RL = '"+telefonoRL+"'"
+                            + " AND TELEFONO_AZIENDA = '"+telefonoAzienda+"'"
+                            + " AND INDIRIZZO_AZIENDA = '"+indirizzo+"'"
+                            + " AND INDIRIZZO_RL = '"+indirizzoRL+"'"
                             + " AND RAGIONE_SOCIALE = '"+ragioneSociale+"';";
                         
                         res = conn.selectSMS(query);
@@ -791,17 +798,22 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
                             id = res.getString("ID");
                             if (!id.equals("")) {
                                 jTextFieldID.setText(res.getString("ID"));
-                                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Operazione avvenuta correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                                closeDialog();
+                                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Inserimento avvenuto correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                                
                             }else{
+                                closeDialog();
                                 JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore su id nullo", "Attenzione", JOptionPane.ERROR_MESSAGE);
                             }
 
                         }else{
+                            closeDialog();
                             JOptionPane.showMessageDialog(parentFrame.getFrame(), "Inserimento effettuato ma id non creato", "Attenzione", JOptionPane.ERROR_MESSAGE);
                         }
                         
                     
                     }else{
+                        closeDialog();
                         JOptionPane.showMessageDialog(parentFrame.getFrame(), "Impossibile inserire nuovo cliente", "Attenzione", JOptionPane.ERROR_MESSAGE);
                         conn.close();
                         return;                      
@@ -810,8 +822,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
                 }                
             } catch (Exception e) {
                 Utils.logError(e, null, true);
+                closeDialog();
             }
-
+            //closeDialog();
             conn.close();
 
         }

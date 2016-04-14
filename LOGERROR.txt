@@ -1,0 +1,64 @@
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:04:11 CEST 2016
+null
+java.lang.NullPointerException
+	at erpgest.panels.JPanelAnagrafica$SalvaDatiNelDB.run(JPanelAnagrafica.java:793)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:20:03 CEST 2016
+
+java.sql.SQLException: no such column: 'cognome'
+	at org.sqlite.jdbc3.JDBC3ResultSet.findColumn(JDBC3ResultSet.java:48)
+	at org.sqlite.jdbc3.JDBC3ResultSet.getString(JDBC3ResultSet.java:437)
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:718)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:20:05 CEST 2016
+
+java.sql.SQLException: no such column: 'cognome'
+	at org.sqlite.jdbc3.JDBC3ResultSet.findColumn(JDBC3ResultSet.java:48)
+	at org.sqlite.jdbc3.JDBC3ResultSet.getString(JDBC3ResultSet.java:437)
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:718)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:20:17 CEST 2016
+
+java.lang.NullPointerException
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:717)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:28:18 CEST 2016
+
+java.sql.SQLException: no such column: 'NOME_RF'
+	at org.sqlite.jdbc3.JDBC3ResultSet.findColumn(JDBC3ResultSet.java:48)
+	at org.sqlite.jdbc3.JDBC3ResultSet.getString(JDBC3ResultSet.java:437)
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:718)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:29:42 CEST 2016
+
+java.sql.SQLException: no such column: 'NOME_RF'
+	at org.sqlite.jdbc3.JDBC3ResultSet.findColumn(JDBC3ResultSet.java:48)
+	at org.sqlite.jdbc3.JDBC3ResultSet.getString(JDBC3ResultSet.java:437)
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:718)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Thu Apr 14 14:54:53 CEST 2016
+
+java.lang.NullPointerException
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:735)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
