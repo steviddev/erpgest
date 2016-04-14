@@ -7,6 +7,7 @@ package erpgest.panels;
 
 import erpgest.MainFrame;
 import erpgest.db.DbConn;
+import erpgest.utils.Utils;
 import erpgest.utils.ValidatoreCodiceFiscale;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -27,6 +28,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
     SimpleDateFormat formatterDataENG = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat formatterDataAndTimeENG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
     MainFrame parentFrame ;
+    
+    String UPDATE_OK = "Aggiornamento effettuato.";
+    String INSERT_OK = "Inserimento effettuato.";
     
     public void setParentFrame(MainFrame parent){
         this.parentFrame = parent;
@@ -393,7 +397,14 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(parentFrame, resultPartitaIva, "Attenzione", JOptionPane.ERROR_MESSAGE);
                 closeDialog();
                 return;
-            }        
+            }else{
+                if (controllaPresenzaPartitaIVA(partitaIVA)) {
+                    JOptionPane.showMessageDialog(parentFrame, "Partita IVA gia presente", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                    closeDialog();
+                    return;                    
+                }
+                        
+            }   
         }
         
         if( !codiceFiscale.equals("") ){
@@ -404,7 +415,6 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
             }          
         }      
        
-        
         /*
         Calendar cal = Calendar.getInstance();
         String query;
@@ -616,12 +626,16 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         conn.close();        
     }
     private boolean controllaPresenzaCliente(String id){
+        
+        if (id.equals("") || id == null) {
+            return false;
+        }
         boolean risultato = false;
         DbConn conn = new DbConn();
         conn.makeConn();
         try {
             
-            String query = "SELECT COUNT(*) FROM ANAGRAFICA WHERE ID='"+id+"'";
+            String query = "SELECT COUNT(*) FROM ANAGRAFICA WHERE ID='"+id+"' AND ATTIVO = 'S'";
             ResultSet res = conn.selectSMS(query);
             int count = res.getInt(1);
             if( count > 0 ){
@@ -636,14 +650,172 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         return risultato;
     }    
     
+    private boolean controllaPresenzaPartitaIVA(String pIVA){
+        
+        if (pIVA.equals("") || pIVA == null) {
+            return false;
+        }
+        boolean risultato = false;
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        try {
+            
+            String query = "SELECT COUNT(*) FROM ANAGRAFICA WHERE PARTITA_IVA='"+pIVA+"' AND ATTIVO = 'S'";
+            ResultSet res = conn.selectSMS(query);
+            int count = res.getInt(1);
+            if( count > 0 ){
+                risultato = true;
+            }else
+                risultato = false;
+            
+        } catch (Exception e) {
+        }
+        
+        conn.close();
+        return risultato;
+    }     
     
+    class SalvaDatiNelDB implements Runnable {
+
+        @Override
+        public void run() {
+            
+            String CAPAzienda     = jTextFieldCAPAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+            String CAPRL          = jTextFieldCAPRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String codiceFiscale  = jTextFieldCF.getText().trim().toUpperCase().replaceAll("'", "''");
+            String cittaAzienda   = jTextFieldCittaAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+            String CittaRL        = jTextFieldCittaRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String CognomeRL      = jTextFieldCognomeRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String faxAzienda     = jTextFieldFaxAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+            String indirizzo      = jTextFieldIndirizzo.getText().trim().toUpperCase().replaceAll("'", "''");
+            String indirizzoRL    = jTextFieldIndirizzoRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String nomeRL         = jTextFieldNomeRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String partitaIVA     = jTextFieldPartitaIVA.getText().trim().toUpperCase().replaceAll("'", "''");
+            String ragioneSociale = jTextFieldRagioneSociale.getText().trim().toUpperCase().replaceAll("'", "''");
+            String telefonoAzienda= jTextFieldTelefonoAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
+            String telefonoRL     = jTextFieldTelefonoRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String id             = jTextFieldID.getText().trim().toUpperCase().replaceAll("'", "''");
+            String query = "";
+            String result = "";
+            
+            ResultSet res = null;
+            DbConn conn = new DbConn();
+            conn.makeConn();
+            
+            try {
+                if (controllaPresenzaCliente(id)) {
+                    //faccio update
+                    query = "UPDATE ANAGRAFICA SET "
+                            + " CAP_AZIENDA = '"+CAPAzienda+"',"
+                            + " CAP_RL = '"+CAPRL+"',"
+                            + " CODICE_FISCALE = '"+codiceFiscale+"',"
+                            + " CITTA_AZIENDA = '"+cittaAzienda+"',"
+                            + " CITTA_RL = '"+CittaRL+"',"
+                            + " NOME_RL = '"+nomeRL+"',"
+                            + " COGNOME_RL= '"+CognomeRL+"',"
+                            + " PARTITA_IVA = '"+partitaIVA+"',"
+                            + " FAX_AZIENDA = '"+faxAzienda+"',"
+                            + " TELEFONO_RL = '"+telefonoRL+"',"
+                            + " TELEFONO_AZIENDA = '"+telefonoAzienda+"',"
+                            + " INDIRIZZO_AZIENDA = '"+indirizzo+"',"
+                            + " INDIRIZZO_RL = '"+indirizzoRL+"',"
+                            + " RAGIONE_SOCIALE = '"+ragioneSociale+"',"
+                            + " DATA_MODIFICA = datetime('now', 'localtime')"
+                            + " WHERE ID = '"+id+"' AND ATTIVO = 'S'";
+                    
+                    result = conn.update("");
+                    if (result.equals(UPDATE_OK)) {
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(parentFrame.getFrame(), "Impossibile aggiornare il cliente", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                        conn.close();
+                        return;                      
+                    }
+
+                }else{
+                    //faccio insert
+                    query = "INSERT INTO ANAGRAFICA "
+                            + "(CAP_AZIENDA,"
+                            + "CAP_RL,"
+                            + "CODICE_FICALE,"
+                            + "CITTA_AZIENDA,"
+                            + "CITTA_RL,"
+                            + "NOME_RL,"
+                            + "COGNOME_RL,"
+                            + "PARTITA_IVA,"
+                            + "FAX_AZIENDA,"
+                            + "TELEFONO_RL,"
+                            + "TELEFONO_AZIENDA,"
+                            + "INDIRIZZO_AZIENDA,"
+                            + "INDIRIZZO_RL,"
+                            + "RAGIONE_SOCIALE) VALUES ("
+                            + "'"+CAPAzienda+"',"
+                            + "'"+CAPRL+"',"
+                            + "'"+codiceFiscale+"',"
+                            + "'"+cittaAzienda+"',"
+                            + "'"+CittaRL+"',"
+                            + "'"+nomeRL+"',"
+                            + "'"+CognomeRL+"',"
+                            + "'"+partitaIVA+"',"
+                            + "'"+faxAzienda+"',"
+                            + "'"+telefonoRL+"',"
+                            + "'"+telefonoAzienda+"',"
+                            + "'"+indirizzo+"',"
+                            + "'"+indirizzoRL+"',"
+                            + "'"+ragioneSociale+"'"
+                            + ");";
+                    result = conn.insert(query);
+                    if (result.equals(INSERT_OK)) {
+                        
+                        
+                        query = "SELECT * FROM ANAGRAFICA "
+                                + "WHERE "
+                            + " CAP_AZIENDA = '"+CAPAzienda+"',"
+                            + " AND CAP_RL = '"+CAPRL+"',"
+                            + " AND CODICE_FISCALE = '"+codiceFiscale+"',"
+                            + " AND CITTA_AZIENDA = '"+cittaAzienda+"',"
+                            + " AND CITTA_RL = '"+CittaRL+"',"
+                            + " AND NOME_RL = '"+nomeRL+"',"
+                            + " AND COGNOME_RL= '"+CognomeRL+"',"
+                            + " AND PARTITA_IVA = '"+partitaIVA+"',"
+                            + " AND FAX_AZIENDA = '"+faxAzienda+"',"
+                            + " AND TELEFONO_RL = '"+telefonoRL+"',"
+                            + " AND TELEFONO_AZIENDA = '"+telefonoAzienda+"',"
+                            + " AND INDIRIZZO_AZIENDA = '"+indirizzo+"',"
+                            + " AND INDIRIZZO_RL = '"+indirizzoRL+"',"
+                            + " AND RAGIONE_SOCIALE = '"+ragioneSociale+"';";
+                        
+                        res = conn.selectSMS(query);
+                        
+                        if( res.next() ){
+                            id = res.getString("ID");
+                            if (!id.equals("")) {
+                                jTextFieldID.setText(res.getString("ID"));
+                                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Operazione avvenuta correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
+                            }else{
+                                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore su id nullo", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                            }
+
+                        }else{
+                            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Inserimento effettuato ma id non creato", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                        }
+                        
+                    
+                    }else{
+                        JOptionPane.showMessageDialog(parentFrame.getFrame(), "Impossibile inserire nuovo cliente", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                        conn.close();
+                        return;                      
+                    }                    
+                    
+                }                
+            } catch (Exception e) {
+                Utils.logError(e, null, true);
+            }
+
+            conn.close();
+
+        }
+    }    
     
 }
 
-class SalvaDatiNelDB implements Runnable {
-
-    @Override
-    public void run() {
-
-    }
-}
