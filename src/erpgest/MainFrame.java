@@ -26,7 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         jPanelAnagrafica1.setParentFrame(this);
         jPanelArticoli1.setParentFrame(this);
-        //jPanelListinoPrezzi1.setParentFrame(this);
+        jPanelListinoPrezzi1.setParentFrame(this);
     }
 
     /**

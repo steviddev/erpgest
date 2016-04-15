@@ -1,5 +1,6 @@
 package erpgest.utils;
 
+import erpgest.MainFrame;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JDialog;
@@ -7,11 +8,11 @@ import javax.swing.JFrame;
 
 public class Waiting extends javax.swing.JDialog {
 
-    JFrame frame;
+    MainFrame frame;
 
     public Waiting(JFrame frame) {
         super(frame, "Operazione in corso...", true);
-        this.frame = frame;
+        this.frame = (MainFrame) frame;
         initComponents();
 
         setUndecorated(true);
@@ -41,7 +42,7 @@ public class Waiting extends javax.swing.JDialog {
 
     public Waiting(JFrame frame, JDialog dialog) {
         super(dialog, "Operazione in corso...", true);
-        this.frame = frame;
+        this.frame = (MainFrame) frame;
         initComponents();
 
         setUndecorated(true);
@@ -72,7 +73,7 @@ public class Waiting extends javax.swing.JDialog {
     public Waiting(JFrame frame, JDialog dialog, String messaqe) {
 
         super(dialog, "Operazione in corso...", true);
-        this.frame = frame;
+        this.frame = (MainFrame) frame;
         initComponents();
 
         loadingLabel.setText(messaqe);
@@ -99,7 +100,7 @@ public class Waiting extends javax.swing.JDialog {
     public Waiting(JFrame frame, JDialog dialog, String messaqe, boolean bool) {
 
         super(dialog, "Operazione in corso...", true);
-        this.frame = frame;
+        this.frame = (MainFrame) frame;
         initComponents();
 
         loadingLabel.setText(messaqe);
@@ -171,7 +172,12 @@ public class Waiting extends javax.swing.JDialog {
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    System.exit(0);
+    if (frame.waiting != null) {
+        frame.waiting.dispose();
+    }
+    frame.waiting = null;
+    validate();
+    repaint();    
 
 }//GEN-LAST:event_jButton1ActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

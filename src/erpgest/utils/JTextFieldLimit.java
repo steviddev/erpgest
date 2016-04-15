@@ -34,3 +34,4 @@ public class JTextFieldLimit extends PlainDocument {
     }
   }
 }
+
