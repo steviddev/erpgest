@@ -6,12 +6,16 @@
 package erpgest.panels;
 
 import erpgest.MainFrame;
+import erpgest.db.DbConn;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import erpgest.utils.ChooseData;
+import erpgest.utils.Utils;
+import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -60,7 +64,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonCancellaCliente = new javax.swing.JButton();
         jButtonAggiungliCliente = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelID = new javax.swing.JLabel();
         jButtonNuovoOrdine = new javax.swing.JButton();
         jButtonAggiungiArticolo = new javax.swing.JButton();
         jButtonRimuoviArticolo = new javax.swing.JButton();
@@ -175,16 +179,21 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
         jLabel2.setText("ID");
         add(jLabel2);
-        jLabel2.setBounds(10, 10, 20, 15);
+        jLabel2.setBounds(10, 10, 20, 16);
 
-        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel3.setText("-");
-        add(jLabel3);
-        jLabel3.setBounds(40, 10, 50, 15);
+        jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelID.setText("-");
+        add(jLabelID);
+        jLabelID.setBounds(40, 10, 50, 15);
 
         jButtonNuovoOrdine.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonNuovoOrdine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/note.png"))); // NOI18N
         jButtonNuovoOrdine.setText("Nuovo");
+        jButtonNuovoOrdine.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuovoOrdineActionPerformed(evt);
+            }
+        });
         add(jButtonNuovoOrdine);
         jButtonNuovoOrdine.setBounds(310, 40, 90, 40);
 
@@ -205,23 +214,50 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
         GregorianCalendar date = new GregorianCalendar();
         Date dal;
-        Date al;
+        Date data;
         Date oggi = (Calendar.getInstance()).getTime();
         String strOggi = formatterData.format(oggi);          
         ChooseData dc = new ChooseData(parentFrame, date);
         String choosed = dc.getDate();
         if( choosed.equals("") || choosed == null){
-            choosed = "Fino Al ...";
+            choosed = "Scegli data";
+        }else{
+                    Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame.getFrame(), null, "Salvataggio in corso. Attendere"));
+        t.start();
+
+        while (parentFrame.waiting == null) {
+            try {
+                Thread.sleep(100);
+            } catch (Exception e) {
+            }
+        }
+
+        Thread tt = new Thread(new PopolaListe());
+        tt.start();
+        
         }
         try {
-            al = formatterData.parse(choosed);
+            data = formatterData.parse(choosed);
+            jButtonScegliData.setText(choosed);
+            
         } catch (Exception e) {
         }
+        
+        
+        
     }//GEN-LAST:event_jButtonScegliDataActionPerformed
 
     private void jButtonRimuoviArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRimuoviArticoloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonRimuoviArticoloActionPerformed
+
+    private void jButtonNuovoOrdineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoOrdineActionPerformed
+        //controllo ci sia una data indicata
+        if( jButtonScegliData.getText().startsWith("Scegli") ){
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_jButtonNuovoOrdineActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -234,7 +270,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private javax.swing.JButton jButtonScegliData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelID;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableArticoli;
@@ -249,5 +285,123 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     @Override
     public void aggiornaListaClienti(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private class PopolaListe implements Runnable {
+
+        public PopolaListe() {
+        }
+
+        @Override
+        public void run() {
+            //prima controllo che non ci sia un ordine attivo nella data indicata
+            DbConn conn = new DbConn();
+            conn.makeConn();
+            ResultSet res2 = null;
+            try {
+                int count = 0;
+                int id = 0;
+                String result = "";
+                String query = "SELECT count(*) FROM ORDINI "
+                        + " WHERE "
+                        + " ATTIVO = 'S' "
+                        + " AND strftime('%d/%m/%Y',data_ORDINE) = '"+jButtonScegliData.getText()+"'";
+                ResultSet res = conn.selectSMS(query);
+                if(res.next()){
+                    count = res.getInt(1);
+                }
+                if (count>0) {
+                    query = "SELECT id FROM ORDINI "
+                        + " WHERE "
+                        + " ATTIVO = 'S' "
+                        + " AND strftime('%d/%m/%Y',data_creazione) = '"+jButtonScegliData.getText()+"'";
+                    res = conn.selectSMS(query);
+                    if(res.next()){
+                        id = res.getInt("ID");
+                    }
+                    if (id>0) {
+                        query = "select A.ID,"
+                                + "A.RAGIONE_SOCIALE,"
+                                + "A.PARTITA_IVA,"
+                                + "A.INDIRIZZO_AZIENDA,"
+                                + "A.CITTA_AZIENDA"
+                                + " from DETTAGLIO_ORDINI_CLIENTI,OC"
+                                + " ANAGRAFICA A WHERE OC.ID = "+id+"" 
+                                + " AND OC.ATTIVO = 'S'"
+                                + " AND OC.ID_ANAGRAFICA = A.ID";
+                        res2 = conn.selectSMS(query);
+                        jTableClienti.setVisible(false);
+                        DefaultTableModel defaultModel = (DefaultTableModel) jTableClienti.getModel();
+
+                        while (defaultModel.getRowCount() > 0) {
+                            defaultModel.removeRow(0);
+                        }      
+                        
+                        while (res2.next()) {
+                            Object[] cell = {res2.getString("ID"),
+                                res2.getString("RAGIONE_SOCIALE"),
+                                res2.getString("PARTITA_IVA"),
+                                res2.getString("INDIRIZZO_AZIENDA"),
+                                res2.getString("CITTA_AZIENDA")
+                            };
+                            defaultModel.addRow(cell);
+                        }                        
+                        
+                        jTableClienti.invalidate();
+                        jTableClienti.validate();
+                        jTableClienti.repaint();    
+                        jTableClienti.setVisible(true);                        
+                        
+                    }
+                }else{
+                    //creo un nuovo ordine
+                    query = "INSERT INTO ORDINI "
+                              + "(TOTALE_COLLI,DATA_ORDINE) VALUES (0,'"+jButtonScegliData.getText()+"');";
+                    result = conn.insert(query);
+                    if (result.equals(INSERT_OK)) {
+                        //recupero id
+                        query = "select seq from sqlite_sequence where name='ORDINI'";
+                        res = conn.selectSMS(query);
+                        id = res.getInt(1);
+                        jLabelID.setText(""+id);
+                        
+                        jTableClienti.setVisible(false);
+                        DefaultTableModel defaultModel = (DefaultTableModel) jTableClienti.getModel();
+
+                        while (defaultModel.getRowCount() > 0) {
+                            defaultModel.removeRow(0);
+                        }      
+                        jTableClienti.invalidate();
+                        jTableClienti.validate();
+                        jTableClienti.repaint();    
+                        jTableClienti.setVisible(true);
+
+                        jTableArticoli.setVisible(false);
+                        defaultModel = (DefaultTableModel) jTableArticoli.getModel();
+
+                        while (defaultModel.getRowCount() > 0) {
+                            defaultModel.removeRow(0);
+                        }      
+                        jTableArticoli.invalidate();
+                        jTableArticoli.validate();
+                        jTableArticoli.repaint();    
+                        jTableArticoli.setVisible(true);                        
+
+                    }
+                }
+                
+            } catch (Exception e) {
+                Utils.logError(e, "", true);
+            }
+            conn.close();
+            parentFrame.waiting.dispose();
+            parentFrame.waiting = null;
+            validate();
+            repaint();            
+        }
+
+        private void popolaListe(int id) {
+            
+        }
     }
 }

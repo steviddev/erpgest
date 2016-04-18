@@ -27,6 +27,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelAnagrafica1.setParentFrame(this);
         jPanelArticoli1.setParentFrame(this);
         jPanelListinoPrezzi1.setParentFrame(this);
+        jPanelOrdini1.setParentFrame(this);
     }
 
     /**
@@ -42,6 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelAnagrafica1 = new erpgest.panels.JPanelAnagrafica();
         jPanelArticoli1 = new erpgest.panels.JPanelArticoli();
         jPanelListinoPrezzi1 = new erpgest.panels.JPanelListinoPrezzi();
+        jPanelOrdini1 = new erpgest.panels.JPanelOrdini();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,6 +62,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Articoli", jPanelArticoli1);
         jTabbedPane2.addTab("Listini e Prezzi", jPanelListinoPrezzi1);
+        jTabbedPane2.addTab("Ordini", jPanelOrdini1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,6 +131,7 @@ public class MainFrame extends javax.swing.JFrame {
     private erpgest.panels.JPanelAnagrafica jPanelAnagrafica1;
     private erpgest.panels.JPanelArticoli jPanelArticoli1;
     private erpgest.panels.JPanelListinoPrezzi jPanelListinoPrezzi1;
+    private erpgest.panels.JPanelOrdini jPanelOrdini1;
     private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 
