@@ -472,7 +472,7 @@ public class JPanelRicercaProdottiPerListino extends javax.swing.JDialog {
         try {
             int[] selection = tabella.getSelectedRows();
             id = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString() ;
-            parentPanel.aggiornaListaProdotti(id);
+            parentPanel.aggiornaListaArticoli(id);
             
             /*
             colonna_ID = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString();

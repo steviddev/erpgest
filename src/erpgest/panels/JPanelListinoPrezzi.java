@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author SteVid <www.stevid.it>
  */
-public class JPanelListinoPrezzi extends javax.swing.JPanel {
+public class JPanelListinoPrezzi extends javax.swing.JPanel implements InterfaceCallBackArticoli{
     String UPDATE_OK = "Aggiornamento effettuato.";
     String INSERT_OK = "Inserimento effettuato.";    
     MainFrame parentFrame;
@@ -903,6 +903,11 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel {
         }
         
         conn.close();
+    }
+
+    @Override
+    public void aggiornaListaArticoli(String id) {
+        aggiornaListaProdotti(id);
     }
     
     
