@@ -14,7 +14,11 @@ import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import erpgest.utils.ChooseData;
 import erpgest.utils.Utils;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,6 +47,32 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
      */
     public JPanelOrdini() {
         initComponents();
+        
+        jTableClienti.setAutoResizeMode(jTableClienti.AUTO_RESIZE_OFF);
+        jTableClienti.setCellSelectionEnabled(false);
+        jTableClienti.setColumnSelectionAllowed(false);
+        jTableClienti.setRowSelectionAllowed(true);
+        jTableClienti.setSelectionMode(0);
+        
+        jTableArticoli.setAutoResizeMode(jTableArticoli.AUTO_RESIZE_OFF);
+        jTableArticoli.setCellSelectionEnabled(false);
+        jTableArticoli.setColumnSelectionAllowed(false);
+        jTableArticoli.setRowSelectionAllowed(true);
+        jTableArticoli.setSelectionMode(0);        
+        
+        jTableClienti.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent me) {
+                JTable table =(JTable) me.getSource();
+                Point p = me.getPoint();
+                int row = table.rowAtPoint(p);
+                /*
+                if (me.getClickCount() == 2) {
+                    popolaListaArticoli();
+                }*/
+                popolaListaArticoli();
+            }
+        });        
+        
     }
 
     /**
@@ -68,6 +98,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonNuovoOrdine = new javax.swing.JButton();
         jButtonAggiungiArticolo = new javax.swing.JButton();
         jButtonRimuoviArticolo = new javax.swing.JButton();
+        jButtonNuovoOrdine1 = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -83,7 +114,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -102,6 +133,8 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             jTableClienti.getColumnModel().getColumn(1).setMaxWidth(400);
             jTableClienti.getColumnModel().getColumn(2).setPreferredWidth(100);
             jTableClienti.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTableClienti.getColumnModel().getColumn(3).setPreferredWidth(350);
+            jTableClienti.getColumnModel().getColumn(3).setMaxWidth(400);
             jTableClienti.getColumnModel().getColumn(4).setPreferredWidth(100);
             jTableClienti.getColumnModel().getColumn(4).setMaxWidth(100);
         }
@@ -166,25 +199,41 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonScegliData.setBounds(150, 40, 150, 40);
 
         jButtonAggiungiTuttiClienti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_all.png"))); // NOI18N
+        jButtonAggiungiTuttiClienti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiTuttiClientiActionPerformed(evt);
+            }
+        });
         add(jButtonAggiungiTuttiClienti);
         jButtonAggiungiTuttiClienti.setBounds(830, 60, 70, 32);
 
         jButtonCancellaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cross.png"))); // NOI18N
+        jButtonCancellaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancellaClienteActionPerformed(evt);
+            }
+        });
         add(jButtonCancellaCliente);
         jButtonCancellaCliente.setBounds(970, 60, 40, 32);
 
         jButtonAggiungliCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_user.png"))); // NOI18N
+        jButtonAggiungliCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungliClienteActionPerformed(evt);
+            }
+        });
         add(jButtonAggiungliCliente);
         jButtonAggiungliCliente.setBounds(900, 60, 70, 32);
 
         jLabel2.setText("ID");
         add(jLabel2);
-        jLabel2.setBounds(10, 10, 20, 16);
+        jLabel2.setBounds(10, 0, 20, 50);
 
-        jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabelID.setForeground(new java.awt.Color(255, 0, 0));
         jLabelID.setText("-");
         add(jLabelID);
-        jLabelID.setBounds(40, 10, 50, 15);
+        jLabelID.setBounds(40, 10, 50, 20);
 
         jButtonNuovoOrdine.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonNuovoOrdine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/note.png"))); // NOI18N
@@ -198,6 +247,11 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonNuovoOrdine.setBounds(310, 40, 90, 40);
 
         jButtonAggiungiArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/add.png"))); // NOI18N
+        jButtonAggiungiArticolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiArticoloActionPerformed(evt);
+            }
+        });
         add(jButtonAggiungiArticolo);
         jButtonAggiungiArticolo.setBounds(940, 330, 40, 31);
 
@@ -209,6 +263,17 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         });
         add(jButtonRimuoviArticolo);
         jButtonRimuoviArticolo.setBounds(940, 370, 40, 31);
+
+        jButtonNuovoOrdine1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonNuovoOrdine1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/arrow_refresh.png"))); // NOI18N
+        jButtonNuovoOrdine1.setText("Aggiorna schermata");
+        jButtonNuovoOrdine1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuovoOrdine1ActionPerformed(evt);
+            }
+        });
+        add(jButtonNuovoOrdine1);
+        jButtonNuovoOrdine1.setBounds(420, 40, 200, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -222,18 +287,18 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         if( choosed.equals("") || choosed == null){
             choosed = "Scegli data";
         }else{
-                    Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame.getFrame(), null, "Salvataggio in corso. Attendere"));
-        t.start();
+            Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame.getFrame(), null, "Salvataggio in corso. Attendere"));
+            t.start();
 
-        while (parentFrame.waiting == null) {
-            try {
-                Thread.sleep(100);
-            } catch (Exception e) {
+            while (parentFrame.waiting == null) {
+                try {
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                }
             }
-        }
 
-        Thread tt = new Thread(new PopolaListe());
-        tt.start();
+            Thread tt = new Thread(new PopolaListe());
+            tt.start();
         
         }
         try {
@@ -248,115 +313,50 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     }//GEN-LAST:event_jButtonScegliDataActionPerformed
 
     private void jButtonRimuoviArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRimuoviArticoloActionPerformed
-        // TODO add your handling code here:
+        String idCliente  = "";
+        String idArticolo = "";
+        try {
+            idCliente = jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString();            
+        } catch (Exception e) {
+        }
+
+        try {
+            idArticolo = jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString();            
+        } catch (Exception e) {
+        }        
+        
+        if (jLabelID.getText().equals("-") || idCliente.equals("")  || idArticolo.equals("")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data e un cliente valido e un prodotto valido", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        rimuoviArticoloSelezionato(jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString());
+        
+        
     }//GEN-LAST:event_jButtonRimuoviArticoloActionPerformed
 
     private void jButtonNuovoOrdineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoOrdineActionPerformed
         //controllo ci sia una data indicata
-        if( jButtonScegliData.getText().startsWith("Scegli") ){
-            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+        if( jButtonScegliData.getText().startsWith("Scegli") || !jLabelID.getText().equals("-")){
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data valida.", "Attenzione", JOptionPane.ERROR_MESSAGE);
             return;
         }
-    }//GEN-LAST:event_jButtonNuovoOrdineActionPerformed
-
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAggiungiArticolo;
-    private javax.swing.JButton jButtonAggiungiTuttiClienti;
-    private javax.swing.JButton jButtonAggiungliCliente;
-    private javax.swing.JButton jButtonCancellaCliente;
-    private javax.swing.JButton jButtonNuovoOrdine;
-    private javax.swing.JButton jButtonRimuoviArticolo;
-    private javax.swing.JButton jButtonScegliData;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelID;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTableArticoli;
-    private javax.swing.JTable jTableClienti;
-    // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void aggiornaListaArticoli(String id) {
         
-    }
-
-    @Override
-    public void aggiornaListaClienti(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private class PopolaListe implements Runnable {
-
-        public PopolaListe() {
-        }
-
-        @Override
-        public void run() {
-            //prima controllo che non ci sia un ordine attivo nella data indicata
-            DbConn conn = new DbConn();
-            conn.makeConn();
-            ResultSet res2 = null;
-            try {
-                int count = 0;
-                int id = 0;
-                String result = "";
-                String query = "SELECT count(*) FROM ORDINI "
-                        + " WHERE "
-                        + " ATTIVO = 'S' "
-                        + " AND strftime('%d/%m/%Y',data_ORDINE) = '"+jButtonScegliData.getText()+"'";
-                ResultSet res = conn.selectSMS(query);
-                if(res.next()){
-                    count = res.getInt(1);
-                }
-                if (count>0) {
-                    query = "SELECT id FROM ORDINI "
-                        + " WHERE "
-                        + " ATTIVO = 'S' "
-                        + " AND strftime('%d/%m/%Y',data_creazione) = '"+jButtonScegliData.getText()+"'";
-                    res = conn.selectSMS(query);
-                    if(res.next()){
-                        id = res.getInt("ID");
-                    }
-                    if (id>0) {
-                        query = "select A.ID,"
-                                + "A.RAGIONE_SOCIALE,"
-                                + "A.PARTITA_IVA,"
-                                + "A.INDIRIZZO_AZIENDA,"
-                                + "A.CITTA_AZIENDA"
-                                + " from DETTAGLIO_ORDINI_CLIENTI,OC"
-                                + " ANAGRAFICA A WHERE OC.ID = "+id+"" 
-                                + " AND OC.ATTIVO = 'S'"
-                                + " AND OC.ID_ANAGRAFICA = A.ID";
-                        res2 = conn.selectSMS(query);
-                        jTableClienti.setVisible(false);
-                        DefaultTableModel defaultModel = (DefaultTableModel) jTableClienti.getModel();
-
-                        while (defaultModel.getRowCount() > 0) {
-                            defaultModel.removeRow(0);
-                        }      
-                        
-                        while (res2.next()) {
-                            Object[] cell = {res2.getString("ID"),
-                                res2.getString("RAGIONE_SOCIALE"),
-                                res2.getString("PARTITA_IVA"),
-                                res2.getString("INDIRIZZO_AZIENDA"),
-                                res2.getString("CITTA_AZIENDA")
-                            };
-                            defaultModel.addRow(cell);
-                        }                        
-                        
-                        jTableClienti.invalidate();
-                        jTableClienti.validate();
-                        jTableClienti.repaint();    
-                        jTableClienti.setVisible(true);                        
-                        
-                    }
-                }else{
+        String query = "";
+        String result = "";
+        Date data;
+        ResultSet res ;
+        int id;
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
                     //creo un nuovo ordine
+                    data = formatterData.parse(jButtonScegliData.getText());
+                    String dataStr = formatterDataAndTimeENG.format(data);
                     query = "INSERT INTO ORDINI "
-                              + "(TOTALE_COLLI,DATA_ORDINE) VALUES (0,'"+jButtonScegliData.getText()+"');";
+                              + "(TOTALE_COLLI,DATA_ORDINE) VALUES (0,'"+dataStr+"');";
                     result = conn.insert(query);
                     if (result.equals(INSERT_OK)) {
                         //recupero id
@@ -387,9 +387,539 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                         jTableArticoli.repaint();    
                         jTableArticoli.setVisible(true);                        
 
+                    }            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        
+        conn.close();
+        
+    }//GEN-LAST:event_jButtonNuovoOrdineActionPerformed
+
+    private void jButtonAggiungiTuttiClientiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungiTuttiClientiActionPerformed
+        if (jLabelID.getText().equals("-")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data e creare un ordine.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int n = JOptionPane.showConfirmDialog(null,
+            "Vuoi aggiungere tutti i restanti clienti?",
+            "",
+            JOptionPane.YES_NO_OPTION);
+
+        if (n == JOptionPane.YES_OPTION) {
+
+                Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame.getFrame(), null, "Salvataggio in corso. Attendere"));
+                t.start();
+
+                while (parentFrame.waiting == null) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (Exception e) {
                     }
                 }
+
+                Thread tt = new Thread(new AggiungiTuttiIClientiAllaLista());
+                tt.start();                   
+            
+        } else {
+            //JOptionPane.showMessageDialog(null, "Goodbye");
+            return;
+        }             
+        
+ 
+        
+        
+    }//GEN-LAST:event_jButtonAggiungiTuttiClientiActionPerformed
+
+    private void jButtonAggiungliClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungliClienteActionPerformed
+        if (jLabelID.getText().equals("-")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data e creare un ordine.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JPanelRicercaClienti dialog = new JPanelRicercaClienti(this.parentFrame,this);
+    }//GEN-LAST:event_jButtonAggiungliClienteActionPerformed
+
+    private void jButtonCancellaClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancellaClienteActionPerformed
+        try {
+
+            int[] selection = jTableClienti.getSelectedRows();
+            String id = jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() ;            
+            
+        } catch (Exception e) {
+            new javax.swing.JOptionPane().showMessageDialog(
+                    parentFrame,
+                    "Selezionare Un Elemento",
+                    "Attenzione",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;            
+        }
+        
+        int n = JOptionPane.showConfirmDialog(null,
+            "ATTENZIONE!! Si vuole cancellare il cliente "+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 1).toString()+"?",
+            "",
+            JOptionPane.YES_NO_OPTION);
+
+        if (n == JOptionPane.YES_OPTION) {
+            rimuoviClienteDaOrdine(jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString());
+        } else {
+            //JOptionPane.showMessageDialog(null, "Goodbye");
+            return;
+        }        
+    }//GEN-LAST:event_jButtonCancellaClienteActionPerformed
+
+    private void jButtonAggiungiArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungiArticoloActionPerformed
+        String idCliente = "";
+        try {
+            idCliente = jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString();            
+        } catch (Exception e) {
+        }
+        
+        if (jLabelID.getText().equals("-") || idCliente.equals("")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data e un cliente valido.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        JPanelRicercaProdottiPerOrdini dialog = new JPanelRicercaProdottiPerOrdini(this.parentFrame,this);
+        
+    }//GEN-LAST:event_jButtonAggiungiArticoloActionPerformed
+
+    private void jButtonNuovoOrdine1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoOrdine1ActionPerformed
+        popolaListaClienti();
+    }//GEN-LAST:event_jButtonNuovoOrdine1ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAggiungiArticolo;
+    private javax.swing.JButton jButtonAggiungiTuttiClienti;
+    private javax.swing.JButton jButtonAggiungliCliente;
+    private javax.swing.JButton jButtonCancellaCliente;
+    private javax.swing.JButton jButtonNuovoOrdine;
+    private javax.swing.JButton jButtonNuovoOrdine1;
+    private javax.swing.JButton jButtonRimuoviArticolo;
+    private javax.swing.JButton jButtonScegliData;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelID;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableArticoli;
+    private javax.swing.JTable jTableClienti;
+    // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void aggiornaListaArticoli(String id) {
+        if (id.equals("")) {
+            return;
+        }
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        ResultSet res = null;
+        int count = 0;
+        String result = "";
+        try {
+            
+            //prima cerco se l'id c'è gia ed è attivo 
+            
+            String query = "SELECT count(*) FROM DETTAGLIO_ORDINI "
+                    + " WHERE ID_DESTINAZIONE_CLIENTE = '"+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +"' "
+                    + " AND ID_ARTICOLO = " + id
+                    + " AND ATTIVO = 'S'"
+                    + " AND ID_ORDINE = '"+jLabelID.getText()+"'";
+            res = conn.selectSMS(query);
+            if (res.next()) {
+                count = res.getInt(1);
+            }
+            if (count<=0) {
+                //faccio l'insert
+                query = "INSERT INTO DETTAGLIO_ORDINI (ID_ORDINE,ID_ARTICOLO,"
+                        + "ID_DESTINAZIONE_CLIENTE,QUANTITA,ID_LISTINO)"
+                        + " VALUES ('"+jLabelID.getText()+"',"+id+","+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +",0,2)";
+                result = conn.insert(query);
+                if (result.equals(INSERT_OK)) {
+                    popolaListaArticoli();
+                }
                 
+            }else{
+                //altrimenti faccio l'update dei colli e del prezzo
+                
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();        
+    }
+    
+    
+    
+    @Override
+    public void aggiornaListaClienti(String id) {
+        if (id.equals("")) {
+            return;
+        }
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        ResultSet res = null;
+        int count = 0;
+        String result = "";
+        try {
+            
+            //prima cerco se l'id c'è gia ed è attivo 
+            
+            String query = "SELECT count(*) FROM DETTAGLIO_ORDINI_CLIENTI "
+                    + " WHERE ID_ANAGRAFICA = '"+id+"' "
+                    + " AND ATTIVO = 'S'"
+                    + " AND ID_ORDINE = '"+jLabelID.getText()+"'";
+            res = conn.selectSMS(query);
+            if (res.next()) {
+                count = res.getInt(1);
+            }
+            if (count<=0) {
+                
+                query = "INSERT INTO DETTAGLIO_ORDINI_CLIENTI (ID_ORDINE,ID_ANAGRAFICA) "
+                        + " VALUES ('"+jLabelID.getText()+"',"+id+")";
+                result = conn.insert(query);
+                if (result.equals(INSERT_OK)) {
+                    popolaListaClienti();
+                }
+                
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+    }
+
+    private void popolaListaClienti(){
+        
+        if (jLabelID.getText().equals("")) {
+            return;
+        }
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        try {
+            String query = "";
+            ResultSet res2;
+            query = "select A.ID,"
+                    + "A.RAGIONE_SOCIALE,"
+                    + "A.PARTITA_IVA,"
+                    + "A.INDIRIZZO_AZIENDA,"
+                    + "A.CITTA_AZIENDA"
+                    + " from DETTAGLIO_ORDINI_CLIENTI OC,"
+                    + " ANAGRAFICA A"
+                    + " WHERE "
+                    + " OC.ID_ORDINE = '"+jLabelID.getText()+"' "
+                    + " AND OC.ATTIVO = 'S'"
+                    + " AND OC.ID_ANAGRAFICA = A.ID";
+            res2 = conn.selectSMS(query);
+            jTableClienti.setVisible(false);
+            DefaultTableModel defaultModel = (DefaultTableModel) jTableClienti.getModel();
+
+            while (defaultModel.getRowCount() > 0) {
+                defaultModel.removeRow(0);
+            }      
+
+            while (res2.next()) {
+                Object[] cell = {res2.getString("ID"),
+                    res2.getString("RAGIONE_SOCIALE"),
+                    res2.getString("PARTITA_IVA"),
+                    res2.getString("INDIRIZZO_AZIENDA"),
+                    res2.getString("CITTA_AZIENDA")
+                };
+                defaultModel.addRow(cell);
+            }                        
+
+            jTableClienti.invalidate();
+            jTableClienti.validate();
+            jTableClienti.repaint();    
+            jTableClienti.setVisible(true);                
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }        
+
+    }
+
+    private void popolaListaArticoli() {
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
+            
+            String query = "SELECT DO.ID_ARTICOLO,"
+                    + " A.NOME,"
+                    + " A.DESCRIZIONE,"
+                    + " L.NOME AS LISTINO,"
+                    + " DO.PREZZO,"
+                    + " DO.COLLI "
+                    + " FROM DETTAGLIO_ORDINI DO,"
+                    + "      ARTICOLI A,"
+                    + "      LISTINI L"
+                    + " WHERE DO.ID_ORDINE = " + jLabelID.getText()
+                    + " AND DO.ID_DESTINAZIONE_CLIENTE = " + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString()
+                    + " AND DO.ATTIVO = 'S'"
+                    + " AND DO.ID_ARTICOLO = A.ID"
+                    + " AND A.ATTIVO = 'S' "
+                    + " AND ID_LISTINO = L.ID"
+                    + " AND L.ATTIVO = 'S'";
+            ResultSet res = conn.selectSMS(query);
+
+            jTableArticoli.setVisible(false);
+            DefaultTableModel defaultModel = (DefaultTableModel) jTableArticoli.getModel();
+
+            while (defaultModel.getRowCount() > 0) {
+                defaultModel.removeRow(0);
+            }                  
+            
+            while( res.next() ){
+                Object[] cell = {res.getString("ID_ARTICOLO"),
+                    res.getString("NOME"),
+                    res.getString("DESCRIZIONE"),
+                    res.getString("LISTINO"),
+                    res.getString("PREZZO"),
+                    res.getString("COLLI")
+                };
+                defaultModel.addRow(cell);                
+            }
+            jTableArticoli.invalidate();
+            jTableArticoli.validate();
+            jTableArticoli.repaint();    
+            jTableArticoli.setVisible(true);               
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        
+        conn.close();
+    }
+
+    @Override
+    public void aggiornaListaArticoli(String id, String Listino, String prezzo, String colli) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void rimuoviArticoloSelezionato(String idArticolo) {
+        if (idArticolo.equals("")) {
+            return;
+        }
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        try {
+            String result = "";
+            String query = "";
+            
+            query = "UPDATE DETTAGLIO_ORDINI "
+                    + " SET ATTIVO = 'N' "
+                    + " WHERE ID_ORDINE = " + jLabelID.getText()
+                    + " AND ATTIVO = 'S'"
+                    + " AND ID_DESTINAZIONE_CLIENTE = " + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString()
+                    + " AND ID_ARTICOLO = " + idArticolo;
+            result = conn.update(query);
+            if (!result.equals(UPDATE_OK)) {
+                JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore nella rimozione dell articolo", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        
+        conn.close();
+        popolaListaArticoli();
+    }
+
+    private  class AggiungiTuttiIClientiAllaLista implements Runnable {
+
+        public AggiungiTuttiIClientiAllaLista() {
+        }
+
+        @Override
+        public void run() {
+            String result = "";
+            String query = "";
+            int count = 0;
+            DbConn conn = new DbConn();
+            conn.makeConn();
+
+            try {  
+                
+                query = "SELECT COUNT(*) "
+                        + " FROM DETTAGLIO_ORDINI_CLIENTI "
+                        + " WHERE ID_ORDINE = "+ jLabelID.getText()
+                        + " AND ATTIVO = 'S'";
+                ResultSet res = conn.selectSMS(query);
+                if (res.next()) {
+                    count = res.getInt(1);
+                }
+                
+                if (count>0) {
+                    query = "UPDATE DETTAGLIO_ORDINI_CLIENTI"
+                            + " SET ATTIVO = 'N' "
+                            + " WHERE ID_ORDINE = " + jLabelID.getText()
+                            + " AND ATTIVO = 'S'";
+                    result = conn.update(query);
+                    if (!result.equals(UPDATE_OK)) {
+                        JOptionPane.showMessageDialog(parentFrame.getFrame(), "impossibile cancellare i clienti gia inseriti.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                        closeDialog();
+                        return;
+
+                    }
+                }
+                query = "INSERT INTO DETTAGLIO_ORDINI_CLIENTI(ID_ANAGRAFICA,id_ordine) "
+                        + "select id,'"+jLabelID.getText()+"' "
+                        + "from anagrafica a "
+                        + "where a.attivo = 'S'";
+                result = conn.insert(query);
+                if (!result.equals(INSERT_OK)) {
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore su inserimento massivo.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                    closeDialog();
+                    return;
+                }
+            } catch (Exception e) {
+                Utils.logError(e, "", true);
+            }
+            conn.close();          
+            popolaListaClienti();
+            closeDialog();
+        }                          
+    }
+        private void closeDialog() {
+        if (parentFrame.waiting != null) {
+            parentFrame.waiting.dispose();
+            parentFrame.waiting = null;
+            validate();
+            repaint();
+        }
+
+    }
+    private class RimuoviCliente implements Runnable {
+        
+        String idCliente;
+        
+        public RimuoviCliente(String idCliente) {
+            this.idCliente = idCliente;
+        }
+        
+        @Override
+        public void run() {
+            System.out.println("Sto rimuovendo il cliente");
+            String result = "";
+            String query = "";
+            DbConn conn = new DbConn();
+            conn.makeConn();
+
+            try {
+                query = "UPDATE DETTAGLIO_ORDINI_CLIENTI "
+                        + " SET ATTIVO = 'N'"
+                        + " WHERE ID_ANAGRAFICA = "+idCliente
+                        + " AND ID_ORDINE = "+jLabelID.getText();
+
+                result = conn.update(query);
+                if (!result.equals(UPDATE_OK)) {
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                }
+
+                query = "UPDATE DETTAGLIO_ORDINI "
+                        + " SET ATTIVO = 'N'"
+                        + " WHERE ID_DESTINAZIONE_CLIENTE = "+idCliente
+                        + " AND ID_ORDINE = "+jLabelID.getText();
+
+                result = conn.update(query);
+                if (!result.equals(UPDATE_OK)) {
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                }                
+                
+                
+            } catch (Exception e) {
+                Utils.logError(e, "", true);
+            }
+            conn.close();
+            popolaListaClienti(); 
+            rimuoviTuttiElementiListaArticoli();
+        }
+    }
+    
+    private class PopolaListe implements Runnable {
+
+        public PopolaListe() {
+        }
+
+        @Override
+        public void run() {
+            //prima controllo che non ci sia un ordine attivo nella data indicata
+            DbConn conn = new DbConn();
+            conn.makeConn();
+            ResultSet res2 = null;
+            Date data;
+            try {
+                int count = 0;
+                int id = 0;
+                String result = "";
+                String query = "SELECT count(*) FROM ORDINI "
+                        + " WHERE "
+                        + " ATTIVO = 'S' "
+                        + " AND strftime('%d/%m/%Y',data_ORDINE) = '"+jButtonScegliData.getText()+"'";
+                ResultSet res = conn.selectSMS(query);
+                if(res.next()){
+                    count = res.getInt(1);
+                }
+                if (count>0) {
+                    query = "SELECT id FROM ORDINI "
+                        + " WHERE "
+                        + " ATTIVO = 'S' "
+                        + " AND strftime('%d/%m/%Y',data_ordine) = '"+jButtonScegliData.getText()+"'";
+                    res = conn.selectSMS(query);
+                    if(res.next()){
+                        id = res.getInt("ID");
+                    }
+                    jLabelID.setText(""+id);
+                    if (id>0) {
+                        query = "select A.ID,"
+                                + "A.RAGIONE_SOCIALE,"
+                                + "A.PARTITA_IVA,"
+                                + "A.INDIRIZZO_AZIENDA,"
+                                + "A.CITTA_AZIENDA"
+                                + " from DETTAGLIO_ORDINI_CLIENTI OC,"
+                                + " ANAGRAFICA A "
+                                + " WHERE OC.ID_ORDINE = "+id+"" 
+                                + " AND OC.ATTIVO = 'S'"
+                                + " AND OC.ID_ANAGRAFICA = A.ID";
+                        res2 = conn.selectSMS(query);
+                        jTableClienti.setVisible(false);
+                        DefaultTableModel defaultModel = (DefaultTableModel) jTableClienti.getModel();
+
+                        while (defaultModel.getRowCount() > 0) {
+                            defaultModel.removeRow(0);
+                        }      
+                        
+                        while (res2.next()) {
+                            Object[] cell = {res2.getString("ID"),
+                                res2.getString("RAGIONE_SOCIALE"),
+                                res2.getString("PARTITA_IVA"),
+                                res2.getString("INDIRIZZO_AZIENDA"),
+                                res2.getString("CITTA_AZIENDA")
+                            };
+                            defaultModel.addRow(cell);
+                        }                        
+                        
+                        jTableClienti.invalidate();
+                        jTableClienti.validate();
+                        jTableClienti.repaint();    
+                        jTableClienti.setVisible(true);                        
+                        rimuoviTuttiElementiListaArticoli();
+                    }
+                }else{
+                    jLabelID.setText("-");
+                    rimuoviTuttiElementiListaArticoli();
+                    rimuoviTuttiElementiListaClienti();
+                    
+
+                }
             } catch (Exception e) {
                 Utils.logError(e, "", true);
             }
@@ -403,5 +933,55 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         private void popolaListe(int id) {
             
         }
+    }
+    
+    private void rimuoviClienteDaOrdine(String idCliente){
+        String idOrdine = jLabelID.getText();
+        if (idOrdine.equals("-")) {
+            return;
+        }
+        
+        //Thread t = new Thread(new erpgest.utils.ShowWaiting(parentFrame.getFrame(), null, "Salvataggio in corso. Attendere"));
+        //t.start();
+
+//        while (parentFrame.waiting == null) {
+//            try {
+//                Thread.sleep(100);
+//            } catch (Exception e) {
+//            }
+//        }
+
+        Thread tt = new Thread(new RimuoviCliente(idCliente));
+        tt.start();        
+        
+        
+
+    }
+    
+    private void rimuoviTuttiElementiListaClienti(){
+        jTableClienti.setVisible(false);
+        DefaultTableModel defaultModel = (DefaultTableModel) jTableClienti.getModel();
+
+        while (defaultModel.getRowCount() > 0) {
+            defaultModel.removeRow(0);
+        }      
+        jTableClienti.invalidate();
+        jTableClienti.validate();
+        jTableClienti.repaint();    
+        jTableClienti.setVisible(true);  
+        
+    }
+    
+    private void rimuoviTuttiElementiListaArticoli(){
+        jTableArticoli.setVisible(false);
+        DefaultTableModel defaultModel = (DefaultTableModel) jTableArticoli.getModel();
+
+        while (defaultModel.getRowCount() > 0) {
+            defaultModel.removeRow(0);
+        }      
+        jTableArticoli.invalidate();
+        jTableArticoli.validate();
+        jTableArticoli.repaint();    
+        jTableArticoli.setVisible(true);
     }
 }

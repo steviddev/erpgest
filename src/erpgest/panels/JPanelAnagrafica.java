@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author SteVid <www.stevid.it>
  */
-public class JPanelAnagrafica extends javax.swing.JPanel {
+public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCallBackClienti{
 
     SimpleDateFormat formatterData = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat formatterOre = new SimpleDateFormat("HH:mm");
@@ -197,6 +197,11 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         buttonElimina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 buttonEliminaMouseReleased(evt);
+            }
+        });
+        buttonElimina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEliminaActionPerformed(evt);
             }
         });
         add(buttonElimina);
@@ -516,6 +521,10 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_buttonEliminaMouseReleased
 
+    private void buttonEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEliminaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonEliminaActionPerformed
+
 
     public void aggiornaFinestraInserimentoCliente(String id){
         
@@ -679,6 +688,11 @@ public class JPanelAnagrafica extends javax.swing.JPanel {
         conn.close();
         return risultato;
     }     
+
+    @Override
+    public void aggiornaListaClienti(String id) {
+        aggiornaFinestraInserimentoCliente(id);
+    }
     
     class SalvaDatiNelDB implements Runnable {
 

@@ -909,6 +909,11 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     public void aggiornaListaArticoli(String id) {
         aggiornaListaProdotti(id);
     }
+
+    @Override
+    public void aggiornaListaArticoli(String id, String Listino, String prezzo, String colli) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

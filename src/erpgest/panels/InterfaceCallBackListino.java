@@ -9,7 +9,6 @@ package erpgest.panels;
  *
  * @author SteVid <www.stevid.it>
  */
-public interface InterfaceCallBackArticoli {
-    public void aggiornaListaArticoli(String id);
-    public void aggiornaListaArticoli(String id,String Listino,String prezzo,String colli);
+public interface InterfaceCallBackListino {
+    public void popolaTabellaListino();
 }

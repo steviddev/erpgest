@@ -38,7 +38,7 @@ import javax.swing.JTable;
 public class JPanelRicercaClienti extends javax.swing.JDialog {
 
     MainFrame parentFrame;
-    JPanelAnagrafica parentPanel;
+    InterfaceCallBackClienti parentPanel;
     
 
     String[] dati = new String[5];
@@ -58,7 +58,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
 
     private static final String COMMIT_ACTION = "commit";   
     
-    public JPanelRicercaClienti(MainFrame parent,JPanelAnagrafica parentPanel) {
+    public JPanelRicercaClienti(MainFrame parent,InterfaceCallBackClienti parentPanel) {
         super(parent, "Ricerca Azienda", true);
 
         this.parentFrame = parent;
@@ -511,7 +511,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
         try {
             int[] selection = tabella.getSelectedRows();
             id = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString() ;
-            parentPanel.aggiornaFinestraInserimentoCliente(id);
+            parentPanel.aggiornaListaClienti(id);
             
             /*
             colonna_ID = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString();

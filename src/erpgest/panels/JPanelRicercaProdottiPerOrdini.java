@@ -35,7 +35,7 @@ import javax.swing.JTable;
  *
  * @author Stefano Vidili <www.stevid.it>
  */
-public class JPanelRicercaProdottiPerListino extends javax.swing.JDialog {
+public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
 
     MainFrame parentFrame;
     InterfaceCallBackArticoli parentPanel;
@@ -58,7 +58,7 @@ public class JPanelRicercaProdottiPerListino extends javax.swing.JDialog {
 
     private static final String COMMIT_ACTION = "commit";   
     
-    public JPanelRicercaProdottiPerListino(MainFrame parent,InterfaceCallBackArticoli parentPanel) {
+    public JPanelRicercaProdottiPerOrdini(MainFrame parent,InterfaceCallBackArticoli parentPanel) {
         super(parent, "Ricerca Azienda", true);
 
         this.parentFrame = parent;
@@ -467,6 +467,8 @@ public class JPanelRicercaProdottiPerListino extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChiudiActionPerformed
 
     private void jButtonSelezionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelezionaActionPerformed
+        JDialogImpostaPrezzo uno = new JDialogImpostaPrezzo(parentFrame, null, colonna_nome, colonna_ID, colonna_nome, colonna_nome, colonna_nome, colonna_ID);
+        
         String id = "";
         ResultSet res;
         try {
