@@ -124,6 +124,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonRimuoviArticolo = new javax.swing.JButton();
         jButtonNuovoOrdine1 = new javax.swing.JButton();
         jButtonModificaArticolo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -308,6 +309,15 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         });
         add(jButtonModificaArticolo);
         jButtonModificaArticolo.setBounds(940, 410, 40, 31);
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1);
+        jButton1.setBounds(960, 490, 90, 31);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -528,8 +538,13 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonModificaArticoloActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JDialogEsploraDoc uno = new JDialogEsploraDoc(parentFrame,true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAggiungiArticolo;
     private javax.swing.JButton jButtonAggiungiTuttiClienti;
     private javax.swing.JButton jButtonAggiungliCliente;
