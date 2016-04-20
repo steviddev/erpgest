@@ -35,11 +35,10 @@ import javax.swing.JTable;
  *
  * @author Stefano Vidili <www.stevid.it>
  */
-public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
+public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog implements InterfaceCallBackListino{
 
     MainFrame parentFrame;
-    InterfaceCallBackArticoli parentPanel;
-    
+    JPanelOrdini parentPanel;
 
     String[] dati = new String[5];
     public String nominativo_cliente = "";
@@ -58,7 +57,7 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
 
     private static final String COMMIT_ACTION = "commit";   
     
-    public JPanelRicercaProdottiPerOrdini(MainFrame parent,InterfaceCallBackArticoli parentPanel) {
+    public JPanelRicercaProdottiPerOrdini(MainFrame parent,JPanelOrdini parentPanel) {
         super(parent, "Ricerca Azienda", true);
 
         this.parentFrame = parent;
@@ -136,77 +135,6 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
                 
         erpgest.utils.UtilsGen.centraDialogo(parent, this);
 
-        // Without this, cursor always leaves text field
-        //jTextFieldNome.setFocusTraversalKeysEnabled(false);
-
-        /*
-        // Our words to complete
-        ArrayList<String> keywords = new ArrayList<String>(6);
-                keywords.add("example");
-                keywords.add("autocomplete");
-                keywords.add("autocompleta");
-                keywords.add("stackabuse");
-                keywords.add("java");
-        Autocomplete autoComplete = new Autocomplete(jTextFieldNome, keywords);
-        jTextFieldNome.getDocument().addDocumentListener(autoComplete);
-
-        // Maps the tab key to the commit action, which finishes the autocomplete
-        // when given a suggestion
-        jTextFieldNome.getInputMap().put(KeyStroke.getKeyStroke("TAB"), COMMIT_ACTION);
-        jTextFieldNome.getActionMap().put(COMMIT_ACTION, autoComplete.new CommitAction());  */      
-        
-        /*
-        AutoSuggestor autoSuggestor = new AutoSuggestor(jTextFieldNome, this, null, Color.WHITE.brighter(), Color.BLUE, Color.RED, 0.90f) {
-            @Override
-            public boolean wordTyped(String typedWord) {
-
-                //create list for dictionary this in your case might be done via calling a method which queries db and returns results as arraylist
-                ArrayList<String> words = new ArrayList<>();
-                words.add("hello");
-                words.add("heritage");
-                words.add("happiness");
-                words.add("goodbye");
-                words.add("cruel");
-                words.add("car");
-                words.add("war");
-                words.add("will");
-                words.add("world");
-                words.add("wall");                
-
-
-                setDictionary(words);
-                //addToDictionary("bye");//adds a single word
-
-                return super.wordTyped(typedWord);//now call super to check for any matches against newest dictionary
-            }
-        };
-        */
-        
-        /*
-        ArrayList<String> items = new ArrayList<String>();
-        Locale[] locales = Locale.getAvailableLocales();
-        for (int i = 0; i < locales.length; i++) {
-            String item = locales[i].getDisplayName();
-            items.add(item);
-        }
-        setupAutoComplete(jTextFieldNome, items);       
-        */
-        
-        /*
-        ArrayList<String> items = new ArrayList<String>();
-        Locale[] locales = Locale.getAvailableLocales();
-        for (int i = 0; i < locales.length; i++) {
-            String item = locales[i].getDisplayName();
-            items.add(item);
-        }        
-                if (autocompleteNome != null) {
-                    autocompleteNome.uninstall();
-
-                }
-
-        jComboBoxNome.setBorder(null);
-        autocompleteNome = AutoCompleteSupport.install(jComboBoxNome, GlazedLists.eventListOf(items.toArray()));        
-        */
         setVisible(true);
     }
 
@@ -467,62 +395,15 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonChiudiActionPerformed
 
     private void jButtonSelezionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelezionaActionPerformed
-        JDialogImpostaPrezzo uno = new JDialogImpostaPrezzo(parentFrame, null, colonna_nome, colonna_ID, colonna_nome, colonna_nome, colonna_nome, colonna_ID);
+        JDialogImpostaPrezzoPerOrdini uno = new JDialogImpostaPrezzoPerOrdini(parentFrame, this, "15", "pane", "pane e casu");
         
-        String id = "";
+        String idArticolo = "";
         ResultSet res;
         try {
             int[] selection = tabella.getSelectedRows();
-            id = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString() ;
-            parentPanel.aggiornaListaArticoli(id);
+            idArticolo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString() ;
+            parentPanel.aggiornaListaArticoli(idArticolo);
             
-            /*
-            colonna_ID = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString();
-            colonna_nome = tabella.getModel().getValueAt(tabella.getSelectedRow(), 2).toString();
-            colonna_cognome = tabella.getModel().getValueAt(tabella.getSelectedRow(), 1).toString();
-            try {
-                colonna_CodiceFiscale = tabella.getModel().getValueAt(tabella.getSelectedRow(), 3).toString();
-            } catch (Exception e) {
-                colonna_CodiceFiscale = "";
-            }
-            
-            try {
-                colonna_id_bracciale = tabella.getModel().getValueAt(tabella.getSelectedRow(), 4).toString();
-            } catch (Exception e) {
-                colonna_id_bracciale = "";
-            }
-            
-            parent.azzeraCampi();
-            
-            parent.setNome(colonna_nome);
-            parent.setCognome(colonna_cognome);
-            parent.setCodiceFiscale(colonna_CodiceFiscale);
-            parent.setID(colonna_ID);
-            parent.setCodiceBraccialetto(colonna_id_bracciale);
-            
-            String query = "select u.citta,u.indirizzo,u.telefono,u.id_transponder "
-                        +"from plc.utenti AS u "
-                        + " "
-                        + "where u.id = " + colonna_ID ;
-            
-            //recupero gli altri dati
-            try {
-                DbConn conn = new DbConn();
-                conn.makeConn();
-                
-                res = conn.selectSMS(query);
-                
-                while (res.next()) {
-                    parent.setCitta( res.getString("citta") );
-                    parent.setIndirizzo(res.getString("indirizzo") );
-                    parent.setTelefono(res.getString("telefono") );
-                    parent.setUUID(res.getString("id_transponder") );
-                }
-                
-            } catch (Exception e) {
-                System.out.println(query);
-            }
-            */
             
         } catch (Exception e) {
             new javax.swing.JOptionPane().showMessageDialog(
@@ -533,7 +414,7 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
             );
             return;
         }
-        if (!id.equals("")) {
+        if (!idArticolo.equals("")) {
             dispose();
         }
     }//GEN-LAST:event_jButtonSelezionaActionPerformed
@@ -596,6 +477,16 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
         jTextFieldNomeProdotto.setText("");
         jTextFieldID.setText("");
         jTextFieldDescrizione.setText("");
+    }
+
+    @Override
+    public void settaListino(String listino, String prezzo) {
+        parentPanel.settaListino(listino, prezzo);
+    }
+
+    @Override
+    public void settaListino(String idListino, String idPrezzo, String prezzo, String listino) {
+        parentPanel.settaListino(idListino, idPrezzo, prezzo,listino);
     }
 
     class eseguiRicerca implements Runnable {
@@ -694,7 +585,7 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog {
             return;
         }
     }
-    public void setParentPanel(JPanelListinoPrezzi parent){
+    public void setParentPanel(JPanelOrdini parent){
         parentPanel = parent;
     }
 }

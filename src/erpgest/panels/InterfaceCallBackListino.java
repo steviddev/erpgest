@@ -10,5 +10,6 @@ package erpgest.panels;
  * @author SteVid <www.stevid.it>
  */
 public interface InterfaceCallBackListino {
-    public void popolaTabellaListino();
+    public void settaListino(String idListino,String idPrezzo);
+    public void settaListino(String idListino,String idPrezzo,String prezzo,String listino);
 }

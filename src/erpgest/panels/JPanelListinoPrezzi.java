@@ -78,7 +78,6 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jButtonOkCreazione = new javax.swing.JButton();
         jTextFieldNuovoListino = new javax.swing.JTextField();
         jButtonAnnullaCreazioneListino = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jPanelCopiaListini = new javax.swing.JPanel();
         jButtonCopiaListino = new javax.swing.JButton();
@@ -200,7 +199,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         add(jComboBoxListini);
-        jComboBoxListini.setBounds(150, 50, 150, 25);
+        jComboBoxListini.setBounds(70, 80, 150, 25);
 
         jButtonNuovoListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonNuovoListino.setText("Nuovo Listino");
@@ -210,7 +209,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         add(jButtonNuovoListino);
-        jButtonNuovoListino.setBounds(350, 30, 140, 34);
+        jButtonNuovoListino.setBounds(410, 90, 140, 34);
 
         jButtonEliminaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonEliminaListino.setText("Elimina Listino");
@@ -220,7 +219,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         add(jButtonEliminaListino);
-        jButtonEliminaListino.setBounds(350, 80, 140, 34);
+        jButtonEliminaListino.setBounds(410, 140, 140, 34);
 
         jPanelCreazioneListino.setBorder(javax.swing.BorderFactory.createTitledBorder("Creazione Nuovo Listino"));
         jPanelCreazioneListino.setEnabled(false);
@@ -234,7 +233,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         jPanelCreazioneListino.add(jButtonOkCreazione);
-        jButtonOkCreazione.setBounds(250, 10, 90, 31);
+        jButtonOkCreazione.setBounds(250, 20, 90, 31);
 
         jTextFieldNuovoListino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,7 +241,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         jPanelCreazioneListino.add(jTextFieldNuovoListino);
-        jTextFieldNuovoListino.setBounds(10, 20, 230, 30);
+        jTextFieldNuovoListino.setBounds(10, 30, 230, 30);
 
         jButtonAnnullaCreazioneListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonAnnullaCreazioneListino.setText("Annulla");
@@ -252,18 +251,10 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         jPanelCreazioneListino.add(jButtonAnnullaCreazioneListino);
-        jButtonAnnullaCreazioneListino.setBounds(250, 50, 90, 31);
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
-        jPanelCreazioneListino.add(jTextField2);
-        jTextField2.setBounds(10, 20, 230, 30);
+        jButtonAnnullaCreazioneListino.setBounds(250, 60, 90, 31);
 
         add(jPanelCreazioneListino);
-        jPanelCreazioneListino.setBounds(560, 30, 350, 90);
+        jPanelCreazioneListino.setBounds(560, 20, 350, 100);
 
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton3.setText("Copia");
@@ -273,7 +264,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         add(jButton3);
-        jButton3.setBounds(350, 170, 140, 34);
+        jButton3.setBounds(410, 180, 140, 34);
 
         jPanelCopiaListini.setBorder(javax.swing.BorderFactory.createTitledBorder("Copia Da Listino"));
         jPanelCopiaListini.setLayout(null);
@@ -303,7 +294,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
 
         add(jPanelCopiaListini);
-        jPanelCopiaListini.setBounds(560, 120, 350, 100);
+        jPanelCopiaListini.setBounds(560, 120, 350, 110);
 
         jButtonConferma.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonConferma.setText("Visualizza");
@@ -313,7 +304,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         add(jButtonConferma);
-        jButtonConferma.setBounds(350, 130, 140, 34);
+        jButtonConferma.setBounds(230, 70, 140, 34);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNuovoListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNuovoListinoActionPerformed
@@ -386,10 +377,6 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         
         nascondiPannelloNuovoListino();
     }//GEN-LAST:event_jButtonOkCreazioneActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         nascondiPannelloNuovoListino();
@@ -701,7 +688,6 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     private javax.swing.JPanel jPanelCreazioneListino;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextFieldNuovoListino;
     // End of variables declaration//GEN-END:variables
 

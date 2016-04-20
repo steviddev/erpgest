@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author SteVid <www.stevid.it>
  */
-public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBackArticoli,InterfaceCallBackClienti{
+public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBackArticoli,InterfaceCallBackClienti,InterfaceCallBackListino{
 
     SimpleDateFormat formatterData = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat formatterOre = new SimpleDateFormat("HH:mm");
@@ -37,6 +37,11 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     
     String UPDATE_OK = "Aggiornamento effettuato.";
     String INSERT_OK = "Inserimento effettuato.";
+    
+    String listinoScelto   = "";
+    String idListinoScelto = "";
+    String idPrezzoScelto  = "";
+    String prezzoScelto    = "";
     
     public void setParentFrame(MainFrame parent){
         this.parentFrame = parent;
@@ -73,8 +78,27 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });        
         
+        jTableArticoli.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent me) {
+                JTable table =(JTable) me.getSource();
+                Point p = me.getPoint();
+                int row = table.rowAtPoint(p);
+                if (me.getClickCount() == 2) {
+                    JDialogImpostaPrezzoPerOrdini uno = new JDialogImpostaPrezzoPerOrdini(parentFrame, getThis(), 
+                            jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString(), 
+                            jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 1).toString(),
+                            jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 2).toString());
+                    aggiornaListaArticoli(jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString());
+                }
+            }
+        });        
+        
     }
-
+    
+    private JPanelOrdini getThis(){
+        return this;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -99,6 +123,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonAggiungiArticolo = new javax.swing.JButton();
         jButtonRimuoviArticolo = new javax.swing.JButton();
         jButtonNuovoOrdine1 = new javax.swing.JButton();
+        jButtonModificaArticolo = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -274,6 +299,15 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         });
         add(jButtonNuovoOrdine1);
         jButtonNuovoOrdine1.setBounds(420, 40, 200, 40);
+
+        jButtonModificaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
+        jButtonModificaArticolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificaArticoloActionPerformed(evt);
+            }
+        });
+        add(jButtonModificaArticolo);
+        jButtonModificaArticolo.setBounds(940, 410, 40, 31);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -490,12 +524,17 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         popolaListaClienti();
     }//GEN-LAST:event_jButtonNuovoOrdine1ActionPerformed
 
+    private void jButtonModificaArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaArticoloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonModificaArticoloActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAggiungiArticolo;
     private javax.swing.JButton jButtonAggiungiTuttiClienti;
     private javax.swing.JButton jButtonAggiungliCliente;
     private javax.swing.JButton jButtonCancellaCliente;
+    private javax.swing.JButton jButtonModificaArticolo;
     private javax.swing.JButton jButtonNuovoOrdine;
     private javax.swing.JButton jButtonNuovoOrdine1;
     private javax.swing.JButton jButtonRimuoviArticolo;
@@ -511,7 +550,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
     @Override
     public void aggiornaListaArticoli(String id) {
-        if (id.equals("")) {
+        if (id.equals("") || idListinoScelto.equals("") || idPrezzoScelto.equals("") ) {
             return;
         }
         
@@ -537,16 +576,28 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             if (count<=0) {
                 //faccio l'insert
                 query = "INSERT INTO DETTAGLIO_ORDINI (ID_ORDINE,ID_ARTICOLO,"
-                        + "ID_DESTINAZIONE_CLIENTE,QUANTITA,ID_LISTINO)"
-                        + " VALUES ('"+jLabelID.getText()+"',"+id+","+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +",0,2)";
+                        + "ID_DESTINAZIONE_CLIENTE,QUANTITA,ID_LISTINO,PREZZO,COLLI)"
+                        + " VALUES ('"+jLabelID.getText()+"',"+id+","+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +",0,"+idListinoScelto+","+prezzoScelto+",2)";
                 result = conn.insert(query);
                 if (result.equals(INSERT_OK)) {
                     popolaListaArticoli();
                 }
                 
             }else{
-                //altrimenti faccio l'update dei colli e del prezzo
+                query = "UPDATE DETTAGLIO_ORDINI "
+                        + " SET COLLI = " + "0"+","
+                        //+ " ID_PREZZO = " + idPrezzoScelto +","
+                        + " PREZZO = " + prezzoScelto+","
+                        + " ID_LISTINO = " + idListinoScelto
+                        + " WHERE ID_DESTINAZIONE_CLIENTE = " + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() 
+                        + " AND ID_ARTICOLO = " + id
+                        + " AND ID_ORDINE = " + jLabelID.getText()
+                        + " AND ATTIVO = 'S'";
                 
+                result = conn.update(query);
+                if (result.equals(UPDATE_OK)) {
+                    popolaListaArticoli();
+                }                
             }
         } catch (Exception e) {
             Utils.logError(e, "", true);
@@ -651,7 +702,6 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         conn.makeConn();
         
         try {
-            
             String query = "SELECT DO.ID_ARTICOLO,"
                     + " A.NOME,"
                     + " A.DESCRIZIONE,"
@@ -700,7 +750,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
     @Override
     public void aggiornaListaArticoli(String id, String Listino, String prezzo, String colli) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //
     }
 
     private void rimuoviArticoloSelezionato(String idArticolo) {
@@ -733,7 +783,22 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         popolaListaArticoli();
     }
 
-    private  class AggiungiTuttiIClientiAllaLista implements Runnable {
+    @Override
+    public void settaListino(String idListino, String idPrezzo,String prezzo,String listino) {
+        listinoScelto = listino;
+        idPrezzoScelto  = idPrezzo;
+        idListinoScelto = idListino;
+        prezzoScelto = prezzo;
+    }
+
+    @Override
+    public void settaListino(String idListino, String idPrezzo) {
+        idPrezzoScelto  = idPrezzo;
+        idListinoScelto = idListino;
+    }        
+
+
+    private class AggiungiTuttiIClientiAllaLista implements Runnable {
 
         public AggiungiTuttiIClientiAllaLista() {
         }
