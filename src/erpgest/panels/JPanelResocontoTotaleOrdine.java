@@ -5,6 +5,8 @@
  */
 package erpgest.panels;
 
+import erpgest.utils.fatturaAnaliticaPDF;
+
 /**
  *
  * @author SteVid <www.stevid.it>
@@ -92,6 +94,11 @@ public class JPanelResocontoTotaleOrdine extends javax.swing.JPanel {
         jButtonStampa.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonStampa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/printer.png"))); // NOI18N
         jButtonStampa.setText("Stampa");
+        jButtonStampa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStampaActionPerformed(evt);
+            }
+        });
         add(jButtonStampa);
         jButtonStampa.setBounds(300, 500, 120, 34);
 
@@ -100,6 +107,11 @@ public class JPanelResocontoTotaleOrdine extends javax.swing.JPanel {
         add(jButtonStampa1);
         jButtonStampa1.setBounds(440, 500, 120, 34);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonStampaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStampaActionPerformed
+        fatturaAnaliticaPDF fap = new fatturaAnaliticaPDF();
+        fap.stampa_pagina(0);
+    }//GEN-LAST:event_jButtonStampaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

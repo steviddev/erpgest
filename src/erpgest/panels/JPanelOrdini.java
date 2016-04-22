@@ -14,6 +14,7 @@ import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import erpgest.utils.ChooseData;
 import erpgest.utils.Utils;
+import erpgest.utils.fatturaAnaliticaPDF;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -125,6 +126,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonNuovoOrdine1 = new javax.swing.JButton();
         jButtonModificaArticolo = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButtonCreaDDT = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -299,7 +301,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonNuovoOrdine1);
-        jButtonNuovoOrdine1.setBounds(420, 40, 200, 40);
+        jButtonNuovoOrdine1.setBounds(400, 40, 200, 40);
 
         jButtonModificaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
         jButtonModificaArticolo.addActionListener(new java.awt.event.ActionListener() {
@@ -318,6 +320,17 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         });
         add(jButton1);
         jButton1.setBounds(960, 490, 90, 31);
+
+        jButtonCreaDDT.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonCreaDDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/page_white_paintbrush.png"))); // NOI18N
+        jButtonCreaDDT.setText("   Crea DDT");
+        jButtonCreaDDT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCreaDDTActionPerformed(evt);
+            }
+        });
+        add(jButtonCreaDDT);
+        jButtonCreaDDT.setBounds(610, 20, 150, 60);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -542,6 +555,24 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         JDialogEsploraDoc uno = new JDialogEsploraDoc(parentFrame,true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonCreaDDTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreaDDTActionPerformed
+        //controllo ci sia un ordine attivo
+        if (jLabelID.getText().equals("-") || jLabelID.getText().equals("") ) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere un ordine", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //controllo non ci siano altri documenti gia fatti per quest'ordine
+        
+        
+        //controllo ci siano prodotti nell'ordine
+        
+        //compilo il ddt in pdf per ciascuna destinazione
+        fatturaAnaliticaPDF fap = new fatturaAnaliticaPDF();
+        fap.stampa_pagina(0);        
+        
+    }//GEN-LAST:event_jButtonCreaDDTActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -549,6 +580,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private javax.swing.JButton jButtonAggiungiTuttiClienti;
     private javax.swing.JButton jButtonAggiungliCliente;
     private javax.swing.JButton jButtonCancellaCliente;
+    private javax.swing.JButton jButtonCreaDDT;
     private javax.swing.JButton jButtonModificaArticolo;
     private javax.swing.JButton jButtonNuovoOrdine;
     private javax.swing.JButton jButtonNuovoOrdine1;
