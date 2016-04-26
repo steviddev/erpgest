@@ -7,6 +7,10 @@
 package erpgest.utils;
 
 import erpgest.MainFrame;
+import java.io.FileInputStream;
+import java.util.Map;
+import java.util.Properties;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,5 +27,26 @@ public class UtilsGen {
         dialog.setLocation(xPos, yPos);
         //*****************************************************************//
 
-    }    
+    } 
+    
+    public static Map<String, String>  caricaConfigurazione() {
+        //leggo il file di properties
+        Properties properties = new Properties();
+        Map<String, String> map;// = (Map)properties;        
+        Map<String, String>  CONFIGURAZIONE = null;
+        
+//        Map properties = new Properties();
+//        Map<String, String> map = new HashMap<String, String>(properties);
+        try {
+            properties.load(new FileInputStream("./system/sysconf.properties"));
+            map = (Map) properties;
+            CONFIGURAZIONE = map;
+
+        } catch (Exception e) {
+            //messaggio di errore e poi esce se non è presente
+            Utils.logError(e, "", true);
+        }
+        return CONFIGURAZIONE;
+    }        
+    
 }

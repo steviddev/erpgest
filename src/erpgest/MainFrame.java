@@ -44,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelArticoli1 = new erpgest.panels.JPanelArticoli();
         jPanelListinoPrezzi1 = new erpgest.panels.JPanelListinoPrezzi();
         jPanelOrdini1 = new erpgest.panels.JPanelOrdini();
+        jPanelAmministrazione1 = new erpgest.panels.JPanelAmministrazione();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +64,7 @@ public class MainFrame extends javax.swing.JFrame {
         jTabbedPane2.addTab("Articoli", jPanelArticoli1);
         jTabbedPane2.addTab("Listini e Prezzi", jPanelListinoPrezzi1);
         jTabbedPane2.addTab("Ordini", jPanelOrdini1);
+        jTabbedPane2.addTab("Amministrazione", jPanelAmministrazione1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,6 +130,7 @@ public class MainFrame extends javax.swing.JFrame {
     }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private erpgest.panels.JPanelAmministrazione jPanelAmministrazione1;
     private erpgest.panels.JPanelAnagrafica jPanelAnagrafica1;
     private erpgest.panels.JPanelArticoli jPanelArticoli1;
     private erpgest.panels.JPanelListinoPrezzi jPanelListinoPrezzi1;

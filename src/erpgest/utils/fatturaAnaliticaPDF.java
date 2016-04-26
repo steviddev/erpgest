@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.util.Vector;
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.util.Calendar;
 
 public class fatturaAnaliticaPDF extends PdfPageEventHelper
 {
@@ -76,11 +77,11 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
 
 
 
-   public void stampa_pagina(int id_fattura)
+   public void stampa_pagina(int idDocumento)
    {
-
-    String path = ".\\allegati\\fatturaAnalitica_" + id_fattura + ".pdf";
-    path = "./Documenti/fatturaAnalitica_" + id_fattura + ".pdf";
+    String strData = ((Calendar.getInstance()).getTime()).toString();
+    String path = ".\\allegati\\fatturaAnalitica_" + idDocumento + ".pdf";
+    path = "./Documenti/fatturaAnalitica_" + idDocumento + ".pdf";
 
     Paragraph p;
 
