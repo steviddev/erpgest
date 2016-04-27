@@ -5,6 +5,7 @@
  */
 package erpgest;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 /**
@@ -28,6 +29,11 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelArticoli1.setParentFrame(this);
         jPanelListinoPrezzi1.setParentFrame(this);
         jPanelOrdini1.setParentFrame(this);
+        jPanelAmministrazione1.setParentFrame(this);
+        
+        if (!jPanelAmministrazione1.aziendaRegistrata()) {
+            JOptionPane.showMessageDialog(this, "Occorre Inserire Ragione Sociale ,partita iva, indirizzo ,citta e cap dell'azienda, sono obbligatori.", "Attenzione", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     /**
