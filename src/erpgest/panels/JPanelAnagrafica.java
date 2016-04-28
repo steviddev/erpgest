@@ -125,6 +125,11 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jTextFieldCAPRL = new javax.swing.JTextField();
         jLabel59 = new javax.swing.JLabel();
         jTextFieldIndirizzoRL = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel60 = new javax.swing.JLabel();
+        jTextFieldBanca = new javax.swing.JTextField();
+        jLabel61 = new javax.swing.JLabel();
+        jTextFieldModalitaPagamento = new javax.swing.JTextField();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Clienti"));
         setLayout(null);
@@ -358,6 +363,32 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
 
         add(jPanel2);
         jPanel2.setBounds(30, 300, 1040, 170);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel3.setLayout(null);
+
+        jLabel60.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel60.setText("Banca d' appoggio");
+        jPanel3.add(jLabel60);
+        jLabel60.setBounds(300, 20, 260, 20);
+
+        jTextFieldBanca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldBanca.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel3.add(jTextFieldBanca);
+        jTextFieldBanca.setBounds(300, 40, 260, 30);
+
+        jLabel61.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel61.setText("Modalita Pagamento");
+        jPanel3.add(jLabel61);
+        jLabel61.setBounds(20, 20, 260, 20);
+
+        jTextFieldModalitaPagamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldModalitaPagamento.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel3.add(jTextFieldModalitaPagamento);
+        jTextFieldModalitaPagamento.setBounds(20, 40, 260, 30);
+
+        add(jPanel3);
+        jPanel3.setBounds(30, 490, 1040, 150);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistraActionPerformed
@@ -508,7 +539,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         controllaPresenzaCliente(jTextFieldID.getText());
         
         int n = JOptionPane.showConfirmDialog(null,
-            "ATTENZIONE!! Si vuole cancellare il cliente "+ jTextFieldNomeRL.getText()+","+jTextFieldCognomeRL.getText() +"?",
+            "ATTENZIONE!! Si vuole cancellare il cliente "+ jTextFieldRagioneSociale.getText()+" di " 
+                    + jTextFieldNomeRL.getText()+","+jTextFieldCognomeRL.getText() +"?",
             "",
             JOptionPane.YES_NO_OPTION);
 
@@ -583,8 +615,12 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
     public javax.swing.JLabel jLabel57;
     public javax.swing.JLabel jLabel58;
     public javax.swing.JLabel jLabel59;
+    public javax.swing.JLabel jLabel60;
+    public javax.swing.JLabel jLabel61;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    public javax.swing.JTextField jTextFieldBanca;
     public javax.swing.JTextField jTextFieldCAPAzienda;
     public javax.swing.JTextField jTextFieldCAPRL;
     public javax.swing.JTextField jTextFieldCF;
@@ -595,6 +631,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
     public javax.swing.JTextField jTextFieldID;
     public javax.swing.JTextField jTextFieldIndirizzo;
     public javax.swing.JTextField jTextFieldIndirizzoRL;
+    public javax.swing.JTextField jTextFieldModalitaPagamento;
     public javax.swing.JTextField jTextFieldNomeRL;
     public javax.swing.JTextField jTextFieldPartitaIVA;
     public javax.swing.JTextField jTextFieldRagioneSociale;

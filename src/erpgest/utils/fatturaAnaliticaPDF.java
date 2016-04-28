@@ -10,6 +10,7 @@ import com.lowagie.text.*;
 import java.io.FileOutputStream;
 import java.util.Vector;
 import java.awt.Color;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.util.Calendar;
 
@@ -38,11 +39,11 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
         int dx = 0;
 
     String ID               = "";
-    String Ragione_Sociale  = "";
-    String Indirizzo        = "";
-    String Localita         = "";
+    String Ragione_Sociale  = "ORTOFRUTTA DI ETZI RAFFAELE";
+    String Indirizzo        = "Via Is Sannas";
+    String Localita         = "San Giovanni Suergiu (CI)";
     String CAPCOMUNE        = "";
-    String PivaCF           = "";
+    String PivaCF           = "03316270929";
     String ReaAltro         = "";
     String Telefoni         = "";
     String SitoEmail        = "";
@@ -90,7 +91,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
     ResultSet rSet = null;
     
 
-
+    /*
     try
      {
         rSet = null;//apigen.dbOP.select( dbQueryAnagraficaAzienda.selectAzienda(" AND ID = 0", "", ""));
@@ -108,7 +109,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
           }
      } catch(Exception e) {
                                 System.out.println("(160) Errore: " + e);
-                              }
+                              }*/
 
     try
      {
@@ -147,7 +148,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
              pTable = new PdfPTable(1);
              pTable.setWidthPercentage(100);
 
-             for(int i=0; i<30; i++)
+             for(int i=0; i<55; i++)
               pTable.addCell(new PdfPCell( impostaArticolo( "10","uno","dd","ttt","qqq","555","666","000")  ));
 
              document.add(pTable);
@@ -304,7 +305,12 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PdfPCell PDFcell;
 
             try {
-               com.lowagie.text.Image jpg = com.lowagie.text.Image.getInstance("/erpgest/img/ico/page_white_paintbrush.png");
+                
+
+                System.err.println(Paths.get(".").toAbsolutePath().normalize().toString());
+
+
+               com.lowagie.text.Image jpg = com.lowagie.text.Image.getInstance("./system/utility/page_white_paintbrush.png");
                Chunk ch = new Chunk(jpg, 0, -15, true);
 
                PdfPCell logoCell = new PdfPCell();
@@ -398,7 +404,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
 
            PDFcell = new PdfPCell();
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
-           p = new Paragraph("NOTA DI CREDITO", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
+           p = new Paragraph("DOCUMENTO DI TRASPORTO", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
@@ -446,7 +452,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            
            PDFcell = new PdfPCell();
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
-           p = new Paragraph("0123456789\nMMMMMMMMMMMMMMMM", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
+           p = new Paragraph("0123456789", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
            p.setLeading(8);
            PDFcell.setVerticalAlignment(PDFcell.ALIGN_MIDDLE);
            PDFcell.addElement(p);
@@ -461,8 +467,9 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PDFtable.addCell( PDFcell );
 
 
-
+           
            /*************  BANCA D'APPOGGIO ***************/
+           /*
            PDFcell = new PdfPCell();
            PDFcell.setColspan(3);
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
@@ -472,6 +479,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
                   /* dato */
+           /*
            PDFcell = new PdfPCell();
            PDFcell.setColspan(3);
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
@@ -479,8 +487,10 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
+           */
 
            /*************  MODALITA' DI PAGAMENTO ***************/
+           /*
            PDFcell = new PdfPCell();
            PDFcell.setColspan(3);
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
@@ -489,7 +499,9 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
+           */
            /* Dato MODALITA' DI PAGAMENTO */
+           /*
            PDFcell = new PdfPCell();
            PDFcell.setColspan(3);
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
@@ -497,14 +509,14 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
-
+           */
 
            /*************  SCADENZA' DI PAGAMENTO e NUM. PAGINA ***************/
            PDFcell = new PdfPCell();
            PDFcell.setColspan(2);
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
            PDFcell.setBackgroundColor(new Color(230,230,230));
-           p = new Paragraph("Scadenza pagamento", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
+           p = new Paragraph("Modalità di pagamento", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
@@ -517,11 +529,13 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
 
+           
+           
            /* Dato SCADENZA PAGAMENTO */
            PDFcell = new PdfPCell();
            PDFcell.setColspan(2);
            PDFcell.setHorizontalAlignment(PDFcell.ALIGN_CENTER);
-           p = new Paragraph("IMMEDIATA", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
+           p = new Paragraph("BONIFICO", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.BOLD));
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell( PDFcell );
@@ -564,14 +578,14 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
-           p = new Paragraph("::\n::\n::\n::\n::\n::\n::\n::", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
+           p = new Paragraph("::\n::\n::\n::\n::\n::", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
            p.setLeading(8);
            PDFcell.setVerticalAlignment(PDFcell.ALIGN_MIDDLE);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
-           p = new Paragraph("Destinazine\n\n::", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
+           p = new Paragraph("Destinazine::", FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL));
            p.setLeading(8);
            PDFcell.setVerticalAlignment(PDFcell.ALIGN_MIDDLE);
            PDFcell.addElement(p);
@@ -590,7 +604,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
 
     try
      {
-       float[] widths = {0.12f,0.44f,0.05f,0.07f,0.1f,0.07f,0.1f,0.05f};
+       float[] widths = {0.40f,0.05f,0.05f,0.05f,0.05f,0.1f,0.1f,0.1f,0.05f};
 
        PDFtable = new PdfPTable(widths);
        PDFtable.setWidthPercentage(100);
@@ -602,16 +616,32 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
 
 
            PDFcell = new PdfPCell();
-           p = new Paragraph("Codice Art.", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
+           p = new Paragraph("    Articolo", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
            PDFcell.setBackgroundColor(new Color(230,230,230));
            p.setLeading(8);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
-           p = new Paragraph("Descrizione", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
+           p = new Paragraph("Cat.", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
            PDFcell.setBackgroundColor(new Color(230,230,230));
            p.setLeading(8);
+           PDFcell.addElement(p);
+           PDFtable.addCell(PDFcell);
+
+           PDFcell = new PdfPCell();
+           p = new Paragraph("Orig.", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
+           PDFcell.setBackgroundColor(new Color(230,230,230));
+           p.setLeading(8);
+           p.setAlignment(1);
+           PDFcell.addElement(p);
+           PDFtable.addCell(PDFcell);
+
+           PDFcell = new PdfPCell();
+           p = new Paragraph("Colli", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
+           PDFcell.setBackgroundColor(new Color(230,230,230));
+           p.setLeading(8);
+           p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
@@ -624,7 +654,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
-           p = new Paragraph("Qt.", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
+           p = new Paragraph("Quantita", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
            PDFcell.setBackgroundColor(new Color(230,230,230));
            p.setLeading(8);
            p.setAlignment(1);
@@ -640,28 +670,20 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
-           p = new Paragraph("Sconto %", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
-           PDFcell.setBackgroundColor(new Color(230,230,230));
-           p.setLeading(8);
-           p.setAlignment(1);
-           PDFcell.addElement(p);
-           PDFtable.addCell(PDFcell);
-
-           PDFcell = new PdfPCell();
            p = new Paragraph("Imponibile", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
            PDFcell.setBackgroundColor(new Color(230,230,230));
            p.setLeading(8);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
-
+           
            PDFcell = new PdfPCell();
            p = new Paragraph("IVA", FontFactory.getFont(FontFactory.HELVETICA, 7, Font.BOLD));
            PDFcell.setBackgroundColor(new Color(230,230,230));
            p.setLeading(8);
            p.setAlignment(1);
            PDFcell.addElement(p);
-           PDFtable.addCell(PDFcell);
+           PDFtable.addCell(PDFcell);           
 
          } catch(Exception e) {
                                 System.out.println("(164) Errore: " + e);
@@ -685,7 +707,7 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
 
     try
      {
-       float[] widths = {0.12f,0.44f,0.05f,0.07f,0.1f,0.07f,0.1f,0.05f};
+       float[] widths = {0.40f,0.05f,0.05f,0.05f,0.05f,0.1f,0.1f,0.1f,0.05f};
 
        PDFtable = new PdfPTable(widths);
        PDFtable.setWidthPercentage(100);
@@ -698,58 +720,65 @@ public class fatturaAnaliticaPDF extends PdfPageEventHelper
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_1_codice, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_2_descr, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_3_um, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_4_qt, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_5_prezzo, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_6_sconto, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_7_imponibile, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
            PDFcell = new PdfPCell();
            p = new Paragraph(campo_8_iva, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
-           p.setLeading(8);
+           p.setLeading(4);
            p.setAlignment(1);
            PDFcell.addElement(p);
            PDFtable.addCell(PDFcell);
 
+           PDFcell = new PdfPCell();
+           p = new Paragraph(campo_8_iva, FontFactory.getFont(FontFactory.COURIER, 6, Font.NORMAL));
+           p.setLeading(4);
+           p.setAlignment(1);
+           PDFcell.addElement(p);
+           PDFtable.addCell(PDFcell);           
+           
          } catch(Exception e) {
                                 System.out.println("(167) Errore: " + e);
                               }
