@@ -217,14 +217,14 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
         jButtonScegliData.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonScegliData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/calendar_1.png"))); // NOI18N
-        jButtonScegliData.setText("Scegli Data");
+        jButtonScegliData.setText("Scegli Data Ordine");
         jButtonScegliData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonScegliDataActionPerformed(evt);
             }
         });
         add(jButtonScegliData);
-        jButtonScegliData.setBounds(150, 40, 150, 40);
+        jButtonScegliData.setBounds(150, 40, 190, 40);
 
         jButtonAggiungiTuttiClienti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_all.png"))); // NOI18N
         jButtonAggiungiTuttiClienti.addActionListener(new java.awt.event.ActionListener() {
@@ -272,7 +272,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonNuovoOrdine);
-        jButtonNuovoOrdine.setBounds(310, 40, 90, 40);
+        jButtonNuovoOrdine.setBounds(350, 40, 90, 40);
 
         jButtonAggiungiArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/add.png"))); // NOI18N
         jButtonAggiungiArticolo.addActionListener(new java.awt.event.ActionListener() {
@@ -301,7 +301,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonNuovoOrdine1);
-        jButtonNuovoOrdine1.setBounds(400, 40, 200, 40);
+        jButtonNuovoOrdine1.setBounds(450, 40, 200, 40);
 
         jButtonModificaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
         jButtonModificaArticolo.addActionListener(new java.awt.event.ActionListener() {
@@ -319,7 +319,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButton1);
-        jButton1.setBounds(960, 490, 90, 31);
+        jButton1.setBounds(960, 490, 83, 32);
 
         jButtonCreaDDT.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonCreaDDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/page_white_paintbrush.png"))); // NOI18N
@@ -330,7 +330,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonCreaDDT);
-        jButtonCreaDDT.setBounds(610, 20, 150, 60);
+        jButtonCreaDDT.setBounds(660, 40, 150, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -394,10 +394,15 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
     private void jButtonNuovoOrdineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuovoOrdineActionPerformed
         //controllo ci sia una data indicata
-        if( jButtonScegliData.getText().startsWith("Scegli") || !jLabelID.getText().equals("-")){
-            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data valida.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+        if( jButtonScegliData.getText().startsWith("Scegli") ){
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Scegliere una data.", "Attenzione", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        if( !jLabelID.getText().equals("-")){
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Ordine Gia creato per la data indicata.", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }        
         
         String query = "";
         String result = "";
@@ -548,7 +553,20 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     }//GEN-LAST:event_jButtonNuovoOrdine1ActionPerformed
 
     private void jButtonModificaArticoloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaArticoloActionPerformed
-        // TODO add your handling code here:
+
+        try {
+
+            JDialogImpostaPrezzoPerOrdini uno = new JDialogImpostaPrezzoPerOrdini(parentFrame, getThis(), 
+                                jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString(), 
+                                jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 1).toString(),
+                                jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 2).toString());
+                        aggiornaListaArticoli(jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString());            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Nessun articolo selezionato", "Attenzione", JOptionPane.ERROR_MESSAGE);
+        }
+
+
     }//GEN-LAST:event_jButtonModificaArticoloActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

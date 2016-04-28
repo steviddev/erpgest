@@ -71,7 +71,6 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jLabelListinoSelezionato = new javax.swing.JLabel();
         jLabelIDListino = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBoxListini = new javax.swing.JComboBox();
         jButtonNuovoListino = new javax.swing.JButton();
         jButtonEliminaListino = new javax.swing.JButton();
         jPanelCreazioneListino = new javax.swing.JPanel();
@@ -83,7 +82,9 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jButtonCopiaListino = new javax.swing.JButton();
         jButtonAnnullaCopiaListino = new javax.swing.JButton();
         jComboBoxListinoDaCuiCopiare = new javax.swing.JComboBox();
+        jPanel2 = new javax.swing.JPanel();
         jButtonConferma = new javax.swing.JButton();
+        jComboBoxListini = new javax.swing.JComboBox();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Listino Prezzi"));
         setLayout(null);
@@ -192,15 +193,6 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         add(jLabel3);
         jLabel3.setBounds(50, 50, 110, 20);
 
-        jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
-        jComboBoxListini.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxListiniItemStateChanged(evt);
-            }
-        });
-        add(jComboBoxListini);
-        jComboBoxListini.setBounds(70, 80, 150, 25);
-
         jButtonNuovoListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonNuovoListino.setText("Nuovo Listino");
         jButtonNuovoListino.addActionListener(new java.awt.event.ActionListener() {
@@ -209,7 +201,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         });
         add(jButtonNuovoListino);
-        jButtonNuovoListino.setBounds(410, 90, 140, 34);
+        jButtonNuovoListino.setBounds(410, 100, 140, 34);
 
         jButtonEliminaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonEliminaListino.setText("Elimina Listino");
@@ -291,7 +283,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
 
         jComboBoxListinoDaCuiCopiare.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         jPanelCopiaListini.add(jComboBoxListinoDaCuiCopiare);
-        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
+        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 26);
 
         add(jPanelCopiaListini);
         jPanelCopiaListini.setBounds(560, 120, 350, 110);
@@ -303,8 +295,37 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
                 jButtonConfermaActionPerformed(evt);
             }
         });
-        add(jButtonConferma);
-        jButtonConferma.setBounds(230, 70, 140, 34);
+
+        jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jComboBoxListini.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxListiniItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addComponent(jComboBoxListini, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonConferma, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jComboBoxListini, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonConferma))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        add(jPanel2);
+        jPanel2.setBounds(20, 70, 370, 80);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNuovoListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNuovoListinoActionPerformed
@@ -684,6 +705,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     private javax.swing.JLabel jLabelIDListino;
     private javax.swing.JLabel jLabelListinoSelezionato;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCopiaListini;
     private javax.swing.JPanel jPanelCreazioneListino;
     private javax.swing.JScrollPane jScrollPane1;

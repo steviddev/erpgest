@@ -128,7 +128,7 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButtonOK);
-        jButtonOK.setBounds(100, 220, 90, 31);
+        jButtonOK.setBounds(100, 220, 90, 32);
 
         jButtonCancella.setText("Cancella");
         jButtonCancella.addActionListener(new java.awt.event.ActionListener() {
@@ -137,9 +137,9 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButtonCancella);
-        jButtonCancella.setBounds(220, 220, 90, 31);
+        jButtonCancella.setBounds(220, 220, 83, 32);
         jPanel1.add(jTextFieldPrezzo);
-        jTextFieldPrezzo.setBounds(210, 150, 110, 23);
+        jTextFieldPrezzo.setBounds(210, 150, 110, 24);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(10, 10, 420, 300);

@@ -11,6 +11,7 @@ import erpgest.utils.Utils;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -60,6 +61,19 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
         getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(escape, "ESCAPE");
         getRootPane().getActionMap().put("ESCAPE", escapeAction);        
 
+        jTextFieldColli.setDocument(new erpgest.utils.JTextFieldLimit(4) );
+        jTextFieldColli.addKeyListener(new KeyAdapter() {
+            public void keyTyped(KeyEvent e) {
+                char vChar = e.getKeyChar();
+                if (!(Character.isDigit(vChar)
+                        || (vChar == KeyEvent.VK_BACK_SPACE)
+                        || (vChar == KeyEvent.VK_DELETE))) {
+                    e.consume();
+                }
+            }
+        });  
+        
+        
         erpgest.utils.UtilsGen.centraDialogo(parent, this);
         setVisible(true);
     }
@@ -74,16 +88,19 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabelNomeArticolo = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabelprezzo = new javax.swing.JLabel();
-        jLabelPrezzoArticolo = new javax.swing.JLabel();
         jButtonOK = new javax.swing.JButton();
         jButtonCancella = new javax.swing.JButton();
-        jLabelDescrizioneArticolo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jComboBoxListini = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        jLabelNomeArticolo = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelDescrizioneArticolo = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldColli = new javax.swing.JTextField();
+        jLabelprezzo = new javax.swing.JLabel();
+        jLabelPrezzoArticolo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(441, 340));
@@ -93,36 +110,6 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Scegli Prezzo Articolo"));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel1.setText("Listino: ");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(150, 40, 60, 15);
-
-        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel3.setText("Nome Articolo:");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(110, 70, 100, 15);
-
-        jLabelNomeArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelNomeArticolo.setText("-");
-        jPanel1.add(jLabelNomeArticolo);
-        jLabelNomeArticolo.setBounds(210, 70, 160, 20);
-
-        jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel5.setText("Descrizione:");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(130, 100, 80, 15);
-
-        jLabelprezzo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelprezzo.setText("Prezzo :");
-        jPanel1.add(jLabelprezzo);
-        jLabelprezzo.setBounds(130, 150, 70, 20);
-
-        jLabelPrezzoArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelPrezzoArticolo.setText("-");
-        jPanel1.add(jLabelPrezzoArticolo);
-        jLabelPrezzoArticolo.setBounds(200, 150, 160, 20);
-
         jButtonOK.setText("OK");
         jButtonOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,7 +117,7 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
             }
         });
         jPanel1.add(jButtonOK);
-        jButtonOK.setBounds(100, 220, 90, 31);
+        jButtonOK.setBounds(70, 250, 90, 32);
 
         jButtonCancella.setText("Cancella");
         jButtonCancella.addActionListener(new java.awt.event.ActionListener() {
@@ -139,12 +126,10 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
             }
         });
         jPanel1.add(jButtonCancella);
-        jButtonCancella.setBounds(220, 220, 90, 31);
+        jButtonCancella.setBounds(170, 250, 83, 32);
 
-        jLabelDescrizioneArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelDescrizioneArticolo.setText("-");
-        jPanel1.add(jLabelDescrizioneArticolo);
-        jLabelDescrizioneArticolo.setBounds(210, 100, 160, 20);
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel1.setText("Listino: ");
 
         jComboBoxListini.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
         jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
@@ -153,11 +138,87 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
                 jComboBoxListiniItemStateChanged(evt);
             }
         });
-        jPanel1.add(jComboBoxListini);
-        jComboBoxListini.setBounds(240, 30, 140, 25);
+
+        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel3.setText("Nome Articolo:");
+
+        jLabelNomeArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelNomeArticolo.setText("-");
+
+        jLabel6.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel6.setText("Descrizione:");
+
+        jLabelDescrizioneArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelDescrizioneArticolo.setText("-");
+
+        jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel5.setText("Colli:");
+
+        jTextFieldColli.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldColli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldColliActionPerformed(evt);
+            }
+        });
+
+        jLabelprezzo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelprezzo.setText("Prezzo :");
+
+        jLabelPrezzoArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelPrezzoArticolo.setText("-");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelprezzo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxListini, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNomeArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDescrizioneArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldColli, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelPrezzoArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBoxListini, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelNomeArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelDescrizioneArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldColli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelprezzo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelPrezzoArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(30, 30, 320, 210);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 420, 300);
+        jPanel1.setBounds(10, 10, 370, 330);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -181,6 +242,10 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
         
     }//GEN-LAST:event_jComboBoxListiniItemStateChanged
 
+    private void jTextFieldColliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldColliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldColliActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -193,11 +258,14 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabelDescrizioneArticolo;
     private javax.swing.JLabel jLabelNomeArticolo;
     private javax.swing.JLabel jLabelPrezzoArticolo;
     private javax.swing.JLabel jLabelprezzo;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextFieldColli;
     // End of variables declaration//GEN-END:variables
 
     public void popolaCampi(String idProdotto ,String idListino,String listino, String articolo, String descrizione, String prezzo){
