@@ -51,6 +51,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelListinoPrezzi1 = new erpgest.panels.JPanelListinoPrezzi();
         jPanelOrdini1 = new erpgest.panels.JPanelOrdini();
         jPanelAmministrazione1 = new erpgest.panels.JPanelAmministrazione();
+        jPanelDocumenti1 = new erpgest.panels.JPanelDocumenti();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,7 +61,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelArticoli1.setLayout(jPanelArticoli1Layout);
         jPanelArticoli1Layout.setHorizontalGroup(
             jPanelArticoli1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1132, Short.MAX_VALUE)
+            .addGap(0, 1119, Short.MAX_VALUE)
         );
         jPanelArticoli1Layout.setVerticalGroup(
             jPanelArticoli1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,12 +72,13 @@ public class MainFrame extends javax.swing.JFrame {
         jTabbedPane2.addTab("Listini e Prezzi", jPanelListinoPrezzi1);
         jTabbedPane2.addTab("Ordini", jPanelOrdini1);
         jTabbedPane2.addTab("Amministrazione", jPanelAmministrazione1);
+        jTabbedPane2.addTab("Documenti", jPanelDocumenti1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,6 +141,7 @@ public class MainFrame extends javax.swing.JFrame {
     private erpgest.panels.JPanelAmministrazione jPanelAmministrazione1;
     private erpgest.panels.JPanelAnagrafica jPanelAnagrafica1;
     private erpgest.panels.JPanelArticoli jPanelArticoli1;
+    private erpgest.panels.JPanelDocumenti jPanelDocumenti1;
     private erpgest.panels.JPanelListinoPrezzi jPanelListinoPrezzi1;
     private erpgest.panels.JPanelOrdini jPanelOrdini1;
     private javax.swing.JTabbedPane jTabbedPane2;

@@ -97,14 +97,14 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
 
             },
             new String [] {
-                "ID", "Nome Prodotto", "Descrizione", "prezzo"
+                "ID", "Nome Prodotto", "Descrizione", "Prezzo", "IVA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -122,8 +122,10 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             jTable1.getColumnModel().getColumn(1).setResizable(false);
             jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
             jTable1.getColumnModel().getColumn(2).setMinWidth(200);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(30);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(120);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(60);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
         jPanel1.add(jScrollPane1);
@@ -283,7 +285,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
 
         jComboBoxListinoDaCuiCopiare.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         jPanelCopiaListini.add(jComboBoxListinoDaCuiCopiare);
-        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 26);
+        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
 
         add(jPanelCopiaListini);
         jPanelCopiaListini.setBounds(560, 120, 350, 110);
@@ -450,6 +452,10 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     }//GEN-LAST:event_jButtonAnnullaCopiaListinoActionPerformed
 
     private void jButtonInserisciProdottoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserisciProdottoActionPerformed
+        if (jLabelIDListino.getText().equals("") || jLabelIDListino.getText().equals("-")) {
+            return;
+        }
+        
         JPanelRicercaProdottiPerListino dialog = new JPanelRicercaProdottiPerListino(this.parentFrame,this);
     }//GEN-LAST:event_jButtonInserisciProdottoActionPerformed
 
@@ -934,7 +940,8 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             query = "SELECT ID_ARTICOLO,"
                     + " A.NOME,"
                     + " A.DESCRIZIONE,"
-                    + " P.PREZZO"
+                    + " P.PREZZO,"
+                    + " P.IVA"
                     + " FROM ARTICOLI a,"
                     + " PREZZI P,"
                     + " LISTINI L "
@@ -964,7 +971,8 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
                     Object[] cell = {rSet.getString("ID_ARTICOLO"),
                         rSet.getString("NOME"),
                         rSet.getString("DESCRIZIONE"),
-                        rSet.getString("PREZZO")
+                        rSet.getString("PREZZO"),
+                        rSet.getString("IVA")
                     };
                     defaultModel.addRow(cell);
                 }

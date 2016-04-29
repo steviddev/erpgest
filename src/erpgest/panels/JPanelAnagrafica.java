@@ -407,6 +407,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         String ragioneSociale = jTextFieldRagioneSociale.getText().trim().toUpperCase().replaceAll("'", "''");
         String telefonoAzienda= jTextFieldTelefonoAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
         String telefonoRL     = jTextFieldTelefonoRL.getText().trim().toUpperCase().replaceAll("'", "''");
+        String modalitaPagamento = jTextFieldModalitaPagamento.getText().trim().toUpperCase().replaceAll("'", "''");
+        String banca          = jTextFieldBanca.getText().trim().toUpperCase().replaceAll("'", "''");
         String id             = jTextFieldID.getText().trim().toUpperCase().replaceAll("'", "''");
         
         //controllo esistenza e validazione
@@ -584,6 +586,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
                 jTextFieldRagioneSociale.setText( res.getString("RAGIONE_SOCIALE") );
                 jTextFieldTelefonoAzienda.setText( res.getString("TELEFONO_AZIENDA") );
                 jTextFieldTelefonoRL.setText( res.getString("TELEFONO_RL") );
+                jTextFieldBanca.setText( res.getString("BANCA") );
+                jTextFieldModalitaPagamento.setText( res.getString("MODALITA_PAGAMENTO") );
                 jTextFieldID.setText( res.getString("ID") );            
             
             }
@@ -655,6 +659,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jTextFieldTelefonoAzienda.setText("");
         jTextFieldTelefonoRL.setText("");
         jTextFieldID.setText("");
+        jTextFieldBanca.setText("");
+        jTextFieldModalitaPagamento.setText("");
     }
 
     private void disabilitaUtente(String id) {
@@ -750,6 +756,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
             String ragioneSociale = jTextFieldRagioneSociale.getText().trim().toUpperCase().replaceAll("'", "''");
             String telefonoAzienda= jTextFieldTelefonoAzienda.getText().trim().toUpperCase().replaceAll("'", "''");
             String telefonoRL     = jTextFieldTelefonoRL.getText().trim().toUpperCase().replaceAll("'", "''");
+            String modalitaPagamento = jTextFieldModalitaPagamento.getText().trim().toUpperCase().replaceAll("'", "''");
+            String banca          = jTextFieldBanca.getText().trim().toUpperCase().replaceAll("'", "''");            
             String id             = jTextFieldID.getText().trim().toUpperCase().replaceAll("'", "''");
             String query = "";
             String result = "";
@@ -776,7 +784,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
                             + " INDIRIZZO_AZIENDA = '"+indirizzo+"',"
                             + " INDIRIZZO_RL = '"+indirizzoRL+"',"
                             + " RAGIONE_SOCIALE = '"+ragioneSociale+"',"
-                            + " DATA_MODIFICA = datetime('now', 'localtime')"
+                            + " DATA_MODIFICA = datetime('now', 'localtime') ,"
+                            + " BANCA = '"+banca+"',"
+                            + " MODALITA_PAGAMENTO = '"+modalitaPagamento+"'"
                             + " WHERE ID = '"+id+"' AND ATTIVO = 'S'";
                     
                     result = conn.update(query);
@@ -806,7 +816,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
                             + "TELEFONO_AZIENDA,"
                             + "INDIRIZZO_AZIENDA,"
                             + "INDIRIZZO_RL,"
-                            + "RAGIONE_SOCIALE) VALUES ("
+                            + "RAGIONE_SOCIALE,"
+                            + "BANCA,"
+                            + "MODALITA_PAGAMENTO) VALUES ("
                             + "'"+CAPAzienda+"',"
                             + "'"+CAPRL+"',"
                             + "'"+codiceFiscale+"',"
@@ -820,7 +832,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
                             + "'"+telefonoAzienda+"',"
                             + "'"+indirizzo+"',"
                             + "'"+indirizzoRL+"',"
-                            + "'"+ragioneSociale+"'"
+                            + "'"+ragioneSociale+"',"
+                            + "'"+banca+"',"
+                            + "'"+modalitaPagamento+"'"
                             + ");";
                     result = conn.insert(query);
                     if (result.equals(INSERT_OK)) {
@@ -841,7 +855,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
                             + " AND TELEFONO_AZIENDA = '"+telefonoAzienda+"'"
                             + " AND INDIRIZZO_AZIENDA = '"+indirizzo+"'"
                             + " AND INDIRIZZO_RL = '"+indirizzoRL+"'"
-                            + " AND RAGIONE_SOCIALE = '"+ragioneSociale+"';";
+                            + " AND RAGIONE_SOCIALE = '"+ragioneSociale+"'"
+                            + " AND BANCA = '"+banca+"'"
+                                + " AND MODALITA_PAGAMENTO = '"+modalitaPagamento+"'";
                         
                         res = conn.selectSMS(query);
                         

@@ -43,6 +43,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     String idListinoScelto = "";
     String idPrezzoScelto  = "";
     String prezzoScelto    = "";
+    String colliScelti     = "1";
     
     public void setParentFrame(MainFrame parent){
         this.parentFrame = parent;
@@ -113,20 +114,22 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jTableClienti = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableArticoli = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonScegliData = new javax.swing.JButton();
         jButtonAggiungiTuttiClienti = new javax.swing.JButton();
         jButtonCancellaCliente = new javax.swing.JButton();
         jButtonAggiungliCliente = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabelID = new javax.swing.JLabel();
-        jButtonNuovoOrdine = new javax.swing.JButton();
         jButtonAggiungiArticolo = new javax.swing.JButton();
         jButtonRimuoviArticolo = new javax.swing.JButton();
-        jButtonNuovoOrdine1 = new javax.swing.JButton();
         jButtonModificaArticolo = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButtonScegliData = new javax.swing.JButton();
+        jButtonNuovoOrdine = new javax.swing.JButton();
+        jButtonNuovoOrdine1 = new javax.swing.JButton();
         jButtonCreaDDT = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabelID = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setLayout(null);
 
@@ -163,26 +166,24 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             jTableClienti.getColumnModel().getColumn(2).setMaxWidth(100);
             jTableClienti.getColumnModel().getColumn(3).setPreferredWidth(350);
             jTableClienti.getColumnModel().getColumn(3).setMaxWidth(400);
-            jTableClienti.getColumnModel().getColumn(4).setPreferredWidth(100);
-            jTableClienti.getColumnModel().getColumn(4).setMaxWidth(100);
         }
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(50, 100, 970, 190);
+        jScrollPane1.setBounds(50, 100, 920, 190);
 
         jTableArticoli.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "Descrizione", "Listino", "Prezzo", "Colli"
+                "ID", "Nome", "Descrizione", "Listino", "Prezzo", "IVA", "Colli"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -205,15 +206,79 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             jTableArticoli.getColumnModel().getColumn(3).setMaxWidth(100);
             jTableArticoli.getColumnModel().getColumn(4).setPreferredWidth(100);
             jTableArticoli.getColumnModel().getColumn(4).setMaxWidth(100);
+            jTableArticoli.getColumnModel().getColumn(5).setPreferredWidth(40);
+            jTableArticoli.getColumnModel().getColumn(5).setMaxWidth(40);
         }
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(50, 310, 880, 310);
+        jScrollPane2.setBounds(50, 310, 850, 310);
+
+        jButtonAggiungiTuttiClienti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_all.png"))); // NOI18N
+        jButtonAggiungiTuttiClienti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiTuttiClientiActionPerformed(evt);
+            }
+        });
+        add(jButtonAggiungiTuttiClienti);
+        jButtonAggiungiTuttiClienti.setBounds(790, 60, 70, 32);
+
+        jButtonCancellaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cross.png"))); // NOI18N
+        jButtonCancellaCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancellaClienteActionPerformed(evt);
+            }
+        });
+        add(jButtonCancellaCliente);
+        jButtonCancellaCliente.setBounds(930, 60, 40, 32);
+
+        jButtonAggiungliCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_user.png"))); // NOI18N
+        jButtonAggiungliCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungliClienteActionPerformed(evt);
+            }
+        });
+        add(jButtonAggiungliCliente);
+        jButtonAggiungliCliente.setBounds(860, 60, 70, 32);
+
+        jButtonAggiungiArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/add.png"))); // NOI18N
+        jButtonAggiungiArticolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiArticoloActionPerformed(evt);
+            }
+        });
+        add(jButtonAggiungiArticolo);
+        jButtonAggiungiArticolo.setBounds(920, 320, 40, 31);
+
+        jButtonRimuoviArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/minus2.png"))); // NOI18N
+        jButtonRimuoviArticolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRimuoviArticoloActionPerformed(evt);
+            }
+        });
+        add(jButtonRimuoviArticolo);
+        jButtonRimuoviArticolo.setBounds(920, 360, 40, 31);
+
+        jButtonModificaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
+        jButtonModificaArticolo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificaArticoloActionPerformed(evt);
+            }
+        });
+        add(jButtonModificaArticolo);
+        jButtonModificaArticolo.setBounds(920, 400, 40, 31);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/images.png"))); // NOI18N
+        jButton1.setToolTipText("Visualizza Resoconto totale prodotti");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1);
+        jButton1.setBounds(920, 440, 40, 30);
 
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel1.setText("Data Ordine:");
-        add(jLabel1);
-        jLabel1.setBounds(60, 50, 90, 18);
 
         jButtonScegliData.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonScegliData.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/calendar_1.png"))); // NOI18N
@@ -223,45 +288,6 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 jButtonScegliDataActionPerformed(evt);
             }
         });
-        add(jButtonScegliData);
-        jButtonScegliData.setBounds(150, 40, 190, 40);
-
-        jButtonAggiungiTuttiClienti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_all.png"))); // NOI18N
-        jButtonAggiungiTuttiClienti.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAggiungiTuttiClientiActionPerformed(evt);
-            }
-        });
-        add(jButtonAggiungiTuttiClienti);
-        jButtonAggiungiTuttiClienti.setBounds(830, 60, 70, 32);
-
-        jButtonCancellaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cross.png"))); // NOI18N
-        jButtonCancellaCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancellaClienteActionPerformed(evt);
-            }
-        });
-        add(jButtonCancellaCliente);
-        jButtonCancellaCliente.setBounds(970, 60, 40, 32);
-
-        jButtonAggiungliCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_user.png"))); // NOI18N
-        jButtonAggiungliCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAggiungliClienteActionPerformed(evt);
-            }
-        });
-        add(jButtonAggiungliCliente);
-        jButtonAggiungliCliente.setBounds(900, 60, 70, 32);
-
-        jLabel2.setText("ID");
-        add(jLabel2);
-        jLabel2.setBounds(10, 0, 20, 50);
-
-        jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        jLabelID.setForeground(new java.awt.Color(255, 0, 0));
-        jLabelID.setText("-");
-        add(jLabelID);
-        jLabelID.setBounds(40, 10, 50, 20);
 
         jButtonNuovoOrdine.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonNuovoOrdine.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/note.png"))); // NOI18N
@@ -271,55 +297,14 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 jButtonNuovoOrdineActionPerformed(evt);
             }
         });
-        add(jButtonNuovoOrdine);
-        jButtonNuovoOrdine.setBounds(350, 40, 90, 40);
-
-        jButtonAggiungiArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/add.png"))); // NOI18N
-        jButtonAggiungiArticolo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAggiungiArticoloActionPerformed(evt);
-            }
-        });
-        add(jButtonAggiungiArticolo);
-        jButtonAggiungiArticolo.setBounds(940, 330, 40, 31);
-
-        jButtonRimuoviArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/minus2.png"))); // NOI18N
-        jButtonRimuoviArticolo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRimuoviArticoloActionPerformed(evt);
-            }
-        });
-        add(jButtonRimuoviArticolo);
-        jButtonRimuoviArticolo.setBounds(940, 370, 40, 31);
 
         jButtonNuovoOrdine1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonNuovoOrdine1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/arrow_refresh.png"))); // NOI18N
-        jButtonNuovoOrdine1.setText("Aggiorna schermata");
         jButtonNuovoOrdine1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonNuovoOrdine1ActionPerformed(evt);
             }
         });
-        add(jButtonNuovoOrdine1);
-        jButtonNuovoOrdine1.setBounds(450, 40, 200, 40);
-
-        jButtonModificaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
-        jButtonModificaArticolo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModificaArticoloActionPerformed(evt);
-            }
-        });
-        add(jButtonModificaArticolo);
-        jButtonModificaArticolo.setBounds(940, 410, 40, 31);
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        add(jButton1);
-        jButton1.setBounds(960, 490, 83, 32);
 
         jButtonCreaDDT.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonCreaDDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/page_white_paintbrush.png"))); // NOI18N
@@ -329,8 +314,73 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 jButtonCreaDDTActionPerformed(evt);
             }
         });
-        add(jButtonCreaDDT);
-        jButtonCreaDDT.setBounds(660, 40, 150, 40);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonScegliData, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonNuovoOrdine)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonCreaDDT, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonNuovoOrdine1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonNuovoOrdine1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonScegliData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonNuovoOrdine, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonCreaDDT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(5, 5, 5))))
+        );
+
+        add(jPanel1);
+        jPanel1.setBounds(130, 40, 610, 50);
+
+        jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabelID.setForeground(new java.awt.Color(255, 0, 0));
+        jLabelID.setText("-");
+
+        jLabel2.setText("ID");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelID, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelID, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        add(jPanel2);
+        jPanel2.setBounds(20, 10, 90, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -560,7 +610,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                                 jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString(), 
                                 jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 1).toString(),
                                 jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 2).toString());
-                        aggiornaListaArticoli(jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString());            
+            aggiornaListaArticoli(jTableArticoli.getModel().getValueAt(jTableArticoli.getSelectedRow(), 0).toString());            
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(parentFrame.getFrame(), "Nessun articolo selezionato", "Attenzione", JOptionPane.ERROR_MESSAGE);
@@ -607,6 +657,8 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelID;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableArticoli;
@@ -642,18 +694,20 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 //faccio l'insert
                 query = "INSERT INTO DETTAGLIO_ORDINI (ID_ORDINE,ID_ARTICOLO,"
                         + "ID_DESTINAZIONE_CLIENTE,QUANTITA,ID_LISTINO,PREZZO,COLLI)"
-                        + " VALUES ('"+jLabelID.getText()+"',"+id+","+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +",0,"+idListinoScelto+","+prezzoScelto+",2)";
+                        + " VALUES ('"+jLabelID.getText()+"',"+id+","+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +",0,"+idListinoScelto+","+prezzoScelto+","+colliScelti+")";
                 result = conn.insert(query);
                 if (result.equals(INSERT_OK)) {
                     popolaListaArticoli();
+                }else{
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore", "Attenzione", JOptionPane.ERROR_MESSAGE);                
                 }
                 
             }else{
                 query = "UPDATE DETTAGLIO_ORDINI "
-                        + " SET COLLI = " + "0"+","
+                        + " SET COLLI = " + colliScelti+","
                         //+ " ID_PREZZO = " + idPrezzoScelto +","
                         + " PREZZO = " + prezzoScelto+","
-                        + " ID_LISTINO = " + idListinoScelto
+                        + " ID_LISTINO = " + idListinoScelto 
                         + " WHERE ID_DESTINAZIONE_CLIENTE = " + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() 
                         + " AND ID_ARTICOLO = " + id
                         + " AND ID_ORDINE = " + jLabelID.getText()
@@ -772,16 +826,21 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                     + " A.DESCRIZIONE,"
                     + " L.NOME AS LISTINO,"
                     + " DO.PREZZO,"
-                    + " DO.COLLI "
+                    + " DO.COLLI,"
+                    + " P.IVA"
                     + " FROM DETTAGLIO_ORDINI DO,"
                     + "      ARTICOLI A,"
-                    + "      LISTINI L"
+                    + "      LISTINI L,"
+                    + "      PREZZI P"
                     + " WHERE DO.ID_ORDINE = " + jLabelID.getText()
                     + " AND DO.ID_DESTINAZIONE_CLIENTE = " + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString()
                     + " AND DO.ATTIVO = 'S'"
                     + " AND DO.ID_ARTICOLO = A.ID"
                     + " AND A.ATTIVO = 'S' "
-                    + " AND ID_LISTINO = L.ID"
+                    + " AND DO.ID_LISTINO = L.ID"
+                    + " AND P.ID_LISTINO = DO.ID_LISTINO"
+                    + " AND P.ID_ARTICOLO = DO.ID_ARTICOLO"
+                    + " AND P.ATTIVO = 'S'"
                     + " AND L.ATTIVO = 'S'";
             ResultSet res = conn.selectSMS(query);
 
@@ -798,7 +857,8 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                     res.getString("DESCRIZIONE"),
                     res.getString("LISTINO"),
                     res.getString("PREZZO"),
-                    res.getString("COLLI")
+                    res.getString("IVA"),
+                    res.getString("COLLI"),
                 };
                 defaultModel.addRow(cell);                
             }
@@ -861,6 +921,15 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         idPrezzoScelto  = idPrezzo;
         idListinoScelto = idListino;
     }        
+
+    @Override
+    public void settaListino(String idListino, String idPrezzo, String prezzo, String listino, String colli) {
+        listinoScelto = listino;
+        idPrezzoScelto  = idPrezzo;
+        idListinoScelto = idListino;
+        prezzoScelto = prezzo;
+        colliScelti  = colli;
+    }
 
 
     private class AggiungiTuttiIClientiAllaLista implements Runnable {

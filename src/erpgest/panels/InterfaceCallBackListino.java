@@ -12,4 +12,5 @@ package erpgest.panels;
 public interface InterfaceCallBackListino {
     public void settaListino(String idListino,String idPrezzo);
     public void settaListino(String idListino,String idPrezzo,String prezzo,String listino);
+    public void settaListino(String idListino,String idPrezzo,String prezzo,String listino,String colli);
 }

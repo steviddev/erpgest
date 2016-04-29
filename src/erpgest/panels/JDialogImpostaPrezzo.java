@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 /**
@@ -21,6 +22,8 @@ import javax.swing.KeyStroke;
  */
 public class JDialogImpostaPrezzo extends javax.swing.JDialog {
 
+    String UPDATE_OK = "Aggiornamento effettuato.";
+    String INSERT_OK = "Inserimento effettuato.";     
     MainFrame parentFrame;
     JPanelListinoPrezzi parentPanel;    
     String idProdotto = "";
@@ -35,7 +38,7 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
         this.parentPanel = parentPanel;        
         initComponents();
         jTextFieldPrezzo.setDocument(new erpgest.utils.JTextFieldDoubleDocument(11) );
-
+        jTextFieldIVA.setDocument(new erpgest.utils.JTextFieldDoubleDocument(11) );
         this.idProdotto = idArticolo;
         this.idListino = idListino;
         jTextFieldPrezzo.setText(prezzo);
@@ -66,16 +69,19 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabelNomeListino = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabelNomeArticolo = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabelprezzo = new javax.swing.JLabel();
-        jLabelDescrizioneArticolo1 = new javax.swing.JLabel();
         jButtonOK = new javax.swing.JButton();
         jButtonCancella = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabelprezzo = new javax.swing.JLabel();
+        jLabelNomeListino = new javax.swing.JLabel();
+        jLabelNomeArticolo = new javax.swing.JLabel();
+        jLabelDescrizioneArticolo1 = new javax.swing.JLabel();
         jTextFieldPrezzo = new javax.swing.JTextField();
+        jLabelprezzo1 = new javax.swing.JLabel();
+        jTextFieldIVA = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(441, 340));
@@ -86,41 +92,6 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Imposta Prezzo Articolo"));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel1.setText("Listino: ");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(150, 40, 60, 15);
-
-        jLabelNomeListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelNomeListino.setText("-");
-        jPanel1.add(jLabelNomeListino);
-        jLabelNomeListino.setBounds(210, 40, 160, 20);
-
-        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel3.setText("Nome Articolo:");
-        jPanel1.add(jLabel3);
-        jLabel3.setBounds(110, 70, 100, 15);
-
-        jLabelNomeArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelNomeArticolo.setText("-");
-        jPanel1.add(jLabelNomeArticolo);
-        jLabelNomeArticolo.setBounds(210, 70, 160, 20);
-
-        jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
-        jLabel5.setText("Descrizione:");
-        jPanel1.add(jLabel5);
-        jLabel5.setBounds(130, 100, 80, 15);
-
-        jLabelprezzo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelprezzo.setText("Prezzo :");
-        jPanel1.add(jLabelprezzo);
-        jLabelprezzo.setBounds(130, 150, 70, 20);
-
-        jLabelDescrizioneArticolo1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabelDescrizioneArticolo1.setText("-");
-        jPanel1.add(jLabelDescrizioneArticolo1);
-        jLabelDescrizioneArticolo1.setBounds(210, 100, 160, 20);
-
         jButtonOK.setText("OK");
         jButtonOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +99,7 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButtonOK);
-        jButtonOK.setBounds(100, 220, 90, 32);
+        jButtonOK.setBounds(150, 230, 90, 31);
 
         jButtonCancella.setText("Cancella");
         jButtonCancella.addActionListener(new java.awt.event.ActionListener() {
@@ -137,12 +108,89 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
             }
         });
         jPanel1.add(jButtonCancella);
-        jButtonCancella.setBounds(220, 220, 83, 32);
-        jPanel1.add(jTextFieldPrezzo);
-        jTextFieldPrezzo.setBounds(210, 150, 110, 24);
+        jButtonCancella.setBounds(270, 230, 90, 31);
+
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Listino:");
+
+        jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Nome Articolo:");
+
+        jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 12)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel5.setText("Descrizione:");
+
+        jLabelprezzo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelprezzo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelprezzo.setText("Prezzo :");
+
+        jLabelNomeListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelNomeListino.setText("-");
+
+        jLabelNomeArticolo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelNomeArticolo.setText("-");
+
+        jLabelDescrizioneArticolo1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelDescrizioneArticolo1.setText("-");
+
+        jLabelprezzo1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabelprezzo1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelprezzo1.setText("IVA:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelprezzo1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelprezzo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNomeListino, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNomeArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDescrizioneArticolo1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPrezzo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelNomeListino, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelNomeArticolo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelDescrizioneArticolo1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelprezzo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPrezzo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelprezzo1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2);
+        jPanel2.setBounds(100, 40, 320, 170);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(10, 10, 420, 300);
+        jPanel1.setBounds(10, 10, 510, 400);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -152,16 +200,32 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancellaActionPerformed
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
+        String prezzo = jTextFieldPrezzo.getText();
+        String iva = jTextFieldIVA.getText();
+        
+        if (prezzo.equals("")) {
+            prezzo = "0.0";
+        }
+        
+        if (iva.equals("")) {
+            iva = "0.0";
+        }        
+        
         DbConn conn = new DbConn();
         conn.makeConn();
+        String risultato = "";
         try {
             String query = "UPDATE PREZZI "
-                    + " SET PREZZO = '"+jTextFieldPrezzo.getText()+"'"
+                    + " SET PREZZO = '"+prezzo+"',"
+                    + " IVA = '"+iva+"'"
                     + " WHERE ID_LISTINO = '"+idListino+"'"
                     + " AND ID_ARTICOLO = '"+idProdotto+"'"
                     + " AND ATTIVO = 'S'";
             
-            conn.update(query);
+            risultato = conn.update(query);
+            if (!risultato.equals(UPDATE_OK)) {
+                JOptionPane.showMessageDialog(parentFrame, "Errore in aggiornamento", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            }
             
         } catch (Exception e) {
             Utils.logError(e, "", true);
@@ -188,7 +252,10 @@ public class JDialogImpostaPrezzo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelNomeArticolo;
     private javax.swing.JLabel jLabelNomeListino;
     private javax.swing.JLabel jLabelprezzo;
+    private javax.swing.JLabel jLabelprezzo1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextFieldIVA;
     private javax.swing.JTextField jTextFieldPrezzo;
     // End of variables declaration//GEN-END:variables
 

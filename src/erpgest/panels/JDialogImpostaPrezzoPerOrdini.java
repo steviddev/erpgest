@@ -224,7 +224,7 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancellaActionPerformed
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jButtonCancellaActionPerformed
 
     private void jButtonOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOKActionPerformed
@@ -232,8 +232,13 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
             JOptionPane.showMessageDialog(parentFrame.getFrame(), "Nessun listino selezionato", "Attenzione", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        if (jLabelPrezzoArticolo.getText().equals("-")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Il prodotto non ha un prezzo in quel listino. settare il prezzo nel listino e riprovare", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;
+        }        
         idListino = Utils.getKeyByValue(listiniMap, (String)jComboBoxListini.getSelectedItem());
-        parentPanel.settaListino(idListino, idArticolo,jLabelPrezzoArticolo.getText(),(String)jComboBoxListini.getSelectedItem());
+        parentPanel.settaListino(idListino, idArticolo,jLabelPrezzoArticolo.getText(),(String)jComboBoxListini.getSelectedItem(),jTextFieldColli.getText());
         dispose();
         
     }//GEN-LAST:event_jButtonOKActionPerformed
@@ -304,6 +309,11 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
     @Override
     public void settaListino(String idListino, String idPrezzo, String prezzo,String listino) {
         parentPanel.settaListino(idListino, idPrezzo, prezzo,listino);
+    }
+
+    @Override
+    public void settaListino(String idListino, String idPrezzo, String prezzo, String listino, String colli) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

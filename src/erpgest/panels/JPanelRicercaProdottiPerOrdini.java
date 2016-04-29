@@ -27,6 +27,7 @@ import erpgest.db.DbConn;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
@@ -395,14 +396,16 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog implemen
     }//GEN-LAST:event_jButtonChiudiActionPerformed
 
     private void jButtonSelezionaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelezionaActionPerformed
-        JDialogImpostaPrezzoPerOrdini uno = new JDialogImpostaPrezzoPerOrdini(parentFrame, this, "15", "pane", "pane e casu");
-        
         String idArticolo = "";
         ResultSet res;
+        String query = "";
+        String nomeArticolo = "";
+        String descrizioneArticolo = "";
+
         try {
             int[] selection = tabella.getSelectedRows();
             idArticolo = tabella.getModel().getValueAt(tabella.getSelectedRow(), 0).toString() ;
-            parentPanel.aggiornaListaArticoli(idArticolo);
+            
             
             
         } catch (Exception e) {
@@ -414,9 +417,31 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog implemen
             );
             return;
         }
-        if (!idArticolo.equals("")) {
+        if (idArticolo.equals("")) {     
             dispose();
         }
+        DbConn conn = new DbConn();
+        try {
+            
+            conn.makeConn();
+            
+            query = "SELECT * FROM ARTICOLI "
+                    + " WHERE ID = '"+idArticolo+"'"
+                    + " AND ATTIVO = 'S'";
+            res = conn.selectSMS(query);
+            
+            if( res.next() ){
+                nomeArticolo = res.getString("NOME");
+                descrizioneArticolo = res.getString("DESCRIZIONE");
+            }
+            
+        } catch (Exception e) {
+            //conn.close();
+        }
+        conn.close();
+        
+        JDialogImpostaPrezzoPerOrdini uno = new JDialogImpostaPrezzoPerOrdini(parentFrame, this, idArticolo, nomeArticolo, descrizioneArticolo);        
+        parentPanel.aggiornaListaArticoli(idArticolo);
     }//GEN-LAST:event_jButtonSelezionaActionPerformed
 
     private void jButtonRicercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRicercaActionPerformed
@@ -487,6 +512,11 @@ public class JPanelRicercaProdottiPerOrdini extends javax.swing.JDialog implemen
     @Override
     public void settaListino(String idListino, String idPrezzo, String prezzo, String listino) {
         parentPanel.settaListino(idListino, idPrezzo, prezzo,listino);
+    }
+
+    @Override
+    public void settaListino(String idListino, String idPrezzo, String prezzo, String listino, String colli) {
+        parentPanel.settaListino(idListino, idPrezzo, prezzo,listino,colli);
     }
 
     class eseguiRicerca implements Runnable {

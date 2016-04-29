@@ -34,8 +34,10 @@ public class JPanelResocontoTotaleOrdine extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jButtonStampa = new javax.swing.JButton();
-        jButtonStampa1 = new javax.swing.JButton();
+        jButtonExcel = new javax.swing.JButton();
+        jButtonAnnulla = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -99,13 +101,40 @@ public class JPanelResocontoTotaleOrdine extends javax.swing.JPanel {
                 jButtonStampaActionPerformed(evt);
             }
         });
-        add(jButtonStampa);
-        jButtonStampa.setBounds(300, 500, 120, 34);
 
-        jButtonStampa1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonStampa1.setText("Annulla");
-        add(jButtonStampa1);
-        jButtonStampa1.setBounds(440, 500, 120, 34);
+        jButtonExcel.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/doc_excel_csv.png"))); // NOI18N
+        jButtonExcel.setText("Estrai Excel");
+
+        jButtonAnnulla.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonAnnulla.setText("Annulla");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonStampa, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExcel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonAnnulla, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonStampa)
+                    .addComponent(jButtonExcel, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAnnulla))
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
+
+        add(jPanel1);
+        jPanel1.setBounds(270, 490, 370, 70);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonStampaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStampaActionPerformed
@@ -115,11 +144,13 @@ public class JPanelResocontoTotaleOrdine extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAnnulla;
+    private javax.swing.JButton jButtonExcel;
     private javax.swing.JButton jButtonStampa;
-    private javax.swing.JButton jButtonStampa1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

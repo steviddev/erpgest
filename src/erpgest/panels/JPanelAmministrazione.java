@@ -218,12 +218,16 @@ public class JPanelAmministrazione extends javax.swing.JPanel {
         }
 
         Map <String,String> conf = UtilsGen.caricaConfigurazione();
-        ragioneSociale = conf.get("RagioneSociale");
-        partitaIva     = conf.get("PartitaIva");
-        cap            = conf.get("CAP");
-        telefono       = conf.get("Telefono");
-        indirizzo      = conf.get("Indirizzo");
-        citta           = conf.get("Citta");
+        try {
+            ragioneSociale = conf.get("RagioneSociale");
+            partitaIva     = conf.get("PartitaIva");
+            cap            = conf.get("CAP");
+            telefono       = conf.get("Telefono");
+            indirizzo      = conf.get("Indirizzo");
+            citta           = conf.get("Citta");            
+        } catch (Exception e) {
+        }
+
         
         jTextFieldRagioneSociale.setText(ragioneSociale);
         jTextFieldPartitaIVA.setText(partitaIva);
