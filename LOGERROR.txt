@@ -718,3 +718,27 @@ java.lang.NullPointerException
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:91)
 /-------------------------FINE---------------------------/
 
+/------------------------INIZIO----------------------------/
+Fri Apr 29 18:58:34 CEST 2016
+
+java.lang.NullPointerException
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:735)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Fri Apr 29 18:58:46 CEST 2016
+
+java.lang.NullPointerException
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:735)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+
+/------------------------INIZIO----------------------------/
+Fri Apr 29 23:36:17 CEST 2016
+
+java.lang.NullPointerException
+	at erpgest.panels.JPanelRicercaClienti$eseguiRicerca.run(JPanelRicercaClienti.java:735)
+	at java.lang.Thread.run(Thread.java:745)
+/-------------------------FINE---------------------------/
+

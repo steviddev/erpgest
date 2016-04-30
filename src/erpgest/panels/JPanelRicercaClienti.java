@@ -695,7 +695,7 @@ public class JPanelRicercaClienti extends javax.swing.JDialog {
                     }
 
                     if (jTextFieldRagioneSociale.getText().trim().length() > 0) {
-                        filter += "\n AND a.RAGIONE_SOCIALE =" + jTextFieldRagioneSociale.getText().toUpperCase().replace("'", "''") + " ";
+                        filter += "\n AND a.RAGIONE_SOCIALE LIKE '%" + jTextFieldRagioneSociale.getText().toUpperCase().replace("'", "''") + "%' ";
                     }
 
                     if (jTextFieldID.getText().trim().length() > 0) {
