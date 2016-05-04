@@ -110,6 +110,10 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jLabel56 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jTextFieldPartitaIVA = new javax.swing.JTextField();
+        jLabel61 = new javax.swing.JLabel();
+        jTextFieldModalitaPagamento = new javax.swing.JTextField();
+        jLabel60 = new javax.swing.JLabel();
+        jTextFieldBanca = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
         jTextFieldNomeRL = new javax.swing.JTextField();
@@ -126,10 +130,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jLabel59 = new javax.swing.JLabel();
         jTextFieldIndirizzoRL = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel60 = new javax.swing.JLabel();
-        jTextFieldBanca = new javax.swing.JTextField();
-        jLabel61 = new javax.swing.JLabel();
-        jTextFieldModalitaPagamento = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablePuntiVendita = new javax.swing.JTable();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Clienti"));
         setLayout(null);
@@ -194,7 +196,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jTextFieldID.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextFieldID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         add(jTextFieldID);
-        jTextFieldID.setBounds(30, 40, 90, 35);
+        jTextFieldID.setBounds(30, 30, 90, 35);
 
         buttonElimina.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cancel.png"))); // NOI18N
         buttonElimina.setText("Elimina");
@@ -218,42 +220,42 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jLabel50.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel50.setText("Indirizzo");
         jPanel1.add(jLabel50);
-        jLabel50.setBounds(20, 110, 260, 20);
+        jLabel50.setBounds(20, 70, 260, 20);
 
         jTextFieldIndirizzo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldIndirizzo.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldIndirizzo);
-        jTextFieldIndirizzo.setBounds(20, 130, 260, 30);
+        jTextFieldIndirizzo.setBounds(20, 90, 260, 30);
 
         jLabel52.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel52.setText("Telefono");
         jPanel1.add(jLabel52);
-        jLabel52.setBounds(680, 110, 130, 20);
+        jLabel52.setBounds(680, 70, 130, 20);
 
         jTextFieldTelefonoAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldTelefonoAzienda.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldTelefonoAzienda);
-        jTextFieldTelefonoAzienda.setBounds(680, 130, 130, 30);
+        jTextFieldTelefonoAzienda.setBounds(680, 90, 130, 30);
 
         jLabel54.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel54.setText("CAP");
         jPanel1.add(jLabel54);
-        jLabel54.setBounds(560, 110, 110, 20);
+        jLabel54.setBounds(560, 70, 110, 20);
 
         jTextFieldCAPAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCAPAzienda.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldCAPAzienda);
-        jTextFieldCAPAzienda.setBounds(560, 130, 110, 30);
+        jTextFieldCAPAzienda.setBounds(560, 90, 110, 30);
 
         jLabel55.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel55.setText("Città");
         jPanel1.add(jLabel55);
-        jLabel55.setBounds(290, 110, 260, 20);
+        jLabel55.setBounds(290, 70, 260, 20);
 
         jTextFieldCittaAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCittaAzienda.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldCittaAzienda);
-        jTextFieldCittaAzienda.setBounds(290, 130, 260, 30);
+        jTextFieldCittaAzienda.setBounds(290, 90, 260, 30);
 
         jLabel51.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel51.setText("Ragione Sociale");
@@ -268,12 +270,12 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jTextFieldFaxAzienda.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldFaxAzienda.setForeground(new java.awt.Color(0, 0, 204));
         jPanel1.add(jTextFieldFaxAzienda);
-        jTextFieldFaxAzienda.setBounds(820, 130, 130, 30);
+        jTextFieldFaxAzienda.setBounds(820, 90, 130, 30);
 
         jLabel56.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel56.setText("FAX");
         jPanel1.add(jLabel56);
-        jLabel56.setBounds(820, 110, 130, 20);
+        jLabel56.setBounds(820, 70, 130, 20);
 
         jLabel21.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel21.setText("Partita IVA");
@@ -285,8 +287,28 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jPanel1.add(jTextFieldPartitaIVA);
         jTextFieldPartitaIVA.setBounds(290, 40, 170, 30);
 
+        jLabel61.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel61.setText("Modalita Pagamento");
+        jPanel1.add(jLabel61);
+        jLabel61.setBounds(470, 20, 260, 20);
+
+        jTextFieldModalitaPagamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldModalitaPagamento.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldModalitaPagamento);
+        jTextFieldModalitaPagamento.setBounds(470, 40, 260, 30);
+
+        jLabel60.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel60.setText("Banca d' appoggio");
+        jPanel1.add(jLabel60);
+        jLabel60.setBounds(750, 20, 260, 20);
+
+        jTextFieldBanca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jTextFieldBanca.setForeground(new java.awt.Color(0, 0, 204));
+        jPanel1.add(jTextFieldBanca);
+        jTextFieldBanca.setBounds(750, 40, 260, 30);
+
         add(jPanel1);
-        jPanel1.setBounds(30, 100, 1040, 180);
+        jPanel1.setBounds(30, 80, 1040, 140);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Referente Legale"));
         jPanel2.setLayout(null);
@@ -314,81 +336,97 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jLabel53.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel53.setText("Città");
         jPanel2.add(jLabel53);
-        jLabel53.setBounds(290, 110, 260, 20);
+        jLabel53.setBounds(290, 70, 260, 20);
 
         jTextFieldCittaRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCittaRL.setForeground(new java.awt.Color(0, 0, 204));
         jPanel2.add(jTextFieldCittaRL);
-        jTextFieldCittaRL.setBounds(290, 130, 260, 30);
+        jTextFieldCittaRL.setBounds(290, 90, 260, 30);
 
         jLabel20.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel20.setText("Codice Fiscale");
         jPanel2.add(jLabel20);
-        jLabel20.setBounds(820, 110, 200, 20);
+        jLabel20.setBounds(820, 70, 200, 20);
 
         jTextFieldCF.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCF.setForeground(new java.awt.Color(0, 0, 204));
         jPanel2.add(jTextFieldCF);
-        jTextFieldCF.setBounds(820, 130, 200, 30);
+        jTextFieldCF.setBounds(820, 90, 200, 30);
 
         jLabel58.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel58.setText("Telefono");
         jPanel2.add(jLabel58);
-        jLabel58.setBounds(680, 110, 130, 20);
+        jLabel58.setBounds(680, 70, 130, 20);
 
         jLabel57.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel57.setText("CAP");
         jPanel2.add(jLabel57);
-        jLabel57.setBounds(560, 110, 110, 20);
+        jLabel57.setBounds(560, 70, 110, 20);
 
         jTextFieldTelefonoRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldTelefonoRL.setForeground(new java.awt.Color(0, 0, 204));
         jPanel2.add(jTextFieldTelefonoRL);
-        jTextFieldTelefonoRL.setBounds(680, 130, 130, 30);
+        jTextFieldTelefonoRL.setBounds(680, 90, 130, 30);
 
         jTextFieldCAPRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldCAPRL.setForeground(new java.awt.Color(0, 0, 204));
         jPanel2.add(jTextFieldCAPRL);
-        jTextFieldCAPRL.setBounds(560, 130, 110, 30);
+        jTextFieldCAPRL.setBounds(560, 90, 110, 30);
 
         jLabel59.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel59.setText("Indirizzo");
         jPanel2.add(jLabel59);
-        jLabel59.setBounds(20, 110, 260, 20);
+        jLabel59.setBounds(20, 70, 260, 20);
 
         jTextFieldIndirizzoRL.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTextFieldIndirizzoRL.setForeground(new java.awt.Color(0, 0, 204));
         jPanel2.add(jTextFieldIndirizzoRL);
-        jTextFieldIndirizzoRL.setBounds(20, 130, 260, 30);
+        jTextFieldIndirizzoRL.setBounds(20, 90, 260, 30);
 
         add(jPanel2);
-        jPanel2.setBounds(30, 300, 1040, 170);
+        jPanel2.setBounds(30, 230, 1040, 140);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Punti Vendita"));
         jPanel3.setLayout(null);
 
-        jLabel60.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel60.setText("Banca d' appoggio");
-        jPanel3.add(jLabel60);
-        jLabel60.setBounds(300, 20, 260, 20);
+        jTablePuntiVendita.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jTextFieldBanca.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldBanca.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel3.add(jTextFieldBanca);
-        jTextFieldBanca.setBounds(300, 40, 260, 30);
+            },
+            new String [] {
+                "ID", "Nome", "Indirizzo", "Citta", "CAP", "Telefono"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
 
-        jLabel61.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jLabel61.setText("Modalita Pagamento");
-        jPanel3.add(jLabel61);
-        jLabel61.setBounds(20, 20, 260, 20);
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jTextFieldModalitaPagamento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTextFieldModalitaPagamento.setForeground(new java.awt.Color(0, 0, 204));
-        jPanel3.add(jTextFieldModalitaPagamento);
-        jTextFieldModalitaPagamento.setBounds(20, 40, 260, 30);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTablePuntiVendita);
+        if (jTablePuntiVendita.getColumnModel().getColumnCount() > 0) {
+            jTablePuntiVendita.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTablePuntiVendita.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTablePuntiVendita.getColumnModel().getColumn(2).setPreferredWidth(300);
+            jTablePuntiVendita.getColumnModel().getColumn(3).setPreferredWidth(80);
+            jTablePuntiVendita.getColumnModel().getColumn(4).setPreferredWidth(60);
+            jTablePuntiVendita.getColumnModel().getColumn(5).setPreferredWidth(80);
+        }
+
+        jPanel3.add(jScrollPane1);
+        jScrollPane1.setBounds(20, 20, 970, 230);
 
         add(jPanel3);
-        jPanel3.setBounds(30, 490, 1040, 150);
+        jPanel3.setBounds(30, 380, 1040, 270);
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonRegistraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegistraActionPerformed
@@ -624,6 +662,8 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTablePuntiVendita;
     public javax.swing.JTextField jTextFieldBanca;
     public javax.swing.JTextField jTextFieldCAPAzienda;
     public javax.swing.JTextField jTextFieldCAPRL;

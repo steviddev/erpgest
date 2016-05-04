@@ -71,15 +71,15 @@ public class JDialogResocontoOrdine extends javax.swing.JDialog {
 
         jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(290, 30, 45, 16);
+        jLabel1.setBounds(290, 30, 51, 15);
 
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(400, 30, 45, 16);
+        jLabel2.setBounds(400, 30, 51, 15);
 
         jLabel3.setText("jLabel3");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(490, 30, 45, 16);
+        jLabel3.setBounds(490, 30, 51, 15);
 
         jButtonStampa.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonStampa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/printer.png"))); // NOI18N

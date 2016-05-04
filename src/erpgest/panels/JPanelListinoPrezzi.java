@@ -34,8 +34,9 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         nascondiPannelloCopiaListino();
         nascondiPannelloNuovoListino();
         caricaComboListini();
+        popolaTabellaListini();
         
-        jTable1.addMouseListener(new MouseAdapter() {
+        jTablePrezziProdottiSuListino.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent me) {
                 JTable table =(JTable) me.getSource();
                 Point p = me.getPoint();
@@ -45,10 +46,49 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
                 }
             }
         });        
-        jTable1.setCellSelectionEnabled(false);
-        jTable1.setColumnSelectionAllowed(false);
-        jTable1.setRowSelectionAllowed(true);
-        jTable1.setSelectionMode(0);
+      
+        jTableListini.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent me) {
+                JTable table =(JTable) me.getSource();
+                Point p = me.getPoint();
+                int row = table.rowAtPoint(p);
+                String idListino   = "";
+                String nomeListino = "";
+                try {
+
+                   idListino = jTableListini.getModel().getValueAt(jTableListini.getSelectedRow(), 0).toString() ;
+                } catch (Exception e) {
+                    new javax.swing.JOptionPane().showMessageDialog(
+                            jPanel1,
+                            "Selezionare Un Elemento",
+                            "Attenzione",
+                            javax.swing.JOptionPane.WARNING_MESSAGE
+                    );
+                    return;            
+                }                
+                
+                jLabelListinoSelezionato.setText(jTableListini.getModel().getValueAt(jTableListini.getSelectedRow(), 1).toString());
+                jLabelIDListino.setText(idListino);        
+                popolaTabellaListino();                
+            }
+        });         
+        
+            /*
+                if (((String)jComboBoxListini.getSelectedItem()).equals("-") ) {
+                    JOptionPane.showMessageDialog(parentFrame, "Selezionare un listino valido", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }   */
+
+        jTablePrezziProdottiSuListino.setCellSelectionEnabled(false);
+        jTablePrezziProdottiSuListino.setColumnSelectionAllowed(false);
+        jTablePrezziProdottiSuListino.setRowSelectionAllowed(true);
+        jTablePrezziProdottiSuListino.setSelectionMode(0);
+        
+        
+        jTableListini.setCellSelectionEnabled(false);
+        jTableListini.setColumnSelectionAllowed(false);
+        jTableListini.setRowSelectionAllowed(true);
+        jTableListini.setSelectionMode(0);        
     }
 
     /**
@@ -62,7 +102,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTablePrezziProdottiSuListino = new javax.swing.JTable();
         jButtonImpostaPrezzo = new javax.swing.JButton();
         jButtonInserisciProdotto = new javax.swing.JButton();
         jButtonEliminaArticoloDaListino = new javax.swing.JButton();
@@ -71,20 +111,23 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jLabelListinoSelezionato = new javax.swing.JLabel();
         jLabelIDListino = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButtonNuovoListino = new javax.swing.JButton();
-        jButtonEliminaListino = new javax.swing.JButton();
-        jPanelCreazioneListino = new javax.swing.JPanel();
-        jButtonOkCreazione = new javax.swing.JButton();
-        jTextFieldNuovoListino = new javax.swing.JTextField();
-        jButtonAnnullaCreazioneListino = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jPanelCopiaListini = new javax.swing.JPanel();
         jButtonCopiaListino = new javax.swing.JButton();
         jButtonAnnullaCopiaListino = new javax.swing.JButton();
         jComboBoxListinoDaCuiCopiare = new javax.swing.JComboBox();
-        jPanel2 = new javax.swing.JPanel();
-        jButtonConferma = new javax.swing.JButton();
         jComboBoxListini = new javax.swing.JComboBox();
+        jButtonConferma = new javax.swing.JButton();
+        jPanelCreazioneListino = new javax.swing.JPanel();
+        jButtonOkCreazione = new javax.swing.JButton();
+        jTextFieldNuovoListino = new javax.swing.JTextField();
+        jButtonAnnullaCreazioneListino = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jButtonNuovoListino = new javax.swing.JButton();
+        jButtonEliminaListino = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableListini = new javax.swing.JTable();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Listino Prezzi"));
         setLayout(null);
@@ -92,7 +135,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista Prodotti"));
         jPanel1.setLayout(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePrezziProdottiSuListino.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -115,17 +158,17 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(60);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(200);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(120);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(60);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(60);
+        jScrollPane1.setViewportView(jTablePrezziProdottiSuListino);
+        if (jTablePrezziProdottiSuListino.getColumnModel().getColumnCount() > 0) {
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(0).setResizable(false);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(0).setPreferredWidth(60);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(1).setResizable(false);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(1).setPreferredWidth(200);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(2).setMinWidth(200);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(3).setMaxWidth(120);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(4).setPreferredWidth(60);
+            jTablePrezziProdottiSuListino.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
         jPanel1.add(jScrollPane1);
@@ -188,32 +231,61 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jLabelIDListino.setBounds(750, 10, 80, 30);
 
         add(jPanel1);
-        jPanel1.setBounds(30, 240, 870, 340);
+        jPanel1.setBounds(30, 280, 870, 340);
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel3.setText("Scegli Listino ");
         add(jLabel3);
-        jLabel3.setBounds(50, 50, 110, 20);
+        jLabel3.setBounds(790, 150, 110, 20);
 
-        jButtonNuovoListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonNuovoListino.setText("Nuovo Listino");
-        jButtonNuovoListino.addActionListener(new java.awt.event.ActionListener() {
+        jPanelCopiaListini.setBorder(javax.swing.BorderFactory.createTitledBorder("Copia Da Listino"));
+        jPanelCopiaListini.setLayout(null);
+
+        jButtonCopiaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonCopiaListino.setText("OK");
+        jButtonCopiaListino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuovoListinoActionPerformed(evt);
+                jButtonCopiaListinoActionPerformed(evt);
             }
         });
-        add(jButtonNuovoListino);
-        jButtonNuovoListino.setBounds(410, 100, 140, 34);
+        jPanelCopiaListini.add(jButtonCopiaListino);
+        jButtonCopiaListino.setBounds(250, 20, 90, 31);
 
-        jButtonEliminaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonEliminaListino.setText("Elimina Listino");
-        jButtonEliminaListino.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAnnullaCopiaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonAnnullaCopiaListino.setText("Annulla");
+        jButtonAnnullaCopiaListino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminaListinoActionPerformed(evt);
+                jButtonAnnullaCopiaListinoActionPerformed(evt);
             }
         });
-        add(jButtonEliminaListino);
-        jButtonEliminaListino.setBounds(410, 140, 140, 34);
+        jPanelCopiaListini.add(jButtonAnnullaCopiaListino);
+        jButtonAnnullaCopiaListino.setBounds(250, 60, 90, 31);
+
+        jComboBoxListinoDaCuiCopiare.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jPanelCopiaListini.add(jComboBoxListinoDaCuiCopiare);
+        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
+
+        add(jPanelCopiaListini);
+        jPanelCopiaListini.setBounds(500, 10, 350, 100);
+
+        jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jComboBoxListini.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxListiniItemStateChanged(evt);
+            }
+        });
+        add(jComboBoxListini);
+        jComboBoxListini.setBounds(780, 170, 120, 30);
+
+        jButtonConferma.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonConferma.setText("Visualizza");
+        jButtonConferma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConfermaActionPerformed(evt);
+            }
+        });
+        add(jButtonConferma);
+        jButtonConferma.setBounds(770, 200, 140, 34);
 
         jPanelCreazioneListino.setBorder(javax.swing.BorderFactory.createTitledBorder("Creazione Nuovo Listino"));
         jPanelCreazioneListino.setEnabled(false);
@@ -248,7 +320,23 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jButtonAnnullaCreazioneListino.setBounds(250, 60, 90, 31);
 
         add(jPanelCreazioneListino);
-        jPanelCreazioneListino.setBounds(560, 20, 350, 100);
+        jPanelCreazioneListino.setBounds(150, 10, 350, 100);
+
+        jButtonNuovoListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonNuovoListino.setText("Nuovo Listino");
+        jButtonNuovoListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuovoListinoActionPerformed(evt);
+            }
+        });
+
+        jButtonEliminaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonEliminaListino.setText("Elimina Listino");
+        jButtonEliminaListino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminaListinoActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton3.setText("Copia");
@@ -257,77 +345,92 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
                 jButton3ActionPerformed(evt);
             }
         });
-        add(jButton3);
-        jButton3.setBounds(410, 180, 140, 34);
-
-        jPanelCopiaListini.setBorder(javax.swing.BorderFactory.createTitledBorder("Copia Da Listino"));
-        jPanelCopiaListini.setLayout(null);
-
-        jButtonCopiaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonCopiaListino.setText("OK");
-        jButtonCopiaListino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCopiaListinoActionPerformed(evt);
-            }
-        });
-        jPanelCopiaListini.add(jButtonCopiaListino);
-        jButtonCopiaListino.setBounds(250, 20, 90, 31);
-
-        jButtonAnnullaCopiaListino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonAnnullaCopiaListino.setText("Annulla");
-        jButtonAnnullaCopiaListino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAnnullaCopiaListinoActionPerformed(evt);
-            }
-        });
-        jPanelCopiaListini.add(jButtonAnnullaCopiaListino);
-        jButtonAnnullaCopiaListino.setBounds(250, 60, 90, 31);
-
-        jComboBoxListinoDaCuiCopiare.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
-        jPanelCopiaListini.add(jComboBoxListinoDaCuiCopiare);
-        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
-
-        add(jPanelCopiaListini);
-        jPanelCopiaListini.setBounds(560, 120, 350, 110);
-
-        jButtonConferma.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonConferma.setText("Visualizza");
-        jButtonConferma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonConfermaActionPerformed(evt);
-            }
-        });
-
-        jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
-        jComboBoxListini.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxListiniItemStateChanged(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(jComboBoxListini, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonConferma, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonNuovoListino, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEliminaListino, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jComboBoxListini, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonConferma))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jButtonNuovoListino)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonEliminaListino)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         add(jPanel2);
-        jPanel2.setBounds(20, 70, 370, 80);
+        jPanel2.setBounds(870, 20, 60, 130);
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Listini"));
+
+        jTableListini.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome", "Data", "Inviato"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jTableListini);
+        if (jTableListini.getColumnModel().getColumnCount() > 0) {
+            jTableListini.getColumnModel().getColumn(0).setMinWidth(40);
+            jTableListini.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTableListini.getColumnModel().getColumn(0).setMaxWidth(40);
+            jTableListini.getColumnModel().getColumn(1).setMinWidth(400);
+            jTableListini.getColumnModel().getColumn(1).setPreferredWidth(400);
+            jTableListini.getColumnModel().getColumn(1).setMaxWidth(400);
+            jTableListini.getColumnModel().getColumn(2).setMinWidth(160);
+            jTableListini.getColumnModel().getColumn(2).setPreferredWidth(160);
+            jTableListini.getColumnModel().getColumn(2).setMaxWidth(160);
+            jTableListini.getColumnModel().getColumn(3).setMinWidth(60);
+            jTableListini.getColumnModel().getColumn(3).setPreferredWidth(60);
+            jTableListini.getColumnModel().getColumn(3).setMaxWidth(60);
+        }
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 13, Short.MAX_VALUE))
+        );
+
+        add(jPanel3);
+        jPanel3.setBounds(30, 120, 690, 150);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNuovoListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNuovoListinoActionPerformed
@@ -524,7 +627,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         }
         try {
             
-            String idProdotto = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString() ;
+            String idProdotto = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 0).toString() ;
         } catch (Exception e) {
             new javax.swing.JOptionPane().showMessageDialog(
                     jPanel1,
@@ -572,7 +675,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             }
         }
 
-        Thread tt = new Thread(new popolaTabellaConListino());
+        Thread tt = new Thread(new PopolaTabellaPrezziConListino());
         tt.start();         
     }
     
@@ -614,19 +717,65 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jLabelIDListino.setText("-");
         jLabelListinoSelezionato.setText("-");
         caricaComboListini();
-        jTable1.setVisible(false);
+        jTablePrezziProdottiSuListino.setVisible(false);
         
-        DefaultTableModel defaultModel = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel defaultModel = (DefaultTableModel) jTablePrezziProdottiSuListino.getModel();
 
         while (defaultModel.getRowCount() > 0) {
             defaultModel.removeRow(0);
         }        
-        jTable1.invalidate();
-        jTable1.validate();
-        jTable1.repaint(); 
-        jTable1.setVisible(true);
+        jTablePrezziProdottiSuListino.invalidate();
+        jTablePrezziProdottiSuListino.validate();
+        jTablePrezziProdottiSuListino.repaint(); 
+        jTablePrezziProdottiSuListino.setVisible(true);
         validate();
         repaint();        
+    }
+    
+    private void popolaTabellaListini(){
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query     = "";
+        ResultSet res    = null;
+        String risultato = "";
+        try {
+            query = "SELECT * "
+                    + " FROM LISTINI L "
+                    + " WHERE L.ATTIVO = 'S' "
+                    + " ORDER BY DATA_MODIFICA DESC;";
+
+            
+            DefaultTableModel defaultModel = (DefaultTableModel) jTableListini.getModel();
+
+            while (defaultModel.getRowCount() > 0) {
+                defaultModel.removeRow(0);
+            }
+
+            res = conn.selectSMS(query);
+            
+
+            while (res.next()) {
+                Object[] cell = {res.getString("ID"),
+                    res.getString("NOME") ,
+                    res.getString("DATA_MODIFICA"),
+                    res.getString("INVIATO")
+                };
+                defaultModel.addRow(cell);
+            }
+
+            jTableListini.invalidate();
+            jTableListini.validate();
+            jTableListini.repaint();            
+            
+
+            
+            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+    
     }
     
     private void caricaComboListini(){
@@ -652,7 +801,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         jComboBoxListinoDaCuiCopiare.removeAllItems();
         jComboBoxListinoDaCuiCopiare.addItem("-");
         try {
-            String query = "SELECT * FROM LISTINI WHERE ATTIVO = 'S'";
+            String query = "SELECT * FROM LISTINI WHERE ATTIVO = 'S' ORDER BY DATA_MODIFICA DESC";
             ResultSet res = conn.selectSMS(query);
             while( res.next() ){
                 if (!res.getString("NOME").equals((String)jComboBoxListini.getSelectedItem())) {
@@ -712,10 +861,13 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     private javax.swing.JLabel jLabelListinoSelezionato;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelCopiaListini;
     private javax.swing.JPanel jPanelCreazioneListino;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTableListini;
+    private javax.swing.JTable jTablePrezziProdottiSuListino;
     private javax.swing.JTextField jTextFieldNuovoListino;
     // End of variables declaration//GEN-END:variables
 
@@ -768,10 +920,10 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         
         String listino = jLabelListinoSelezionato.getText();
         String idListino = jLabelIDListino.getText();
-        String idProdotto = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString() ;
-        String articolo = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 1).toString() ;
-        String descrizione = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2).toString() ;
-        String prezzo = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3).toString() ;
+        String idProdotto = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 0).toString() ;
+        String articolo = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 1).toString() ;
+        String descrizione = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 2).toString() ;
+        String prezzo = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 3).toString() ;
         
         JDialogImpostaPrezzo dialog = new JDialogImpostaPrezzo(this.parentFrame,this,idListino,idProdotto,listino,articolo,descrizione,prezzo);    
         dialog.popolaCampi(idProdotto, idListino, listino, articolo, descrizione,prezzo);
@@ -853,7 +1005,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     private void disabilitaPrezzoProdotto() {
         
         String idListino = jLabelIDListino.getText();
-        String idArticolo  = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 0).toString() ;
+        String idArticolo  = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 0).toString() ;
         String result = "";
         
         DbConn conn = new DbConn();
@@ -931,7 +1083,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     
     
     
-    class popolaTabellaConListino implements Runnable {
+    class PopolaTabellaPrezziConListino implements Runnable {
 
         @Override
         public void run() {
@@ -954,14 +1106,14 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             
             ResultSet rSet = null;
 
-            jTable1.setVisible(false);
+            jTablePrezziProdottiSuListino.setVisible(false);
 
             DbConn conn = new DbConn();
             conn.makeConn();
 
             try {
 
-                DefaultTableModel defaultModel = (DefaultTableModel) jTable1.getModel();
+                DefaultTableModel defaultModel = (DefaultTableModel) jTablePrezziProdottiSuListino.getModel();
 
                 while (defaultModel.getRowCount() > 0) {
                     defaultModel.removeRow(0);
@@ -977,9 +1129,9 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
                     defaultModel.addRow(cell);
                 }
 
-                jTable1.invalidate();
-                jTable1.validate();
-                jTable1.repaint();
+                jTablePrezziProdottiSuListino.invalidate();
+                jTablePrezziProdottiSuListino.validate();
+                jTablePrezziProdottiSuListino.repaint();
                 conn.close();
             } catch (Exception e) {
                 erpgest.utils.Utils.logError(e, "", true);
@@ -988,7 +1140,7 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
 
             erpgest.db.Utils.ResultSetClose(rSet, null);
 
-            jTable1.setVisible(true);
+            jTablePrezziProdottiSuListino.setVisible(true);
             parentFrame.waiting.dispose();
             parentFrame.waiting = null;
             validate();
