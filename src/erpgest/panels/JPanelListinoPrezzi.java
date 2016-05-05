@@ -33,9 +33,10 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         initComponents();
         nascondiPannelloCopiaListino();
         nascondiPannelloNuovoListino();
-        caricaComboListini();
+        //caricaComboListini();
         popolaTabellaListini();
-        
+        jComboBoxListini.setVisible(false);
+        jButtonConferma.setVisible(false);
         jTablePrezziProdottiSuListino.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent me) {
                 JTable table =(JTable) me.getSource();
@@ -257,29 +258,31 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
 
         jComboBoxListinoDaCuiCopiare.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
         jPanelCopiaListini.add(jComboBoxListinoDaCuiCopiare);
-        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 26);
+        jComboBoxListinoDaCuiCopiare.setBounds(20, 30, 180, 25);
 
         add(jPanelCopiaListini);
         jPanelCopiaListini.setBounds(500, 10, 350, 100);
 
         jComboBoxListini.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jComboBoxListini.setEnabled(false);
         jComboBoxListini.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxListiniItemStateChanged(evt);
             }
         });
         add(jComboBoxListini);
-        jComboBoxListini.setBounds(800, 120, 120, 30);
+        jComboBoxListini.setBounds(20, 20, 120, 30);
 
         jButtonConferma.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonConferma.setText("Visualizza");
+        jButtonConferma.setEnabled(false);
         jButtonConferma.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonConfermaActionPerformed(evt);
             }
         });
         add(jButtonConferma);
-        jButtonConferma.setBounds(790, 160, 140, 34);
+        jButtonConferma.setBounds(10, 60, 140, 34);
 
         jPanelCreazioneListino.setBorder(javax.swing.BorderFactory.createTitledBorder("Creazione Nuovo Listino"));
         jPanelCreazioneListino.setEnabled(false);
@@ -494,8 +497,8 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
         }
         
         conn.close();
-        caricaComboListini();
-        
+        //caricaComboListini();
+        popolaTabellaListini();
         nascondiPannelloNuovoListino();
     }//GEN-LAST:event_jButtonOkCreazioneActionPerformed
 
@@ -595,13 +598,26 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     }//GEN-LAST:event_jButtonConfermaActionPerformed
 
     private void jButtonEliminaListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaListinoActionPerformed
-        
+        /*
         String listinoScelto = (String)jComboBoxListini.getSelectedItem();
         
         if ( listinoScelto.equals("-") ) {
             JOptionPane.showMessageDialog(parentFrame, "Selezionare un listino valido", "Attenzione", JOptionPane.ERROR_MESSAGE);
             return;             
         }
+        */
+        String listinoScelto ="";
+        try {
+            listinoScelto = jTableListini.getModel().getValueAt(jTableListini.getSelectedRow(), 1).toString();
+            if (listinoScelto.equals("")) {
+                JOptionPane.showMessageDialog(parentFrame, "Nessun Listino Selezionato", "Attenzione", JOptionPane.ERROR_MESSAGE);
+                return; 
+            }            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(parentFrame, "Nessun Listino Selezionato", "Attenzione", JOptionPane.ERROR_MESSAGE);
+            return;             
+        }
+
         
         int n = JOptionPane.showConfirmDialog(null,
                 "ATTENZIONE!! Si vuole cancellare il listino "+ listinoScelto +"?\n"
@@ -636,6 +652,19 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     }//GEN-LAST:event_jButtonImpostaPrezzoActionPerformed
 
     private void jButtonEliminaArticoloDaListinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaArticoloDaListinoActionPerformed
+        String idProdotto = "";
+        try {
+             idProdotto = jTablePrezziProdottiSuListino.getModel().getValueAt(jTablePrezziProdottiSuListino.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            
+            new javax.swing.JOptionPane().showMessageDialog(
+                    jPanel1,
+                    "Selezionare Un Elemento",
+                    "Attenzione",
+                    javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return; 
+        }
         
         if (jLabelIDListino.getText().equals("") || jLabelIDListino.getText().equals("-")) {
             return;
@@ -711,7 +740,8 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
     private void resettaTabellaListini(){
         jLabelIDListino.setText("-");
         jLabelListinoSelezionato.setText("-");
-        caricaComboListini();
+        //caricaComboListini();
+        popolaTabellaListini();
         jTablePrezziProdottiSuListino.setVisible(false);
         
         DefaultTableModel defaultModel = (DefaultTableModel) jTablePrezziProdottiSuListino.getModel();
@@ -960,32 +990,34 @@ public class JPanelListinoPrezzi extends javax.swing.JPanel implements Interface
             return;
         }
         String result = "";
-        
+        String query = "";
         DbConn conn = new DbConn();
         conn.makeConn();
         try {
             
-            String query = "UPDATE PREZZI "
-                    + " SET ATTIVO = 'N',"
-                    + " DATA_MODIFICA =  datetime('now', 'localtime')"
-                    + " WHERE ID_LISTINO = '"+idListino+"'"
-                    + " AND ATTIVO = 'S'";
-            
-            result = conn.update(query);
-            if (result.equals(UPDATE_OK)) {
-                
                 query = "UPDATE LISTINI"
                         + " SET ATTIVO = 'N',"
                         + " DATA_MODIFICA =  datetime('now', 'localtime')"
                         + " WHERE ID='"+idListino+"'"
-                        + " AND ATTIVO = 'S'";
+                        + " AND ATTIVO = 'S'";            
+            
+            result = conn.update(query);
+            if (result.equals(UPDATE_OK)) {
+                query = "UPDATE PREZZI "
+                    + " SET ATTIVO = 'N',"
+                    + " DATA_MODIFICA =  datetime('now', 'localtime')"
+                    + " WHERE ID_LISTINO = '"+idListino+"'"
+                    + " AND ATTIVO = 'S'";                
+
                 
                 result = conn.update(query);
                 if ( result.equals(UPDATE_OK)) {
                     JOptionPane.showMessageDialog(parentFrame.getFrame(), "Elaborazione avvenuta correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
-                    resettaTabellaListini();
+                    
+                }else{
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Errore nella cancellazione", "OK", JOptionPane.INFORMATION_MESSAGE);
                 }
-                
+                resettaTabellaListini();
             }
             
             

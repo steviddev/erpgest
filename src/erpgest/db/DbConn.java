@@ -125,11 +125,14 @@ public class DbConn {
             erpgest.db.Utils.ResultSetClose(null, statement);
             return "Errore (" + e + ")";
         }
+        
+        return "Aggiornamento effettuato.";
+        /*
         if (totale > 0) {
             return "Aggiornamento effettuato.";
         } else {
             return "Aggiornamento non effettuato.";
-        }
+        }*/
     }
 
     public String delete(String query) {
