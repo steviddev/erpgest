@@ -136,6 +136,7 @@ public class JDialogResocontoOrdine extends javax.swing.JDialog {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonStampa;

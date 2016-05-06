@@ -288,7 +288,7 @@ public class JDialogImpostaPrezzoPerOrdini extends javax.swing.JDialog implement
         jComboBoxListini.addItem("-");
         listiniMap.clear();
         try {
-            String query = "SELECT * FROM LISTINI WHERE ATTIVO = 'S'";
+            String query = "SELECT * FROM LISTINI WHERE ATTIVO = 'S' ORDER BY DATA_MODIFICA DESC";
             ResultSet res = conn.selectSMS(query);
             while( res.next() ){
                 jComboBoxListini.addItem(res.getString("NOME"));

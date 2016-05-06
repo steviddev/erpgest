@@ -15,12 +15,13 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author SteVid <www.stevid.it>
  */
-public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCallBackClienti{
+public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCallBackClienti,InterfaceCallBackPuntoVendita{
 
     SimpleDateFormat formatterData = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat formatterOre = new SimpleDateFormat("HH:mm");
@@ -132,6 +133,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTablePuntiVendita = new javax.swing.JTable();
+        jButtonAggiungiPuntoVendita = new javax.swing.JButton();
+        jButtonEliminaPuntoVendita = new javax.swing.JButton();
+        jButtonModificaPuntoVendita = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Clienti"));
         setLayout(null);
@@ -425,6 +429,23 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jPanel3.add(jScrollPane1);
         jScrollPane1.setBounds(20, 20, 970, 230);
 
+        jButtonAggiungiPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/add.png"))); // NOI18N
+        jButtonAggiungiPuntoVendita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiPuntoVenditaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonAggiungiPuntoVendita);
+        jButtonAggiungiPuntoVendita.setBounds(990, 30, 40, 40);
+
+        jButtonEliminaPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/minus2.png"))); // NOI18N
+        jPanel3.add(jButtonEliminaPuntoVendita);
+        jButtonEliminaPuntoVendita.setBounds(990, 80, 40, 40);
+
+        jButtonModificaPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
+        jPanel3.add(jButtonModificaPuntoVendita);
+        jButtonModificaPuntoVendita.setBounds(990, 130, 40, 40);
+
         add(jPanel3);
         jPanel3.setBounds(30, 380, 1040, 270);
     }// </editor-fold>//GEN-END:initComponents
@@ -597,6 +618,55 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonEliminaActionPerformed
 
+    private void jButtonAggiungiPuntoVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungiPuntoVenditaActionPerformed
+        if ( jTextFieldID.getText().equals("")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR);
+        }
+        try {
+            
+        } catch (Exception e) {
+        }
+        
+        JDialogImpostaPuntoVendita jDialogImpostaPuntoVendita = new JDialogImpostaPuntoVendita(this.parentFrame,this,jTextFieldID.getText(),"");
+    }//GEN-LAST:event_jButtonAggiungiPuntoVenditaActionPerformed
+    
+    public void aggiornaTabellaPuntiVendita(String id){
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query = "";
+        ResultSet res = null;
+        String risultato = "";
+        try {
+            query = "SELECT * FROM PUNTI_VENDITA "
+                    + " WHERE ID_ANAGRAFICA_PADRE = '"+id+"' "
+            + " AND ATTIVO = 'S' ORDER BY DATA_MODIFICA DESC";            
+            res   = conn.selectSMS(query);
+            DefaultTableModel defaultModel = (DefaultTableModel) jTablePuntiVendita.getModel();
+
+            while (defaultModel.getRowCount() > 0) {
+                defaultModel.removeRow(0);
+            }            
+            while (res.next()) {
+                Object[] cell = {res.getString("ID"),
+                    res.getString("NOME") ,
+                    res.getString("INDIRIZZO"),
+                    res.getString("CITTA"),
+                    res.getString("CAP"),
+                    res.getString("TELEFONO")
+                };
+                defaultModel.addRow(cell);
+            }
+            jTablePuntiVendita.invalidate();
+            jTablePuntiVendita.validate();
+            jTablePuntiVendita.repaint();              
+            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+    }
+    
 
     public void aggiornaFinestraInserimentoCliente(String id){
         
@@ -643,6 +713,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
     public javax.swing.JButton buttonRicerca2;
     public javax.swing.JButton buttonRipulisci;
     private javax.swing.JButton jButtonAggiorna;
+    private javax.swing.JButton jButtonAggiungiPuntoVendita;
+    private javax.swing.JButton jButtonEliminaPuntoVendita;
+    private javax.swing.JButton jButtonModificaPuntoVendita;
     public javax.swing.JLabel jLabel20;
     public javax.swing.JLabel jLabel21;
     public javax.swing.JLabel jLabel49;
@@ -776,6 +849,11 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
     public void aggiornaListaClienti(String id) {
         aggiornaFinestraInserimentoCliente(id);
     }
+
+    @Override
+    public void aggiornaListaPuntiVendita(String id) {
+        aggiornaTabellaPuntiVendita(id);
+    }
     
     class SalvaDatiNelDB implements Runnable {
 
@@ -832,7 +910,7 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
                     result = conn.update(query);
                     if (result.equals(UPDATE_OK)) {
                         closeDialog();
-                        JOptionPane.showMessageDialog(parentFrame.getFrame(), "Aggiornamento avvenuto correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);                        
+                        JOptionPane.showMessageDialog(parentFrame.getFrame(), "Aggiornamento avvenuto correttamente", "OK", JOptionPane.INFORMATION_MESSAGE);
                     }else{
                         closeDialog();
                         JOptionPane.showMessageDialog(parentFrame.getFrame(), "Impossibile aggiornare il cliente", "Attenzione", JOptionPane.ERROR_MESSAGE);
