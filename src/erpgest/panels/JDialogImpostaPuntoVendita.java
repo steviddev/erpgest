@@ -22,6 +22,9 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
     String idAnagraficaPadre = ""; 
     String idPuntoVendita    = "";
     
+    String UPDATE_OK = "Aggiornamento effettuato.";
+    String INSERT_OK = "Inserimento effettuato.";    
+    
     /**
      * Creates new form JDialogImpostaPuntoVendita
      */
@@ -199,6 +202,13 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonAnnullaActionPerformed
 
     private void jButtonSalvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvaActionPerformed
+        
+        if (idAnagraficaPadre.equals("")) {
+            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Anagrafica principale, non identificata. ID anagrafica non valido.", "OK", JOptionPane.INFORMATION_MESSAGE);
+            return;            
+        }
+        
+        
         if( jTextFieldNome.getText().equals("") || 
             jTextFieldIndirizzo.getText().equals("") ||
             jTextFieldCitta.getText().equals("")){
@@ -207,6 +217,35 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
             return;
         }
         
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query = "";
+        ResultSet res = null;
+        String risultato = "";
+        try {
+            query = "";
+            if (idPuntoVendita.equals("") || idPuntoVendita == null) {
+                query = "INSERT INTO PUNTI_VENDITA"
+                        + "(ID_ANAGRAFICA_PADRE,NOME,INDIRIZZO,CITTA,CAP,TELEFONO) "
+                        + "VALUES ("
+                        + "'"+idAnagraficaPadre+"',"                        
+                        + "'"+jTextFieldNome+"',"
+                        + "'"+jTextFieldIndirizzo+"',"
+                        + "'"+jTextFieldCitta+"',"
+                        + "'"+jTextFieldCAP+"',"
+                        + "'"+jTextFieldTelefono+"')";
+                risultato = conn.insert(query);
+                if (!risultato.equals(INSERT_OK)) {
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Non è stato possibile inserire i dati.", "OK", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }else{
+            
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
         
         parentPanel.aggiornaListaPuntiVendita(idAnagraficaPadre);
     }//GEN-LAST:event_jButtonSalvaActionPerformed
