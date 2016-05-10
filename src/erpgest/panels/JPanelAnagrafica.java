@@ -439,10 +439,20 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         jButtonAggiungiPuntoVendita.setBounds(990, 30, 40, 40);
 
         jButtonEliminaPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/minus2.png"))); // NOI18N
+        jButtonEliminaPuntoVendita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEliminaPuntoVenditaActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButtonEliminaPuntoVendita);
         jButtonEliminaPuntoVendita.setBounds(990, 80, 40, 40);
 
         jButtonModificaPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
+        jButtonModificaPuntoVendita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificaPuntoVenditaActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButtonModificaPuntoVendita);
         jButtonModificaPuntoVendita.setBounds(990, 130, 40, 40);
 
@@ -620,15 +630,62 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
 
     private void jButtonAggiungiPuntoVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungiPuntoVenditaActionPerformed
         if ( jTextFieldID.getText().equals("")) {
-            JOptionPane.showMessageDialog(parentFrame.getFrame(), "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+        String idPuntoVendita = "";
         try {
-            
+            idPuntoVendita = jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString();
         } catch (Exception e) {
         }
         
-        JDialogImpostaPuntoVendita jDialogImpostaPuntoVendita = new JDialogImpostaPuntoVendita(this.parentFrame,this,jTextFieldID.getText(),"");
+        JDialogImpostaPuntoVendita jDialogImpostaPuntoVendita = new JDialogImpostaPuntoVendita(this.parentFrame,this,jTextFieldID.getText(),idPuntoVendita,false);
     }//GEN-LAST:event_jButtonAggiungiPuntoVenditaActionPerformed
+
+    private void jButtonModificaPuntoVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaPuntoVenditaActionPerformed
+        if ( jTextFieldID.getText().equals("")) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String idPuntoVendita = "";
+        try {
+            idPuntoVendita = jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un punto vendita.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JDialogImpostaPuntoVendita jDialogImpostaPuntoVendita = new JDialogImpostaPuntoVendita(this.parentFrame,this,jTextFieldID.getText(),idPuntoVendita,true);
+    }//GEN-LAST:event_jButtonModificaPuntoVenditaActionPerformed
+
+    private void jButtonEliminaPuntoVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminaPuntoVenditaActionPerformed
+        if ( jTextFieldID.getText().equals("")) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String idPuntoVendita = "";
+        try {
+            idPuntoVendita = jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un punto vendita.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }        
+
+        int n = JOptionPane.showConfirmDialog(null,
+            "ATTENZIONE!! Si vuole cancellare il punto vendita "+ jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 1).toString()+" di " 
+                    + jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 2).toString()+" ?",
+            "",
+            JOptionPane.YES_NO_OPTION);
+
+        if (n == JOptionPane.YES_OPTION) {
+            disabilitaPuntoVendita(jTextFieldID.getText(),idPuntoVendita);
+        } else {
+            //JOptionPane.showMessageDialog(null, "Goodbye");
+            return;
+        }        
+        
+
+    }//GEN-LAST:event_jButtonEliminaPuntoVenditaActionPerformed
     
     public void aggiornaTabellaPuntiVendita(String id){
         DbConn conn = new DbConn();
@@ -703,6 +760,9 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
         }
         
         conn.close();
+        
+        aggiornaListaPuntiVendita(id);
+        
         
     }
     
@@ -853,6 +913,34 @@ public class JPanelAnagrafica extends javax.swing.JPanel implements InterfaceCal
     @Override
     public void aggiornaListaPuntiVendita(String id) {
         aggiornaTabellaPuntiVendita(id);
+    }
+
+    private void disabilitaPuntoVendita(String idAnagraficaPadre, String idPuntoVendita) {
+        
+        if (idAnagraficaPadre.equals("") || idPuntoVendita.equals("")) {
+            return;
+        }
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query = "";
+        ResultSet res = null;
+        String risultato = "";
+        try {
+            query = "UPDATE PUNTI_VENDITA"
+                + " SET ATTIVO = 'N' "
+                + " WHERE ID_ANAGRAFICA_PADRE = '"+idAnagraficaPadre+"'"
+                + " AND ID = '"+idPuntoVendita+"'";
+            risultato = conn.update(query);
+            if (!risultato.equals(UPDATE_OK)) {
+                JOptionPane.showMessageDialog(this.parentFrame, "Errore in fase di cancellazione.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+        aggiornaTabellaPuntiVendita(jTextFieldID.getText());        
     }
     
     class SalvaDatiNelDB implements Runnable {

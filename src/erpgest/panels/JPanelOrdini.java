@@ -67,18 +67,29 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jTableArticoli.setRowSelectionAllowed(true);
         jTableArticoli.setSelectionMode(0);        
         
+     
+
         jTableClienti.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent me) {
                 JTable table =(JTable) me.getSource();
                 Point p = me.getPoint();
                 int row = table.rowAtPoint(p);
-                /*
-                if (me.getClickCount() == 2) {
-                    popolaListaArticoli();
-                }*/
-                popolaListaArticoli();
+
+                //popolaListaArticoli();
+                aggiornaTabellaPuntiVendita(jLabelID.getText(),jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString());  
+                rimuoviTuttiElementiListaArticoli();
             }
-        });        
+        });          
+      
+        jTablePuntiVendita.addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent me) {
+                JTable table =(JTable) me.getSource();
+                Point p = me.getPoint();
+                int row = table.rowAtPoint(p);
+                popolaListaArticoli();
+                
+            }
+        });   
         
         jTableArticoli.addMouseListener(new MouseAdapter() {
         public void mousePressed(MouseEvent me) {
@@ -130,6 +141,11 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jPanel2 = new javax.swing.JPanel();
         jLabelID = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTablePuntiVendita = new javax.swing.JTable();
+        jButtonAggiungiPuntoVendita = new javax.swing.JButton();
+        jButtonRimuoviPuntoVendita = new javax.swing.JButton();
+        jButtonAggiungiTuttiPuntiVendita = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -169,7 +185,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         }
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(50, 100, 920, 190);
+        jScrollPane1.setBounds(50, 60, 920, 160);
 
         jTableArticoli.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -211,7 +227,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         }
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(50, 310, 850, 310);
+        jScrollPane2.setBounds(50, 410, 850, 250);
 
         jButtonAggiungiTuttiClienti.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_all.png"))); // NOI18N
         jButtonAggiungiTuttiClienti.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +236,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonAggiungiTuttiClienti);
-        jButtonAggiungiTuttiClienti.setBounds(790, 60, 70, 32);
+        jButtonAggiungiTuttiClienti.setBounds(790, 20, 70, 32);
 
         jButtonCancellaCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/cross.png"))); // NOI18N
         jButtonCancellaCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -229,7 +245,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonCancellaCliente);
-        jButtonCancellaCliente.setBounds(930, 60, 40, 32);
+        jButtonCancellaCliente.setBounds(930, 20, 40, 32);
 
         jButtonAggiungliCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_user.png"))); // NOI18N
         jButtonAggiungliCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -238,7 +254,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonAggiungliCliente);
-        jButtonAggiungliCliente.setBounds(860, 60, 70, 32);
+        jButtonAggiungliCliente.setBounds(860, 20, 70, 32);
 
         jButtonAggiungiArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/add.png"))); // NOI18N
         jButtonAggiungiArticolo.addActionListener(new java.awt.event.ActionListener() {
@@ -247,7 +263,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonAggiungiArticolo);
-        jButtonAggiungiArticolo.setBounds(920, 320, 40, 31);
+        jButtonAggiungiArticolo.setBounds(910, 430, 40, 40);
 
         jButtonRimuoviArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/minus2.png"))); // NOI18N
         jButtonRimuoviArticolo.addActionListener(new java.awt.event.ActionListener() {
@@ -256,7 +272,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonRimuoviArticolo);
-        jButtonRimuoviArticolo.setBounds(920, 360, 40, 31);
+        jButtonRimuoviArticolo.setBounds(910, 470, 40, 40);
 
         jButtonModificaArticolo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/pencil.png"))); // NOI18N
         jButtonModificaArticolo.addActionListener(new java.awt.event.ActionListener() {
@@ -265,7 +281,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButtonModificaArticolo);
-        jButtonModificaArticolo.setBounds(920, 400, 40, 31);
+        jButtonModificaArticolo.setBounds(910, 510, 40, 40);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/images.png"))); // NOI18N
         jButton1.setToolTipText("Visualizza Resoconto totale prodotti");
@@ -275,7 +291,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
         add(jButton1);
-        jButton1.setBounds(920, 440, 40, 30);
+        jButton1.setBounds(910, 550, 40, 40);
 
         jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jLabel1.setText("Data Ordine:");
@@ -350,7 +366,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         );
 
         add(jPanel1);
-        jPanel1.setBounds(130, 40, 610, 50);
+        jPanel1.setBounds(140, 10, 610, 50);
 
         jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabelID.setForeground(new java.awt.Color(255, 0, 0));
@@ -381,6 +397,69 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
         add(jPanel2);
         jPanel2.setBounds(20, 10, 90, 40);
+
+        jTablePuntiVendita.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "Nome", "Indirizzo", "Citta", "CAP", "Telefono"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTablePuntiVendita);
+        if (jTablePuntiVendita.getColumnModel().getColumnCount() > 0) {
+            jTablePuntiVendita.getColumnModel().getColumn(0).setPreferredWidth(40);
+            jTablePuntiVendita.getColumnModel().getColumn(1).setPreferredWidth(250);
+            jTablePuntiVendita.getColumnModel().getColumn(2).setPreferredWidth(300);
+            jTablePuntiVendita.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTablePuntiVendita.getColumnModel().getColumn(4).setPreferredWidth(60);
+            jTablePuntiVendita.getColumnModel().getColumn(5).setPreferredWidth(80);
+        }
+
+        add(jScrollPane3);
+        jScrollPane3.setBounds(50, 230, 850, 170);
+
+        jButtonAggiungiPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_one_site.png"))); // NOI18N
+        jButtonAggiungiPuntoVendita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiPuntoVenditaActionPerformed(evt);
+            }
+        });
+        add(jButtonAggiungiPuntoVendita);
+        jButtonAggiungiPuntoVendita.setBounds(910, 250, 60, 40);
+
+        jButtonRimuoviPuntoVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/minus2.png"))); // NOI18N
+        jButtonRimuoviPuntoVendita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRimuoviPuntoVenditaActionPerformed(evt);
+            }
+        });
+        add(jButtonRimuoviPuntoVendita);
+        jButtonRimuoviPuntoVendita.setBounds(910, 330, 60, 40);
+
+        jButtonAggiungiTuttiPuntiVendita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/images/add_all_site.png"))); // NOI18N
+        jButtonAggiungiTuttiPuntiVendita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiungiTuttiPuntiVenditaActionPerformed(evt);
+            }
+        });
+        add(jButtonAggiungiTuttiPuntiVendita);
+        jButtonAggiungiTuttiPuntiVendita.setBounds(910, 290, 60, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonScegliDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonScegliDataActionPerformed
@@ -641,11 +720,203 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         
     }//GEN-LAST:event_jButtonCreaDDTActionPerformed
 
+    private void jButtonAggiungiPuntoVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungiPuntoVenditaActionPerformed
+       
+        String idAnagraficaPadre = "";
+        
+        try {
+            idAnagraficaPadre = jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButtonAggiungiPuntoVenditaActionPerformed
+
+    private void jButtonRimuoviPuntoVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRimuoviPuntoVenditaActionPerformed
+        String idAnagraficaPadre = "";
+        String idOrdine = jLabelID.getText();
+        String idPuntoVendita = "";
+        
+        if (idOrdine.equals("") || idOrdine.equals("-")) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Nessun ordine Selezionato.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        try {
+            idAnagraficaPadre = jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+
+        try {
+            idPuntoVendita = jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Nessun Punto vendita selezionato.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }        
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query = "";
+        ResultSet res = null;
+        String risultato = "";
+        try {
+            query = "UPDATE DETTAGLIO_ORDINI_PUNTI_VENDITA"
+                    + " SET ATTIVO = 'N' "
+                    + " WHERE ID_ORDINE = '"+idOrdine+"'"
+                    + " AND ID_ANAGRAFICA_PADRE = '"+idAnagraficaPadre+"'"
+                    + " AND ATTIVO = 'S'";
+            risultato = conn.update(query);
+            if (!risultato.equals(UPDATE_OK)) {
+                JOptionPane.showMessageDialog(this.parentFrame, "Errore durante eliminazione punto vendita.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+                return;                 
+            }
+            
+            query = " UPDATE DETTAGLIO_ORDINI"
+                    + " SET ATTIVO = 'N'"
+                    + " WHERE ID_ORDINE = '"+idOrdine+"'"
+                    + " AND ID_DESTINAZIONE_CLIENTE = '"+idAnagraficaPadre+"'"
+                    + " AND ID_PUNTO_VENDITA = '"+jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString()+"'"
+                    + " AND ATTIVO = 'S'";
+            risultato = conn.update(query);
+            if (!risultato.equals(UPDATE_OK)) {
+                JOptionPane.showMessageDialog(this.parentFrame, "Errore durante eliminazione articoli \n"
+                        + " durante eliminazione punto vendita.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+                return;                  
+            }            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+        
+        aggiornaTabellaPuntiVendita(idOrdine,idAnagraficaPadre);
+    }//GEN-LAST:event_jButtonRimuoviPuntoVenditaActionPerformed
+
+    private void jButtonAggiungiTuttiPuntiVenditaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiungiTuttiPuntiVenditaActionPerformed
+        String idAnagraficaPadre = "";
+        String idOrdine = jLabelID.getText();
+        
+        if (idOrdine.equals("") || idOrdine.equals("-")) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Nessun ordine Selezionato.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        try {
+            idAnagraficaPadre = jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Selezionare un cliente.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        int n = JOptionPane.showConfirmDialog(null,
+            "Vuoi aggiungere tutti i restanti clienti?",
+            "\n Tutti i precedenti puntivendita realtivi a l'ordine : " + idOrdine
+                    + "\n e al cliente :" + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 1).toString()
+                    + " verranno cancellati",
+            JOptionPane.YES_NO_OPTION);        
+        
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query   = "";
+        ResultSet res  = null;   
+        String risultato = "";
+        try {
+            
+            query = "UPDATE DETTAGLIO_ORDINI_PUNTI_VENDITA "
+                    + " SET ATTIVO = 'N'"
+                    + " WHERE ID_ORDINE = '"+idOrdine+"'"
+                    + " AND ATTIVO = 'S'";
+            risultato = conn.update(query);
+            if (!risultato.equals(UPDATE_OK)) {
+                JOptionPane.showMessageDialog(this.parentFrame, "Errore durante cancellazione punti vendita.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+                return;
+            }            
+            query = "SELECT * FROM PUNTI_VENDITA "
+                    + " WHERE ID_ANAGRAFICA_PADRE = '"+idAnagraficaPadre+"'"
+                    + " AND ATTIVO = 'S'";
+            res = conn.selectSMS(query);
+            while( res.next() ){
+                query = " INSERT INTO DETTAGLIO_ORDINI_PUNTI_VENDITA "
+                        + " ("
+                        + " ID_ORDINE,"
+                        + " ID_ANAGRAFICA_PADRE,"
+                        + " ID_PUNTO_VENDITA"
+                        + ") VALUES ("
+                        + " '"+idOrdine+"',"
+                        + " '"+idAnagraficaPadre+"',"
+                        + " '"+res.getString("ID")+"'"
+                        + ")";
+                risultato = conn.insert(query);
+                if (!risultato.equals(INSERT_OK)) {
+                    throw new Exception("errore inserimento query = " + query);
+                }
+            }
+            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+        aggiornaTabellaPuntiVendita(idOrdine, idAnagraficaPadre);
+    }//GEN-LAST:event_jButtonAggiungiTuttiPuntiVenditaActionPerformed
+
+    public void aggiornaTabellaPuntiVendita(String idOrdine, String idAnagraficaPadre){
+        DbConn conn = new DbConn();
+        conn.makeConn();
+        
+        String query = "";
+        ResultSet res = null;
+        String risultato = "";
+        try {
+            query = "SELECT P.* FROM "
+                    + " DETTAGLIO_ORDINI_PUNTI_VENDITA O,"
+                    + " PUNTI_VENDITA P"
+                    + " WHERE "
+                    + " O.ID_ANAGRAFICA_PADRE = '"+idAnagraficaPadre+"' "
+                    + " AND O.ID_ORDINE = '"+idOrdine+"'"
+                    + " AND O.ATTIVO = 'S' "
+                    + " AND P.ID = O.ID_PUNTO_VENDITA"
+                    + " AND P.ATTIVO = 'S' "
+                    + " ORDER BY DATA_MODIFICA DESC";            
+            res   = conn.selectSMS(query);
+            DefaultTableModel defaultModel = (DefaultTableModel) jTablePuntiVendita.getModel();
+
+            while (defaultModel.getRowCount() > 0) {
+                defaultModel.removeRow(0);
+            }            
+            while (res.next()) {
+                Object[] cell = {res.getString("ID"),
+                    res.getString("NOME") ,
+                    res.getString("INDIRIZZO"),
+                    res.getString("CITTA"),
+                    res.getString("CAP"),
+                    res.getString("TELEFONO")
+                };
+                defaultModel.addRow(cell);
+            }
+            jTablePuntiVendita.invalidate();
+            jTablePuntiVendita.validate();
+            jTablePuntiVendita.repaint();              
+            
+        } catch (Exception e) {
+            Utils.logError(e, "", true);
+        }
+        conn.close();
+        //rimuoviTuttiElementiListaPuntiVendita();
+    }    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAggiungiArticolo;
+    private javax.swing.JButton jButtonAggiungiPuntoVendita;
     private javax.swing.JButton jButtonAggiungiTuttiClienti;
+    private javax.swing.JButton jButtonAggiungiTuttiPuntiVendita;
     private javax.swing.JButton jButtonAggiungliCliente;
     private javax.swing.JButton jButtonCancellaCliente;
     private javax.swing.JButton jButtonCreaDDT;
@@ -653,6 +924,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private javax.swing.JButton jButtonNuovoOrdine;
     private javax.swing.JButton jButtonNuovoOrdine1;
     private javax.swing.JButton jButtonRimuoviArticolo;
+    private javax.swing.JButton jButtonRimuoviPuntoVendita;
     private javax.swing.JButton jButtonScegliData;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -661,8 +933,10 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTableArticoli;
     private javax.swing.JTable jTableClienti;
+    private javax.swing.JTable jTablePuntiVendita;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -692,9 +966,23 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
             if (count<=0) {
                 //faccio l'insert
-                query = "INSERT INTO DETTAGLIO_ORDINI (ID_ORDINE,ID_ARTICOLO,"
-                        + "ID_DESTINAZIONE_CLIENTE,QUANTITA,ID_LISTINO,PREZZO,COLLI)"
-                        + " VALUES ('"+jLabelID.getText()+"',"+id+","+ jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +",0,"+idListinoScelto+","+prezzoScelto+","+colliScelti+")";
+                query = "INSERT INTO "
+                        + " DETTAGLIO_ORDINI "
+                        + "(ID_ORDINE,"
+                        + "ID_ARTICOLO,"
+                        + "ID_DESTINAZIONE_CLIENTE,"
+                        + "ID_PUNTO_VENDITA,"
+                        + "QUANTITA,"
+                        + "ID_LISTINO,"
+                        + "PREZZO,COLLI)"
+                        + " VALUES ('"+jLabelID.getText()+"',"
+                        + ""+id+","
+                        + "" + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() +","
+                        + "'" + jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString() +"',"
+                        + "0,"
+                        + ""+idListinoScelto+","
+                        + ""+prezzoScelto+","
+                        + ""+colliScelti+")";
                 result = conn.insert(query);
                 if (result.equals(INSERT_OK)) {
                     popolaListaArticoli();
@@ -704,11 +992,13 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 
             }else{
                 query = "UPDATE DETTAGLIO_ORDINI "
-                        + " SET COLLI = " + colliScelti+","
+                        + " SET "
+                        + " COLLI = " + colliScelti+","
                         //+ " ID_PREZZO = " + idPrezzoScelto +","
                         + " PREZZO = " + prezzoScelto+","
                         + " ID_LISTINO = " + idListinoScelto 
                         + " WHERE ID_DESTINAZIONE_CLIENTE = " + jTableClienti.getModel().getValueAt(jTableClienti.getSelectedRow(), 0).toString() 
+                        + " AND ID_PUNTO_VENDITA = '"+jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString()+"'"
                         + " AND ID_ARTICOLO = " + id
                         + " AND ID_ORDINE = " + jLabelID.getText()
                         + " AND ATTIVO = 'S'";
@@ -829,6 +1119,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                     + " DO.COLLI,"
                     + " P.IVA"
                     + " FROM DETTAGLIO_ORDINI DO,"
+                    + "      DETTAGLIO_ORDINI_PUNTI_VENDITA DOPV,"
                     + "      ARTICOLI A,"
                     + "      LISTINI L,"
                     + "      PREZZI P"
@@ -840,6 +1131,9 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                     + " AND DO.ID_LISTINO = L.ID"
                     + " AND P.ID_LISTINO = DO.ID_LISTINO"
                     + " AND P.ID_ARTICOLO = DO.ID_ARTICOLO"
+                    + " AND DO.ID_ORDINE = DOPV.ID_ORDINE"
+                    + " AND DO.ID_PUNTO_VENDITA = '"+jTablePuntiVendita.getModel().getValueAt(jTablePuntiVendita.getSelectedRow(), 0).toString()+"'"
+                    + " AND DOPV.ATTIVO = 'S'"
                     + " AND P.ATTIVO = 'S'"
                     + " AND L.ATTIVO = 'S'";
             ResultSet res = conn.selectSMS(query);
@@ -1116,7 +1410,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                     jLabelID.setText("-");
                     rimuoviTuttiElementiListaArticoli();
                     rimuoviTuttiElementiListaClienti();
-                    
+                    rimuoviTuttiElementiListaPuntiVendita();
 
                 }
             } catch (Exception e) {
@@ -1132,6 +1426,8 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         private void popolaListe(int id) {
             
         }
+
+
     }
     
     private void rimuoviClienteDaOrdine(String idCliente){
@@ -1183,4 +1479,16 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jTableArticoli.repaint();    
         jTableArticoli.setVisible(true);
     }
+    private void rimuoviTuttiElementiListaPuntiVendita() {
+        jTablePuntiVendita.setVisible(false);
+        DefaultTableModel defaultModel = (DefaultTableModel) jTablePuntiVendita.getModel();
+
+        while (defaultModel.getRowCount() > 0) {
+            defaultModel.removeRow(0);
+        }      
+        jTablePuntiVendita.invalidate();
+        jTablePuntiVendita.validate();
+        jTablePuntiVendita.repaint();    
+        jTablePuntiVendita.setVisible(true);  
+    }    
 }

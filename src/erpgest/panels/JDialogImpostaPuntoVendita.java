@@ -28,7 +28,7 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
     /**
      * Creates new form JDialogImpostaPuntoVendita
      */
-    public JDialogImpostaPuntoVendita(MainFrame parent,InterfaceCallBackPuntoVendita parentPanel,String idAnagraficaPadre, String idPuntoVendita) {
+    public JDialogImpostaPuntoVendita(MainFrame parent,InterfaceCallBackPuntoVendita parentPanel,String idAnagraficaPadre, String idPuntoVendita,boolean aggiornamento) {
         super(parent,"Gestione Punti vendita", true);
         this.parentFrame = parent;
         this.parentPanel = parentPanel;          
@@ -38,7 +38,12 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
         this.idAnagraficaPadre = idAnagraficaPadre;
         this.idPuntoVendita    = idPuntoVendita;
         
-        popolaJTextFields(idAnagraficaPadre,idPuntoVendita);
+        if(aggiornamento){
+            popolaJTextFields(idAnagraficaPadre, idPuntoVendita);
+        }
+        
+        erpgest.utils.UtilsGen.centraDialogo(parent, this);
+        setVisible(true);        
         
     }
 
@@ -230,17 +235,29 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
                         + "(ID_ANAGRAFICA_PADRE,NOME,INDIRIZZO,CITTA,CAP,TELEFONO) "
                         + "VALUES ("
                         + "'"+idAnagraficaPadre+"',"                        
-                        + "'"+jTextFieldNome+"',"
-                        + "'"+jTextFieldIndirizzo+"',"
-                        + "'"+jTextFieldCitta+"',"
-                        + "'"+jTextFieldCAP+"',"
-                        + "'"+jTextFieldTelefono+"')";
+                        + "'"+(jTextFieldNome.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + "'"+(jTextFieldIndirizzo.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + "'"+(jTextFieldCitta.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + "'"+(jTextFieldCAP.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + "'"+(jTextFieldTelefono.getText()).trim().toUpperCase().replaceAll("'", "''")+"')";
                 risultato = conn.insert(query);
                 if (!risultato.equals(INSERT_OK)) {
                     JOptionPane.showMessageDialog(parentFrame.getFrame(), "Non è stato possibile inserire i dati.", "OK", JOptionPane.INFORMATION_MESSAGE);
                 }
             }else{
-            
+                query = "UPDATE PUNTI_VENDITA"
+                        + " SET "
+                        + " NOME = '"+(jTextFieldNome.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + " INDIRIZZO = '"+(jTextFieldIndirizzo.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + " CITTA = '"+(jTextFieldCitta.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + " CAP = '"+(jTextFieldCAP.getText()).trim().toUpperCase().replaceAll("'", "''")+"',"
+                        + " TELEFONO = '"+(jTextFieldTelefono.getText()).trim().toUpperCase().replaceAll("'", "''")+"'"
+                        + " WHERE ID_ANAGRAFICA_PADRE = '"+idAnagraficaPadre+"'"
+                        + " AND ATTIVO = 'S'";
+                risultato = conn.update(query);
+                if (!risultato.equals(UPDATE_OK)) {
+                    JOptionPane.showMessageDialog(parentFrame.getFrame(), "Non è stato possibile aggiornare i dati.", "OK", JOptionPane.INFORMATION_MESSAGE);
+                }                
             }
         } catch (Exception e) {
             Utils.logError(e, "", true);
@@ -248,6 +265,7 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
         conn.close();
         
         parentPanel.aggiornaListaPuntiVendita(idAnagraficaPadre);
+        this.dispose();
     }//GEN-LAST:event_jButtonSalvaActionPerformed
 
     /**
@@ -282,7 +300,7 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
         ResultSet res = null;
         String risultato = "";
         try {
-            query = "SELECT * FROM PUNTO_VENDITA "
+            query = "SELECT * FROM PUNTI_VENDITA "
                     + " WHERE ID = '"+idPuntoVendita+"' "
             + " AND ID_ANAGRAFICA_PADRE = '"+idAnagraficaPadre+"'"
                     + " AND ATTIVO = 'S' "
@@ -302,5 +320,7 @@ public class JDialogImpostaPuntoVendita extends javax.swing.JDialog {
             Utils.logError(e, "", true);
         }
         conn.close();
+        this.pack();
+        this.repaint();
     }
 }
