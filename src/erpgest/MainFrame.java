@@ -49,6 +49,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelAnagrafica1 = new erpgest.panels.JPanelAnagrafica();
         jPanelArticoli1 = new erpgest.panels.JPanelArticoli();
         jPanelListinoPrezzi1 = new erpgest.panels.JPanelListinoPrezzi();
+        jPanel1 = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelOrdini1 = new erpgest.panels.JPanelOrdini();
         jPanelAmministrazione1 = new erpgest.panels.JPanelAmministrazione();
         jPanelDocumenti1 = new erpgest.panels.JPanelDocumenti();
@@ -70,7 +72,21 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Articoli", jPanelArticoli1);
         jTabbedPane2.addTab("Listini e Prezzi", jPanelListinoPrezzi1);
-        jTabbedPane2.addTab("Ordini", jPanelOrdini1);
+
+        jTabbedPane1.addTab("Gestione", jPanelOrdini1);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1129, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 668, Short.MAX_VALUE)
+        );
+
+        jTabbedPane2.addTab("Ordini", jPanel1);
         jTabbedPane2.addTab("Amministrazione", jPanelAmministrazione1);
         jTabbedPane2.addTab("Documenti", jPanelDocumenti1);
 
@@ -78,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
+            .addComponent(jTabbedPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,12 +154,14 @@ public class MainFrame extends javax.swing.JFrame {
     }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private erpgest.panels.JPanelAmministrazione jPanelAmministrazione1;
     private erpgest.panels.JPanelAnagrafica jPanelAnagrafica1;
     private erpgest.panels.JPanelArticoli jPanelArticoli1;
     private erpgest.panels.JPanelDocumenti jPanelDocumenti1;
     private erpgest.panels.JPanelListinoPrezzi jPanelListinoPrezzi1;
     private erpgest.panels.JPanelOrdini jPanelOrdini1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     // End of variables declaration//GEN-END:variables
 

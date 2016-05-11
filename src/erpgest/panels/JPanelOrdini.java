@@ -138,6 +138,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         jButtonNuovoOrdine = new javax.swing.JButton();
         jButtonNuovoOrdine1 = new javax.swing.JButton();
         jButtonCreaDDT = new javax.swing.JButton();
+        jButtonSettaPesiTotali = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelID = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -331,6 +332,9 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
             }
         });
 
+        jButtonSettaPesiTotali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/databases.png"))); // NOI18N
+        jButtonSettaPesiTotali.setText("Tot.");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -344,9 +348,11 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 .addComponent(jButtonNuovoOrdine)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonCreaDDT, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonNuovoOrdine1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonSettaPesiTotali)
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -362,11 +368,14 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                             .addComponent(jButtonScegliData, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonNuovoOrdine, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonCreaDDT, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(5, 5, 5))))
+                        .addGap(5, 5, 5))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonSettaPesiTotali, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         add(jPanel1);
-        jPanel1.setBounds(140, 10, 610, 50);
+        jPanel1.setBounds(100, 10, 680, 50);
 
         jLabelID.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabelID.setForeground(new java.awt.Color(255, 0, 0));
@@ -926,6 +935,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
     private javax.swing.JButton jButtonRimuoviArticolo;
     private javax.swing.JButton jButtonRimuoviPuntoVendita;
     private javax.swing.JButton jButtonScegliData;
+    private javax.swing.JButton jButtonSettaPesiTotali;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelID;
