@@ -325,7 +325,7 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
         jButtonCreaDDT.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButtonCreaDDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/page_white_paintbrush.png"))); // NOI18N
-        jButtonCreaDDT.setText("   Crea DDT");
+        jButtonCreaDDT.setText("D.D.T.");
         jButtonCreaDDT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCreaDDTActionPerformed(evt);
@@ -334,6 +334,11 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
 
         jButtonSettaPesiTotali.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erpgest/img/ico/databases.png"))); // NOI18N
         jButtonSettaPesiTotali.setText("Tot.");
+        jButtonSettaPesiTotali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSettaPesiTotaliActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -347,12 +352,12 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNuovoOrdine)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonCreaDDT, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonCreaDDT)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonNuovoOrdine1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSettaPesiTotali)
-                .addGap(18, 18, 18))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -873,6 +878,22 @@ public class JPanelOrdini extends javax.swing.JPanel implements InterfaceCallBac
         conn.close();
         aggiornaTabellaPuntiVendita(idOrdine, idAnagraficaPadre);
     }//GEN-LAST:event_jButtonAggiungiTuttiPuntiVenditaActionPerformed
+
+    private void jButtonSettaPesiTotaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSettaPesiTotaliActionPerformed
+        if (jLabelID.getText().equals("") 
+                || jLabelID.getText().equals("-") ) {
+            JOptionPane.showMessageDialog(this.parentFrame, "Nessun Ordine Selezionato.", "ATTENZIONE!", JOptionPane.ERROR_MESSAGE);
+            return;            
+        }
+        
+        JDialogResocontoOrdine resTot = new JDialogResocontoOrdine(parentFrame,jLabelID.getText(),true);
+        
+        String query = "select d.id_articolo\n" +
+"from dettaglio_ordini d\n" +
+"where d.id_ordine = 23\n" +
+"group by d.id_articolo";
+        
+    }//GEN-LAST:event_jButtonSettaPesiTotaliActionPerformed
 
     public void aggiornaTabellaPuntiVendita(String idOrdine, String idAnagraficaPadre){
         DbConn conn = new DbConn();
